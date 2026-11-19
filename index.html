@@ -1,53 +1,100 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SUDIP INDUSTRY</title>
+<meta name="description" content="SUDIP INDUSTRY - Dream, Work, Success. Shop online.">
 <style>
 :root{--blue:#1d4ed8;--bg:#f1f5fb;--text:#111827}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--blue);color:white;padding:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-header a{color:white;text-decoration:none;margin:5px}
-main{max-width:1000px;margin:auto;padding:18px}
-button,.btn{background:var(--blue);color:white;border:0;padding:11px 16px;border-radius:7px;cursor:pointer}
-input,textarea,select{width:100%;padding:11px;margin:7px 0 14px;border:1px solid #ccd3df;border-radius:7px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
-.card,.panel{background:white;padding:14px;border-radius:12px;box-shadow:0 2px 9px #0001}
-.photo{height:170px;display:flex;align-items:center;justify-content:center;background:#eef2ff;border-radius:8px;overflow:hidden}
+header{background:var(--blue);color:white;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header a{color:white;text-decoration:none;font-size:14px;padding:5px}
+main{max-width:1000px;margin:auto;padding:16px;min-height:70vh}
+button,.btn{display:inline-block;background:var(--blue);color:white;border:0;padding:11px 15px;border-radius:7px;cursor:pointer;text-decoration:none;margin:3px}
+button:disabled{opacity:.5}
+input,textarea,select{width:100%;padding:11px;margin:7px 0 14px;border:1px solid #ccd3df;border-radius:7px;font-size:15px}
+label{font-size:14px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.card,.panel{background:white;padding:14px;border-radius:12px;box-shadow:0 2px 9px #0001;margin-bottom:14px}
+.photo{height:170px;display:flex;align-items:center;justify-content:center;background:#eef2ff;border-radius:8px;overflow:hidden;font-size:40px}
 .photo img{width:100%;height:100%;object-fit:contain}
-.price{font-weight:bold;font-size:19px;margin:10px 0}
+.price{font-weight:bold;font-size:20px;margin:10px 0}
 .muted{color:#64748b;font-size:13px}
-nav{display:flex;gap:12px;flex-wrap:wrap}
-.hidden{display:none}
-footer{text-align:center;padding:25px;color:#64748b}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+footer{background:#111827;color:white;padding:25px 16px;margin-top:25px}
+footer a{color:white}
+.footer-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.status{background:#dbeafe;color:#1e40af;padding:6px 10px;border-radius:20px;font-size:12px}
+.empty{text-align:center;padding:30px;background:white;border-radius:12px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:15px 0}
+.contact-link{display:block;margin:12px 0;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
+
 <header>
-<div><b>SUDIP INDUSTRY</b><br><small>DREAM • WORK • SUCCESS</small></div>
+<div>
+<b>SUDIP INDUSTRY</b><br>
+<small>DREAM • WORK • SUCCESS</small>
+</div>
 <nav>
 <a href="#home">Home</a>
 <a href="#shop">Shop</a>
 <a href="#cart">Cart (<span id="count">0</span>)</a>
+<a href="#myorders">My Orders</a>
+<a href="#contact">Contact</a>
 <a href="#admin">Admin</a>
 </nav>
 </header>
 
 <main id="app"></main>
-<footer>SUDIP INDUSTRY © 2026</footer>
+
+<footer>
+<div class="footer-grid">
+<div>
+<h3>SUDIP INDUSTRY</h3>
+<p>DREAM • WORK • SUCCESS</p>
+<p>Your online shopping destination.</p>
+</div>
+<div>
+<h3>Quick Links</h3>
+<p><a href="#home">Home</a></p>
+<p><a href="#shop">Shop</a></p>
+<p><a href="#myorders">My Orders</a></p>
+<p><a href="#contact">Contact Us</a></p>
+</div>
+<div>
+<h3>Business Contact</h3>
+<p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>
+<p>Phone: <a href="tel:+918981988831">+91 89819 88831</a></p>
+<p>WhatsApp: <a href="https://wa.me/918981988831" target="_blank" rel="noopener">Chat with us</a></p>
+</div>
+</div>
+<hr>
+<p style="text-align:center">© 2026 SUDIP INDUSTRY. All Rights Reserved.</p>
+</footer>
 
 <script>
 const KEY='sudip_products_v1';
 const CART='sudip_cart_v1';
+const ORDER='sudip_orders_v1';
+
+const BUSINESS_EMAIL='sudippramanick66@gmail.com';
+const BUSINESS_PHONE='+91 89819 88831';
+const WHATSAPP_NUMBER='918981988831';
 
 let products=JSON.parse(localStorage.getItem(KEY)||'[]');
 let cart=JSON.parse(localStorage.getItem(CART)||'[]');
+let orders=JSON.parse(localStorage.getItem(ORDER)||'[]');
 
 function save(){
  localStorage.setItem(KEY,JSON.stringify(products));
  localStorage.setItem(CART,JSON.stringify(cart));
+ localStorage.setItem(ORDER,JSON.stringify(orders));
  updateCount();
 }
 
@@ -60,105 +107,306 @@ function money(n){
  return '₹'+Number(n||0).toLocaleString('en-IN');
 }
 
+function escapeHTML(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;',
+ '"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
 function image(p){
  return p.image
  ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}">`
  : '📦';
 }
 
-function escapeHTML(s){
- return String(s||'').replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;',
- '"':'&quot;',"'":'&#39;'
- }[c]));
-}
-
 function home(){
- return `<section class="panel">
+ return `
+ <section class="panel">
  <h1>Welcome to SUDIP INDUSTRY</h1>
  <p>Dream • Work • Success</p>
+ <p>Explore our products and shop online.</p>
  <a class="btn" href="#shop">Explore Products</a>
+ <a class="btn" href="#contact">Contact Us</a>
+ </section>
+ <h2>Our Products</h2>
+ ${productGrid(products.slice(0,4))}
+ <section class="panel">
+ <h2>Need Help?</h2>
+ <p>Contact our business support.</p>
+ <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">WhatsApp Us</a>
  </section>`;
 }
 
-function shop(){
- return `<h2>Our Products</h2>
- <div class="grid">
- ${products.map(p=>`
+function productGrid(list){
+ if(!list.length)return '<div class="empty">No products available.</div>';
+ return `<div class="grid">${list.map(p=>`
  <article class="card">
+ <a href="#product-${encodeURIComponent(p.id)}">
  <div class="photo">${image(p)}</div>
+ </a>
  <h3>${escapeHTML(p.name)}</h3>
  <div class="price">${money(p.price)}</div>
- <button onclick="addCart('${p.id}')">Add to Cart</button>
- </article>`).join('')}
- </div>
- ${products.length?'':'<p>No products available.</p>'}`;
+ <p class="muted">${p.stock>0?'In stock':'Out of stock'}</p>
+ <a class="btn" href="#product-${encodeURIComponent(p.id)}">View Product</a>
+ <button onclick="addCart('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Add to Cart</button>
+ </article>`).join('')}</div>`;
+}
+
+function shop(){
+ return `<h2>Our Products</h2>${productGrid(products)}`;
+}
+
+function productPage(id){
+ const p=products.find(x=>x.id===id);
+ if(!p)return '<div class="empty">Product not found. <a href="#shop">Back to Shop</a></div>';
+ return `
+ <a href="#shop">← Back to Shop</a>
+ <div class="panel" style="margin-top:15px">
+ <div class="photo" style="height:260px">${image(p)}</div>
+ <h2>${escapeHTML(p.name)}</h2>
+ <p class="muted">${escapeHTML(p.cat||'')}</p>
+ <div class="price">${money(p.price)}</div>
+ ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:''}
+ <p>${escapeHTML(p.desc||'')}</p>
+ <p>${p.stock>0?'In Stock: '+p.stock:'Out of Stock'}</p>
+ <button onclick="addCart('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Add to Cart</button>
+ <button onclick="buyNow('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Buy Now</button>
+ </div>`;
 }
 
 function addCart(id){
  const p=products.find(x=>x.id===id);
- if(!p)return;
+ if(!p||p.stock<=0){alert('Product out of stock');return}
  const item=cart.find(x=>x.id===id);
- if(item)item.qty++;
- else cart.push({id,qty:1});
+ if(item){
+  if(item.qty>=p.stock){alert('Stock limit reached');return}
+  item.qty++;
+ }else cart.push({id,qty:1});
  save();
  alert('Added to cart');
 }
 
-function cartPage(){
- return `<h2>Your Cart</h2>
- ${cart.map(x=>{
- const p=products.find(y=>y.id===x.id);
- if(!p)return '';
- return `<div class="panel">
- <b>${escapeHTML(p.name)}</b>
- <p>${money(p.price)} × ${x.qty}</p>
- <button onclick="changeQty('${x.id}',-1)">−</button>
- <button onclick="changeQty('${x.id}',1)">+</button>
- </div>`;
- }).join('')}
- <h3>Total: ${money(cart.reduce((n,x)=>{
+function buyNow(id){
+ const p=products.find(x=>x.id===id);
+ if(!p||p.stock<=0){alert('Product out of stock');return}
+ if(!cart.some(x=>x.id===id))cart.push({id,qty:1});
+ save();
+ location.hash='cart';
+}
+
+function total(){
+ return cart.reduce((n,x)=>{
  const p=products.find(y=>y.id===x.id);
  return n+(p?p.price*x.qty:0);
- },0))}</h3>`;
+ },0);
+}
+
+function cartPage(){
+ const valid=cart.filter(x=>products.some(p=>p.id===x.id));
+ if(!valid.length)return `
+ <div class="empty">
+ <h2>Your Cart is Empty</h2>
+ <a class="btn" href="#shop">Continue Shopping</a>
+ </div>`;
+ return `
+ <h2>Your Cart</h2>
+ ${valid.map(x=>{
+ const p=products.find(y=>y.id===x.id);
+ return `<div class="panel">
+ <div class="row">
+ <b>${escapeHTML(p.name)}</b>
+ <b>${money(p.price*x.qty)}</b>
+ </div>
+ <p>Price: ${money(p.price)}</p>
+ <button onclick="changeQty('${escapeHTML(x.id)}',-1)">−</button>
+ <b>${x.qty}</b>
+ <button onclick="changeQty('${escapeHTML(x.id)}',1)">+</button>
+ <button onclick="removeCart('${escapeHTML(x.id)}')">Remove</button>
+ </div>`;
+ }).join('')}
+ <div class="panel">
+ <h3>Total: ${money(total())}</h3>
+ <button onclick="location.hash='checkout'">Proceed to Checkout</button>
+ </div>`;
 }
 
 function changeQty(id,n){
  const x=cart.find(y=>y.id===id);
- if(!x)return;
+ const p=products.find(y=>y.id===id);
+ if(!x||!p)return;
+ if(n>0&&x.qty>=p.stock){alert('Stock limit reached');return}
  x.qty+=n;
  if(x.qty<=0)cart=cart.filter(y=>y.id!==id);
  save();route();
 }
 
-function admin(){
- return `<section class="panel">
- <h2>Add Product</h2>
- <label>Product Name</label>
- <input id="name" placeholder="Product name">
- <label>Category</label>
- <input id="cat" placeholder="Category">
- <label>Price ₹</label>
- <input id="price" type="number">
- <label>MRP ₹</label>
- <input id="mrp" type="number">
- <label>Stock</label>
- <input id="stock" type="number">
- <label>Product Image URL</label>
- <input id="image" type="url" placeholder="Paste image URL">
- <label>Description</label>
- <textarea id="desc"></textarea>
- <button onclick="addProduct()">Save Product</button>
- </section>
- <h2>Manage Products</h2>
- <div class="grid">
- ${products.map(p=>`<div class="card">
- <div class="photo">${image(p)}</div>
- <b>${escapeHTML(p.name)}</b>
- <p>${money(p.price)}</p>
- <button onclick="deleteProduct('${p.id}')">Delete</button>
- </div>`).join('')}
+function removeCart(id){
+ cart=cart.filter(x=>x.id!==id);
+ save();route();
+}
+
+function checkout(){
+ if(!cart.length)return '<div class="empty">Your cart is empty. <a href="#shop">Shop Now</a></div>';
+ return `
+ <h2>Checkout</h2>
+ <div class="panel">
+ <h3>Delivery Information</h3>
+ <form onsubmit="placeOrder(event)">
+ <label>Full Name</label>
+ <input id="customerName" required maxlength="80" placeholder="Enter your name">
+ <label>Mobile Number</label>
+ <input id="customerPhone" required type="tel" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
+ <label>Full Address</label>
+ <textarea id="customerAddress" required maxlength="500" rows="4" placeholder="House, street, area, PIN code"></textarea>
+ <label>Payment Method</label>
+ <select id="payment">
+ <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+ </select>
+ <hr>
+ <h3>Order Total: ${money(total())}</h3>
+ <button type="submit">Place Order</button>
+ </form>
  </div>`;
+}
+
+function placeOrder(event){
+ event.preventDefault();
+ if(!cart.length){alert('Cart is empty');return}
+ for(const x of cart){
+  const p=products.find(y=>y.id===x.id);
+  if(!p||p.stock<x.qty){
+   alert('Some products are out of stock. Please check your cart.');
+   location.hash='cart';
+   return;
+  }
+ }
+ const order={
+  id:'SI'+Date.now(),
+  name:document.getElementById('customerName').value.trim(),
+  phone:document.getElementById('customerPhone').value.trim(),
+  address:document.getElementById('customerAddress').value.trim(),
+  payment:document.getElementById('payment').value,
+  items:cart.map(x=>{
+   const p=products.find(y=>y.id===x.id);
+   return {id:p.id,name:p.name,price:p.price,qty:x.qty};
+  }),
+  total:total(),
+  status:'Order Placed',
+  date:new Date().toLocaleString('en-IN')
+ };
+ for(const x of cart){
+  const p=products.find(y=>y.id===x.id);
+  p.stock-=x.qty;
+ }
+ orders.unshift(order);
+ cart=[];
+ save();
+ location.hash='myorders';
+ alert('Your order has been placed!');
+}
+
+function myOrders(){
+ if(!orders.length)return `
+ <div class="empty">
+ <h2>My Orders</h2>
+ <p>You have not placed any orders yet.</p>
+ <a class="btn" href="#shop">Start Shopping</a>
+ </div>`;
+ return `
+ <h2>My Orders</h2>
+ ${orders.map(o=>`
+ <div class="panel">
+ <div class="row">
+ <b>Order ${escapeHTML(o.id)}</b>
+ <span class="status">${escapeHTML(o.status)}</span>
+ </div>
+ <p class="muted">${escapeHTML(o.date)}</p>
+ <p>Total: <b>${money(o.total)}</b></p>
+ <p>${o.items.length} product(s)</p>
+ <a class="btn" href="#order-${encodeURIComponent(o.id)}">View Details</a>
+ </div>`).join('')}`;
+}
+
+function orderDetails(id){
+ const o=orders.find(x=>x.id===id);
+ if(!o)return '<div class="empty">Order not found. <a href="#myorders">My Orders</a></div>';
+ return `
+ <a href="#myorders">← Back to My Orders</a>
+ <div class="panel" style="margin-top:15px">
+ <h2>Order Details</h2>
+ <p><b>Order ID:</b> ${escapeHTML(o.id)}</p>
+ <p><b>Date:</b> ${escapeHTML(o.date)}</p>
+ <p><b>Status:</b> <span class="status">${escapeHTML(o.status)}</span></p>
+ <hr>
+ <h3>Products</h3>
+ ${o.items.map(x=>`
+ <div class="row">
+ <span>${escapeHTML(x.name)} × ${x.qty}</span>
+ <b>${money(x.price*x.qty)}</b>
+ </div>`).join('')}
+ <hr>
+ <h3>Total: ${money(o.total)}</h3>
+ <p><b>Payment:</b> ${escapeHTML(o.payment)}</p>
+ <p><b>Name:</b> ${escapeHTML(o.name)}</p>
+ <p><b>Phone:</b> ${escapeHTML(o.phone)}</p>
+ <p><b>Address:</b> ${escapeHTML(o.address)}</p>
+ </div>`;
+}
+
+function contact(){
+ return `
+ <h2>Contact Us</h2>
+ <div class="panel">
+ <h3>SUDIP INDUSTRY</h3>
+ <p>For product enquiries and business support, contact us.</p>
+ <hr>
+ <b>Business Email</b>
+ <a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
+ <b>Business Phone</b>
+ <a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
+ <b>WhatsApp Support</b>
+ <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+ </div>`;
+}
+
+function admin(){
+ return `
+ <h2>Admin Dashboard</h2>
+ <div class="panel">
+ <h3>Add Product</h3>
+ <label>Product Name</label><input id="name">
+ <label>Category</label><input id="cat">
+ <label>Price ₹</label><input id="price" type="number">
+ <label>MRP ₹</label><input id="mrp" type="number">
+ <label>Stock</label><input id="stock" type="number">
+ <label>Product Image URL</label><input id="image" type="url">
+ <label>Description</label><textarea id="desc"></textarea>
+ <button onclick="addProduct()">Save Product</button>
+ </div>
+ <h3>Manage Products</h3>
+ ${products.map(p=>`
+ <div class="panel">
+ <div class="row">
+ <b>${escapeHTML(p.name)}</b>
+ <span>${money(p.price)}</span>
+ </div>
+ <button onclick="deleteProduct('${escapeHTML(p.id)}')">Delete</button>
+ </div>`).join('')}
+ <h2>All Orders (${orders.length})</h2>
+ ${orders.map(o=>`
+ <div class="panel">
+ <b>${escapeHTML(o.id)}</b>
+ <p>${escapeHTML(o.name)} — ${money(o.total)}</p>
+ <p>Status: ${escapeHTML(o.status)}</p>
+ <select id="status-${escapeHTML(o.id)}">
+ ${['Order Placed','Confirmed','Processing','Shipped','Out for Delivery','Delivered','Cancelled'].map(s=>`
+ <option ${o.status===s?'selected':''}>${s}</option>`).join('')}
+ </select>
+ <button onclick="updateOrder('${escapeHTML(o.id)}')">Update Status</button>
+ <a class="btn" href="#order-${encodeURIComponent(o.id)}">Details</a>
+ </div>`).join('')}
+ `;
 }
 
 function addProduct(){
@@ -171,11 +419,13 @@ function addProduct(){
  cat:document.getElementById('cat').value,
  price,
  mrp:Number(document.getElementById('mrp').value),
- stock:Number(document.getElementById('stock').value),
+ stock:Math.max(0,Number(document.getElementById('stock').value)||0),
  image:document.getElementById('image').value.trim(),
  desc:document.getElementById('desc').value
  });
- save();route();alert('Product saved');
+ save();
+ alert('Product saved');
+ route();
 }
 
 function deleteProduct(id){
@@ -184,13 +434,28 @@ function deleteProduct(id){
  save();route();
 }
 
+function updateOrder(id){
+ const o=orders.find(x=>x.id===id);
+ const select=document.getElementById('status-'+id);
+ if(!o||!select)return;
+ o.status=select.value;
+ save();
+ alert('Order status updated');
+ route();
+}
+
 function route(){
- const page=location.hash.slice(1)||'home';
+ const h=location.hash.slice(1)||'home';
  const app=document.getElementById('app');
- if(page==='home')app.innerHTML=home();
- else if(page==='shop')app.innerHTML=shop();
- else if(page==='cart')app.innerHTML=cartPage();
- else if(page==='admin')app.innerHTML=admin();
+ if(h==='home')app.innerHTML=home();
+ else if(h==='shop')app.innerHTML=shop();
+ else if(h==='cart')app.innerHTML=cartPage();
+ else if(h==='checkout')app.innerHTML=checkout();
+ else if(h==='myorders')app.innerHTML=myOrders();
+ else if(h==='contact')app.innerHTML=contact();
+ else if(h==='admin')app.innerHTML=admin();
+ else if(h.startsWith('product-'))app.innerHTML=productPage(decodeURIComponent(h.slice(8)));
+ else if(h.startsWith('order-'))app.innerHTML=orderDetails(decodeURIComponent(h.slice(6)));
  else app.innerHTML=home();
  updateCount();
 }
