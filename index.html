@@ -8,79 +8,151 @@
 <title>SUDIP INDUSTRY</title>
 <style>
 :root{--blue:#173b75;--gold:#f4b942;--bg:#f3f6fb;--line:#e3e8f0;--muted:#69758a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:Arial,"Noto Sans Bengali",sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#172033;font-family:Arial,"Noto Sans Bengali",sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
 header{background:var(--blue);color:white;position:sticky;top:0;z-index:10}
 .top{max-width:1150px;margin:auto;padding:12px 15px;display:flex;align-items:center;gap:12px}
 .logo{font-size:19px;font-weight:900;color:white;text-decoration:none;white-space:nowrap}
 .logo small{display:block;font-size:9px;letter-spacing:2px;color:#dce8ff}
 .search{flex:1;display:flex;background:white;border-radius:8px;overflow:hidden}
-.search input{border:0;padding:11px;width:100%;outline:0}.search button{background:var(--gold);padding:0 14px}
+.search input{border:0;padding:11px;width:100%;outline:0}
+.search button{background:var(--gold);padding:0 14px}
 .headbtn{background:#ffffff20;color:white;padding:10px;border-radius:7px}
 nav{max-width:1150px;margin:auto;padding:0 15px 10px;display:flex;gap:7px;overflow:auto}
 nav button{background:transparent;color:white;padding:8px 12px;border-radius:20px;white-space:nowrap}
 nav button.active,nav button:hover{background:#ffffff25}
 main{max-width:1150px;margin:20px auto;padding:0 15px 85px}
 .hero{background:linear-gradient(120deg,#10264b,#2863b3);color:white;padding:30px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;min-height:180px}
-.hero h1{font-size:clamp(24px,5vw,40px);margin:0 0 10px}.hero p{color:#dce8ff}.hero-art{font-size:70px}
-.section{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px;gap:10px}.section h2{font-size:21px;margin:0}
-.categories{display:flex;gap:10px;overflow:auto}.cat{background:white;border:1px solid var(--line);padding:13px;border-radius:10px;min-width:95px;color:var(--blue);font-weight:bold}.cat span{display:block;font-size:24px;margin-bottom:5px}
+.hero h1{font-size:clamp(24px,5vw,40px);margin:0 0 10px}
+.hero p{color:#dce8ff}
+.hero-art{font-size:70px}
+.section{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px;gap:10px}
+.section h2{font-size:21px;margin:0}
+.categories{display:flex;gap:10px;overflow:auto}
+.cat{background:white;border:1px solid var(--line);padding:13px;border-radius:10px;min-width:95px;color:var(--blue);font-weight:bold}
+.cat span{display:block;font-size:24px;margin-bottom:5px}
 .products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
 .card,.panel{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.card{box-shadow:0 4px 16px #172b4d0c}.product-img{height:180px;background:#f7f8fb;display:grid;place-items:center;position:relative}.product-img img{width:100%;height:100%;object-fit:contain}
+.card{box-shadow:0 4px 16px #172b4d0c}
+.product-img{height:180px;background:#f7f8fb;display:grid;place-items:center;position:relative}
+.product-img img{width:100%;height:100%;object-fit:contain}
 .heart{position:absolute;right:8px;top:8px;background:white;border-radius:50%;width:34px;height:34px;color:#d43d4e;font-size:20px}
-.info{padding:11px}.info h3{font-size:14px;min-height:34px;margin:0 0 7px}.price{font-size:18px;font-weight:900;color:var(--blue)}.mrp{text-decoration:line-through;color:#8992a1;font-size:12px;margin-left:5px}
-.info p{font-size:12px;color:var(--muted)}.actions{display:flex;gap:6px;margin-top:10px}.actions button{flex:1;padding:9px 4px;border-radius:7px;font-size:12px;font-weight:bold}.primary{background:var(--blue);color:white;padding:11px 16px;border-radius:8px;font-weight:bold}.soft{background:#edf2fa;color:var(--blue);padding:9px 12px;border-radius:7px;font-weight:bold}.gold{background:var(--gold);color:#172033;padding:11px 16px;border-radius:8px;font-weight:bold}.danger{background:#fff0f1;color:#c33345;padding:8px 11px;border-radius:7px}
-.panel{padding:17px;margin-bottom:15px;box-shadow:0 4px 16px #172b4d0a}.panel h2,.panel h3{margin-top:0}
-.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:bold;font-size:13px}.field input,.field textarea,.field select{padding:11px;border:1px solid #dce2ec;border-radius:8px;width:100%;outline-color:var(--blue)}.field textarea{min-height:75px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.muted{font-size:13px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:30px 10px}
-.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.item img{width:65px;height:65px;object-fit:contain;background:#f7f8fb;border-radius:8px}.grow{flex:1;min-width:0}.item h3{font-size:14px;margin:0 0 5px}.qty{display:flex;gap:8px;align-items:center;margin-top:7px}.qty button{background:#edf2fa;color:var(--blue);padding:5px 10px;border-radius:5px}
+.info{padding:11px}
+.info h3{font-size:14px;min-height:34px;margin:0 0 7px}
+.price{font-size:18px;font-weight:900;color:var(--blue)}
+.mrp{text-decoration:line-through;color:#8992a1;font-size:12px;margin-left:5px}
+.info p{font-size:12px;color:var(--muted)}
+.actions{display:flex;gap:6px;margin-top:10px}
+.actions button{flex:1;padding:9px 4px;border-radius:7px;font-size:12px;font-weight:bold}
+.primary{background:var(--blue);color:white;padding:11px 16px;border-radius:8px;font-weight:bold}
+.soft{background:#edf2fa;color:var(--blue);padding:9px 12px;border-radius:7px;font-weight:bold}
+.gold{background:var(--gold);color:#172033;padding:11px 16px;border-radius:8px;font-weight:bold}
+.danger{background:#fff0f1;color:#c33345;padding:8px 11px;border-radius:7px}
+.panel{padding:17px;margin-bottom:15px;box-shadow:0 4px 16px #172b4d0a}
+.panel h2,.panel h3{margin-top:0}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:bold;font-size:13px}
+.field input,.field textarea,.field select{padding:11px;border:1px solid #dce2ec;border-radius:8px;width:100%;outline-color:var(--blue)}
+.field textarea{min-height:75px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.muted{font-size:13px;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item img{width:65px;height:65px;object-fit:contain;background:#f7f8fb;border-radius:8px}
+.grow{flex:1;min-width:0}
+.item h3{font-size:14px;margin:0 0 5px}
+.qty{display:flex;gap:8px;align-items:center;margin-top:7px}
+.qty button{background:#edf2fa;color:var(--blue);padding:5px 10px;border-radius:5px}
 .badge{display:inline-block;background:#e8f5ef;color:#13865c;padding:5px 9px;border-radius:20px;font-size:12px}
-.paybox{background:#f3f6fb;border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}.paybox p{margin:7px 0;overflow-wrap:anywhere}.payvalue{font-weight:bold;color:var(--blue);user-select:text}
-.profile{display:flex;align-items:center;gap:13px}.profile img{width:62px;height:62px;border-radius:50%;object-fit:cover;background:#eee}
-.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:550px}td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{background:#f5f7fb}
-footer{background:#10264b;color:#dce8ff;text-align:center;padding:25px 10px;font-size:13px}footer a{color:white}
-.bottom{display:none}.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px 17px;border-radius:8px;z-index:30;max-width:90%}.hidden{display:none!important}
+.paybox{background:#f3f6fb;border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.paybox p{margin:7px 0;overflow-wrap:anywhere}
+.payvalue{font-weight:bold;color:var(--blue);user-select:text}
+.profile{display:flex;align-items:center;gap:13px}
+.profile img{width:62px;height:62px;border-radius:50%;object-fit:cover;background:#eee}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:550px}
+td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}
+th{background:#f5f7fb}
+footer{background:#10264b;color:#dce8ff;text-align:center;padding:25px 10px;font-size:13px}
+footer a{color:white}
+.bottom{display:none}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px 17px;border-radius:8px;z-index:30;max-width:90%}
+.hidden{display:none!important}
 @media(max-width:800px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.product-img{height:155px}}
-@media(max-width:560px){.top{flex-wrap:wrap;padding:10px}.logo{flex:1;font-size:16px}.search{order:3;flex-basis:100%}.headbtn{padding:8px 6px;font-size:12px}main{padding:0 10px 90px;margin:12px auto}.hero{padding:20px;min-height:155px}.hero-art{font-size:48px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product-img{height:140px}.info{padding:9px}.info h3{font-size:13px}.actions button{font-size:11px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.bottom{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:15}.bottom button{background:none;color:#536078;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px}.bottom b{font-size:19px}}
+@media(max-width:560px){
+.top{flex-wrap:wrap;padding:10px}
+.logo{flex:1;font-size:16px}
+.search{order:3;flex-basis:100%}
+.headbtn{padding:8px 6px;font-size:12px}
+main{padding:0 10px 90px;margin:12px auto}
+.hero{padding:20px;min-height:155px}
+.hero-art{font-size:48px}
+.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.product-img{height:140px}
+.info{padding:9px}
+.info h3{font-size:13px}
+.actions button{font-size:11px}
+.form{grid-template-columns:1fr}
+.field.full{grid-column:auto}
+.bottom{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom));z-index:15}
+.bottom button{background:none;color:#536078;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bottom b{font-size:19px}
+}
 </style>
 </head>
 <body>
 <header>
- <div class="top">
-  <a class="logo" href="#home">SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></a>
-  <div class="search"><input id="search" placeholder="Search products..." oninput="searchProducts(this.value)"><button onclick="searchProducts(document.getElementById('search').value)">Search</button></div>
-  <button class="headbtn" onclick="go('wishlist')">❤️ <span id="wc">0</span></button>
-  <button class="headbtn" onclick="go('cart')">🛒 <span id="cc">0</span></button>
-  <button class="headbtn" id="accountBtn" onclick="go('profile')">Account</button>
- </div>
- <nav>
-  <button data-page="home" onclick="go('home')">Home</button>
-  <button data-page="shop" onclick="go('shop')">Shop</button>
-  <button data-page="orders" onclick="go('orders')">My Orders</button>
-  <button data-page="contact" onclick="go('contact')">Contact</button>
-  <button data-page="admin" onclick="go('admin')">Admin</button>
- </nav>
-</header>
-<main id="app">Loading...</main>
-<div class="bottom">
- <button onclick="go('home')"><b>⌂</b>Home</button>
- <button onclick="go('shop')"><b>▦</b>Shop</button>
- <button onclick="go('wishlist')"><b>♡</b>Wishlist</button>
- <button onclick="go('cart')"><b>🛒</b>Cart</button>
- <button onclick="go('profile')"><b>♙</b>Profile</button>
+<div class="top">
+<a class="logo" href="#home">SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></a>
+<div class="search">
+<input id="search" placeholder="Search products..." oninput="searchProducts(this.value)">
+<button onclick="searchProducts(document.getElementById('search').value)">Search</button>
 </div>
+<button class="headbtn" onclick="go('wishlist')">❤️ <span id="wc">0</span></button>
+<button class="headbtn" onclick="go('cart')">🛒 <span id="cc">0</span></button>
+<button class="headbtn" id="accountBtn" onclick="go('profile')">Account</button>
+</div>
+<nav>
+<button onclick="go('home')">Home</button>
+<button onclick="go('shop')">Shop</button>
+<button onclick="go('orders')">My Orders</button>
+<button onclick="go('contact')">Contact</button>
+<button onclick="go('admin')">Admin</button>
+</nav>
+</header>
+
+<main id="app">Loading...</main>
+
+<div class="bottom">
+<button onclick="go('home')"><b>⌂</b>Home</button>
+<button onclick="go('shop')"><b>▦</b>Shop</button>
+<button onclick="go('wishlist')"><b>♡</b>Wishlist</button>
+<button onclick="go('cart')"><b>🛒</b>Cart</button>
+<button onclick="go('profile')"><b>♙</b>Profile</button>
+</div>
+
 <footer>
- <b>SUDIP INDUSTRY</b><br>DREAM • WORK • SUCCESS<br><br>
- Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a><br>
- WhatsApp: <a href="https://wa.me/918981988831">+91 89819 88831</a><br><br>© 2026 SUDIP INDUSTRY
+<b>SUDIP INDUSTRY</b><br>DREAM • WORK • SUCCESS<br><br>
+Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a><br>
+WhatsApp: <a href="https://wa.me/918981988831">+91 89819 88831</a><br><br>
+© 2026 SUDIP INDUSTRY
 </footer>
 <div id="toast" class="toast hidden"></div>
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signOut,signInAnonymously,linkWithPopup}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import{getFirestore,collection,addDoc,getDocs,doc,updateDoc,deleteDoc,setDoc,getDoc,query,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import{
+ getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,
+ signOut,signInAnonymously,linkWithPopup
+}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import{
+ getFirestore,collection,addDoc,getDocs,doc,updateDoc,
+ deleteDoc,setDoc,getDoc,query,where,serverTimestamp
+}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
@@ -90,90 +162,329 @@ const firebaseConfig={
  messagingSenderId:"377224435101",
  appId:"1:377224435101:web:c5e152120dec1664070b74"
 };
+
 const ADMIN_EMAIL="sudippramanick66@gmail.com";
-const BUSINESS_EMAIL="sudippramanick66@gmail.com";
-const BUSINESS_PHONE="+91 89819 88831";
-const WHATSAPP_NUMBER="918981988831";
-const fb=initializeApp(firebaseConfig),auth=getAuth(fb),db=getFirestore(fb);
-const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});
-let user=null,products=[],orders=[],wishlist=[],paymentSettings={},cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]"),currentPage="home",term="",selectedProduct="";
-const $=s=>document.querySelector(s),money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
-const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fb=initializeApp(firebaseConfig);
+const auth=getAuth(fb);
+const db=getFirestore(fb);
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+
+let user=null,products=[],orders=[],wishlist=[],paymentSettings={};
+let cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]");
+let currentPage="home",term="",category="All",selectedProduct="";
+let loadingError="";
+
+const $=s=>document.querySelector(s);
+const money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
 const admin=()=>!!user&&!user.isAnonymous&&user.email===ADMIN_EMAIL;
 const empty=t=>`<div class="empty">${t}</div>`;
-function toast(t){let e=$("#toast");e.textContent=t;e.classList.remove("hidden");setTimeout(()=>e.classList.add("hidden"),2600)}
-function counts(){$("#cc").textContent=cart.reduce((s,x)=>s+x.qty,0);$("#wc").textContent=wishlist.length}
-function saveCart(){localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));counts()}
-function go(p){location.hash=p}window.go=go;
-function updateAccount(){$("#accountBtn").textContent=user&&!user.isAnonymous?(user.displayName||"Account"):"Login"}
-async function loadData(){
- try{let s=await getDocs(collection(db,"products"));products=s.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);toast("Products load হয়নি।")}
- try{let p=await getDoc(doc(db,"paymentSettings","main"));paymentSettings=p.exists()?p.data():{};}catch(e){console.warn(e)}
- wishlist=[];orders=[];
- if(user&&!user.isAnonymous){
-  try{let w=await getDocs(collection(db,"users",user.uid,"wishlist"));wishlist=w.docs.map(d=>d.id);}catch(e){console.warn(e)}
-  try{let q=admin()?collection(db,"orders"):query(collection(db,"orders"),where("ownerUid","==",user.uid));let o=await getDocs(q);orders=o.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));}catch(e){console.warn(e)}
- }
- counts();updateAccount();render();
-}
-onAuthStateChanged(auth,async u=>{user=u;if(!u){try{await signInAnonymously(auth)}catch(e){toast("Firebase Anonymous Login চালু করো");render()}}else await loadData()});
-async function googleLogin(){try{if(user?.isAnonymous){try{await linkWithPopup(user,provider)}catch(e){if(["auth/credential-already-in-use","auth/email-already-in-use"].includes(e.code)){await signOut(auth);await signInWithPopup(auth,provider)}else throw e}}else await signInWithPopup(auth,provider)}catch(e){toast("Login হয়নি: "+e.message)}}
-async function switchAccount(){try{await signOut(auth);await signInWithPopup(auth,provider)}catch(e){toast(e.message)}}
-async function logout(){try{await signOut(auth);toast("Logout হয়েছে")}catch(e){toast(e.message)}}
-window.googleLogin=googleLogin;window.switchAccount=switchAccount;window.logout=logout;
 
-function card(p){return `<div class="card"><div class="product-img">${p.image?`<img src="${safe(p.image)}" alt="${safe(p.name)}">`:"🛍️"}<button class="heart" onclick="toggleWish('${p.id}')">${wishlist.includes(p.id)?"♥":"♡"}</button></div><div class="info"><h3>${safe(p.name)}</h3><span class="price">${money(p.price)}</span>${p.mrp?`<span class="mrp">${money(p.mrp)}</span>`:""}<p>${safe(p.category||"Other")}</p><div class="actions"><button class="soft" onclick="showProduct('${p.id}')">Details</button><button class="primary" onclick="addCart('${p.id}')">Add to Cart</button></div></div></div>`}
-function home(){let f=products.filter(p=>p.popularity==="Popular"||p.popular===true);return `<section class="hero"><div><h1>Welcome to SUDIP INDUSTRY</h1><p>Shop smart. Shop with confidence.</p><button class="gold" onclick="go('shop')">Explore Products →</button></div><div class="hero-art">🛍️</div></section><div class="section"><h2>Shop by Category</h2></div><div class="categories">${["All","Fashion","Electronics","Home","Beauty","Other"].map((c,i)=>`<button class="cat" onclick="filterCategory('${c}')"><span>${["🛍️","👕","📱","🏠","✨","🎁"][i]}</span>${c}</button>`).join("")}</div><div class="section"><h2>Featured Products</h2><button class="soft" onclick="go('shop')">View All</button></div><div class="products">${(f.length?f:products).slice(0,8).map(card).join("")||empty("এখনও Product যোগ করা হয়নি।")}</div>`}
-let category="All";
-function shop(){let a=products.filter(p=>(!term||(p.name||"").toLowerCase().includes(term)||(p.category||"").toLowerCase().includes(term))&&(category==="All"||p.category===category));return `<div class="section"><h2>All Products</h2><span class="muted">${a.length} Products</span></div><div class="products">${a.map(card).join("")||empty("কোনো Product পাওয়া যায়নি।")}</div>`}
+function toast(t){
+ let e=$("#toast");
+ e.textContent=t;
+ e.classList.remove("hidden");
+ setTimeout(()=>e.classList.add("hidden"),3000);
+}
+function counts(){
+ $("#cc").textContent=cart.reduce((s,x)=>s+x.qty,0);
+ $("#wc").textContent=wishlist.length;
+}
+function saveCart(){
+ localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));
+ counts();
+}
+function go(p){location.hash=p}
+window.go=go;
+
+function updateAccount(){
+ $("#accountBtn").textContent=user&&!user.isAnonymous?
+ (user.displayName||"Account"):"Login";
+}
+
+async function loadData(){
+ loadingError="";
+ try{
+  const s=await getDocs(collection(db,"products"));
+  products=s.docs.map(d=>({id:d.id,...d.data()}));
+ }catch(e){
+  console.error("Products:",e);
+  loadingError="Products load করা যায়নি। Firebase Firestore Rules পরীক্ষা করো।";
+ }
+ try{
+  const p=await getDoc(doc(db,"paymentSettings","main"));
+  paymentSettings=p.exists()?p.data():{};
+ }catch(e){console.warn("Payment settings:",e)}
+
+ wishlist=[];
+ orders=[];
+
+ if(user&&!user.isAnonymous){
+  try{
+   const w=await getDocs(collection(db,"users",user.uid,"wishlist"));
+   wishlist=w.docs.map(d=>d.id);
+  }catch(e){console.warn("Wishlist:",e)}
+
+  try{
+   const q=admin()?collection(db,"orders"):
+   query(collection(db,"orders"),where("ownerUid","==",user.uid));
+   const o=await getDocs(q);
+   orders=o.docs.map(d=>({id:d.id,...d.data()}))
+   .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  }catch(e){console.warn("Orders:",e)}
+ }
+ counts();
+ updateAccount();
+ render();
+}
+
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(!u){
+  try{
+   await signInAnonymously(auth);
+  }catch(e){
+   console.error(e);
+   loadingError="Firebase Anonymous Sign-in চালু নেই। Firebase Authentication থেকে এটি Enable করো।";
+   render();
+  }
+ }else{
+  await loadData();
+ }
+});
+
+async function googleLogin(){
+ try{
+  if(user?.isAnonymous){
+   try{
+    await linkWithPopup(user,provider);
+   }catch(e){
+    if(["auth/credential-already-in-use","auth/email-already-in-use"].includes(e.code)){
+     await signOut(auth);
+     await signInWithPopup(auth,provider);
+    }else throw e;
+   }
+  }else{
+   await signInWithPopup(auth,provider);
+  }
+ }catch(e){toast("Login হয়নি: "+e.message)}
+}
+async function switchAccount(){
+ try{
+  await signOut(auth);
+  await signInWithPopup(auth,provider);
+ }catch(e){toast(e.message)}
+}
+async function logout(){
+ try{
+  await signOut(auth);
+  toast("Logout হয়েছে");
+ }catch(e){toast(e.message)}
+}
+window.googleLogin=googleLogin;
+window.switchAccount=switchAccount;
+window.logout=logout;
+
+function card(p){
+ return `<div class="card">
+ <div class="product-img">
+ ${p.image?`<img src="${safe(p.image)}" alt="${safe(p.name)}">`:"🛍️"}
+ <button class="heart" onclick="toggleWish('${safe(p.id)}')">${wishlist.includes(p.id)?"♥":"♡"}</button>
+ </div>
+ <div class="info">
+ <h3>${safe(p.name)}</h3>
+ <span class="price">${money(p.price)}</span>
+ ${p.mrp?`<span class="mrp">${money(p.mrp)}</span>`:""}
+ <p>${safe(p.category||"Other")}</p>
+ <div class="actions">
+ <button class="soft" onclick="showProduct('${safe(p.id)}')">Details</button>
+ <button class="primary" onclick="addCart('${safe(p.id)}')">Add to Cart</button>
+ </div>
+ </div></div>`;
+}
+
+function home(){
+ let f=products.filter(p=>p.popularity==="Popular"||p.popular===true);
+ return `<section class="hero">
+ <div>
+ <h1>Welcome to SUDIP INDUSTRY</h1>
+ <p>Shop smart. Shop with confidence.</p>
+ <button class="gold" onclick="go('shop')">Explore Products →</button>
+ </div><div class="hero-art">🛍️</div>
+ </section>
+ <div class="section"><h2>Shop by Category</h2></div>
+ <div class="categories">
+ ${["All","Fashion","Electronics","Home","Beauty","Other"].map((c,i)=>
+ `<button class="cat" onclick="filterCategory('${c}')">
+ <span>${["🛍️","👕","📱","🏠","✨","🎁"][i]}</span>${c}</button>`).join("")}
+ </div>
+ <div class="section"><h2>Featured Products</h2>
+ <button class="soft" onclick="go('shop')">View All</button></div>
+ <div class="products">${(f.length?f:products).slice(0,8).map(card).join("")||empty("এখনও Product যোগ করা হয়নি।")}</div>`;
+}
+
+function shop(){
+ let a=products.filter(p=>
+ (!term||(p.name||"").toLowerCase().includes(term)||
+ (p.category||"").toLowerCase().includes(term))&&
+ (category==="All"||p.category===category));
+ return `<div class="section"><h2>All Products</h2>
+ <span class="muted">${a.length} Products</span></div>
+ <div class="products">${a.map(card).join("")||empty("কোনো Product পাওয়া যায়নি।")}</div>`;
+}
 window.filterCategory=c=>{category=c;go("shop")};
-window.searchProducts=v=>{term=v.trim().toLowerCase();if(location.hash!=="#shop")go("shop");else render()};
+window.searchProducts=v=>{
+ term=v.trim().toLowerCase();
+ if(location.hash!=="#shop")go("shop");
+ else render();
+};
 window.showProduct=id=>{selectedProduct=id;go("product")};
-window.addCart=id=>{let x=cart.find(p=>p.id===id);if(x)x.qty++;else cart.push({id,qty:1});saveCart();toast("Cart-এ যোগ হয়েছে")};
-window.toggleWish=async id=>{if(!user||user.isAnonymous){toast("Wishlist-এর জন্য Google Login করো");go("profile");return}try{let r=doc(db,"users",user.uid,"wishlist",id);if(wishlist.includes(id)){await deleteDoc(r);wishlist=wishlist.filter(x=>x!==id)}else{await setDoc(r,{createdAt:serverTimestamp()});wishlist.push(id)}counts();render()}catch(e){toast(e.message)}};
-function product(){let p=products.find(x=>x.id===selectedProduct);if(!p)return empty("Product পাওয়া যায়নি");return `<div class="panel"><button class="soft" onclick="go('shop')">← Back</button><div class="row" style="margin-top:15px"><div style="flex:1;min-width:220px;text-align:center"><img src="${safe(p.image||"")}" style="max-width:100%;height:250px;object-fit:contain"></div><div style="flex:1;min-width:220px"><h2>${safe(p.name)}</h2><h2 class="price">${money(p.price)}</h2><p>${safe(p.description||"")}</p><p>${safe(p.category||"")}</p><button class="primary" onclick="addCart('${p.id}')">Add to Cart</button> <button class="soft" onclick="toggleWish('${p.id}')">♡ Wishlist</button></div></div></div>`}
-function cartView(){let a=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p),total=a.reduce((s,x)=>s+x.p.price*x.qty,0);return `<div class="section"><h2>Shopping Cart</h2></div><div class="panel">${a.map(x=>`<div class="item"><img src="${safe(x.p.image||"")}"><div class="grow"><h3>${safe(x.p.name)}</h3><b>${money(x.p.price)}</b><div class="qty"><button onclick="changeQty('${x.id}',-1)">−</button>${x.qty}<button onclick="changeQty('${x.id}',1)">+</button><button class="danger" onclick="removeCart('${x.id}')">Remove</button></div></div></div>`).join("")||empty("তোমার Cart খালি।")}${a.length?`<div class="row" style="margin-top:15px"><b>Total: ${money(total)}</b><button class="primary" onclick="go('checkout')">Checkout</button></div>`:""}</div>`}
-window.changeQty=(id,n)=>{let x=cart.find(a=>a.id===id);if(x){x.qty+=n;if(x.qty<1)cart=cart.filter(a=>a.id!==id);saveCart();render()}};
-window.removeCart=id=>{cart=cart.filter(x=>x.id!==id);saveCart();render()};
+
+window.addCart=id=>{
+ let x=cart.find(p=>p.id===id);
+ if(x)x.qty++;
+ else cart.push({id,qty:1});
+ saveCart();
+ toast("Cart-এ যোগ হয়েছে");
+};
+
+window.toggleWish=async id=>{
+ if(!user||user.isAnonymous){
+  toast("Wishlist-এর জন্য Google Login করো");
+  go("profile");
+  return;
+ }
+ try{
+  let r=doc(db,"users",user.uid,"wishlist",id);
+  if(wishlist.includes(id)){
+   await deleteDoc(r);
+   wishlist=wishlist.filter(x=>x!==id);
+  }else{
+   await setDoc(r,{createdAt:serverTimestamp()});
+   wishlist.push(id);
+  }
+  counts();
+  render();
+ }catch(e){toast(e.message)}
+};
+
+function productView(){
+ let p=products.find(x=>x.id===selectedProduct);
+ if(!p)return empty("Product পাওয়া যায়নি");
+ return `<div class="panel">
+ <button class="soft" onclick="go('shop')">← Back</button>
+ <div class="row" style="margin-top:15px">
+ <div style="flex:1;min-width:220px;text-align:center">
+ ${p.image?`<img src="${safe(p.image)}" style="max-width:100%;height:250px;object-fit:contain">`:"🛍️"}
+ </div>
+ <div style="flex:1;min-width:220px">
+ <h2>${safe(p.name)}</h2>
+ <h2 class="price">${money(p.price)}</h2>
+ <p>${safe(p.description||"")}</p>
+ <p>${safe(p.category||"")}</p>
+ <button class="primary" onclick="addCart('${safe(p.id)}')">Add to Cart</button>
+ <button class="soft" onclick="toggleWish('${safe(p.id)}')">♡ Wishlist</button>
+ </div></div></div>`;
+}
+
+function cartView(){
+ let a=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
+ let total=a.reduce((s,x)=>s+Number(x.p.price)*x.qty,0);
+ return `<div class="section"><h2>Shopping Cart</h2></div>
+ <div class="panel">
+ ${a.map(x=>`<div class="item">
+ <img src="${safe(x.p.image||"")}">
+ <div class="grow"><h3>${safe(x.p.name)}</h3>
+ <b>${money(x.p.price)}</b>
+ <div class="qty">
+ <button onclick="changeQty('${safe(x.id)}',-1)">−</button>${x.qty}
+ <button onclick="changeQty('${safe(x.id)}',1)">+</button>
+ <button class="danger" onclick="removeCart('${safe(x.id)}')">Remove</button>
+ </div></div></div>`).join("")||empty("তোমার Cart খালি।")}
+ ${a.length?`<div class="row" style="margin-top:15px">
+ <b>Total: ${money(total)}</b>
+ <button class="primary" onclick="go('checkout')">Checkout</button>
+ </div>`:""}
+ </div>`;
+}
+window.changeQty=(id,n)=>{
+ let x=cart.find(a=>a.id===id);
+ if(x){
+  x.qty+=n;
+  if(x.qty<1)cart=cart.filter(a=>a.id!==id);
+  saveCart();render();
+ }
+};
+window.removeCart=id=>{
+ cart=cart.filter(x=>x.id!==id);
+ saveCart();render();
+};
 
 function paymentInstructions(){
  let method=$("#paymentMethod")?.value||"COD";
  let p=paymentSettings;
  if(method==="COD")return `<div class="paybox">Cash on Delivery নির্বাচন করা হয়েছে। পণ্য হাতে পেয়ে টাকা দেবে।</div>`;
- if(method==="UPI")return `<div class="paybox"><b>UPI Payment</b>${p.upiId?`<p>UPI ID: <span class="payvalue">${safe(p.upiId)}</span></p><p>UPI App দিয়ে এই ID-তে টাকা পাঠাও।</p>`:"<p>Admin এখনও UPI Details যোগ করেনি।"}</div><div class="field"><label>UTR / Transaction ID *</label><input name="utr" required maxlength="40" placeholder="Payment-এর UTR Number"></div>`;
- if(method==="BANK")return `<div class="paybox"><b>Bank Transfer</b>${p.accountNumber?`<p>Account Holder: <span class="payvalue">${safe(p.accountName)}</span></p><p>Bank: ${safe(p.bankName)}</p><p>Account Number: <span class="payvalue">${safe(p.accountNumber)}</span></p><p>IFSC: <span class="payvalue">${safe(p.ifsc)}</span></p>`:"<p>Admin এখনও Bank Details যোগ করেনি।</p>"}</div><div class="field"><label>UTR / Transaction ID *</label><input name="utr" required maxlength="40" placeholder="Bank Transaction UTR"></div>`;
+ if(method==="UPI")return `<div class="paybox"><b>UPI Payment</b>
+ ${p.upiId?`<p>UPI ID: <span class="payvalue">${safe(p.upiId)}</span></p><p>UPI App দিয়ে এই ID-তে টাকা পাঠাও।</p>`:"<p>Admin এখনও UPI Details যোগ করেনি।</p>"}
+ </div><div class="field"><label>UTR / Transaction ID</label>
+ <input name="utr" maxlength="40" placeholder="Payment-এর UTR Number"></div>`;
+ if(method==="BANK")return `<div class="paybox"><b>Bank Transfer</b>
+ ${p.accountNumber?`<p>Account Holder: <span class="payvalue">${safe(p.accountName)}</span></p>
+ <p>Bank: ${safe(p.bankName)}</p>
+ <p>Account Number: <span class="payvalue">${safe(p.accountNumber)}</span></p>
+ <p>IFSC: <span class="payvalue">${safe(p.ifsc)}</span></p>`:"<p>Admin এখনও Bank Details যোগ করেনি।</p>"}
+ </div><div class="field"><label>UTR / Transaction ID</label>
+ <input name="utr" maxlength="40" placeholder="Bank Transaction UTR"></div>`;
 }
-window.updatePaymentInstructions=()=>{$("#paymentInstructions").innerHTML=paymentInstructions()};
+window.updatePaymentInstructions=()=>{
+ $("#paymentInstructions").innerHTML=paymentInstructions();
+};
+
 function checkout(){
- let a=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p),total=a.reduce((s,x)=>s+x.p.price*x.qty,0);
+ let a=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
+ let total=a.reduce((s,x)=>s+Number(x.p.price)*x.qty,0);
  if(!a.length)return empty("আগে Cart-এ Product যোগ করো।");
- return `<div class="section"><h2>Checkout</h2></div><div class="panel"><form id="checkoutForm" class="form">
+ if(!user||user.isAnonymous)return `<div class="panel">
+ <h2>Google Login প্রয়োজন</h2>
+ <p>Order করার আগে Google Login করো।</p>
+ <button class="primary" onclick="googleLogin()">Continue with Google</button>
+ </div>`;
+ return `<div class="section"><h2>Checkout</h2></div>
+ <div class="panel"><form id="checkoutForm" class="form">
  <div class="field"><label>Full Name *</label><input name="name" required maxlength="80"></div>
  <div class="field"><label>Mobile Number *</label><input name="phone" required pattern="[6-9][0-9]{9}" maxlength="10" inputmode="numeric"></div>
  <div class="field full"><label>Delivery Address *</label><textarea name="address" required minlength="10"></textarea></div>
  <div class="field"><label>City / Town *</label><input name="city" required></div>
  <div class="field"><label>PIN Code *</label><input name="pin" required pattern="[0-9]{6}" maxlength="6"></div>
- <div class="field full"><label>Payment Method *</label><select name="paymentMethod" id="paymentMethod" onchange="updatePaymentInstructions()"><option value="COD">Cash on Delivery</option><option value="UPI">UPI Payment</option><option value="BANK">Bank Transfer</option></select></div>
+ <div class="field full"><label>Payment Method *</label>
+ <select name="paymentMethod" id="paymentMethod" onchange="updatePaymentInstructions()">
+ <option value="COD">Cash on Delivery</option>
+ <option value="UPI">UPI Payment</option>
+ <option value="BANK">Bank Transfer</option>
+ </select></div>
  <div class="field full" id="paymentInstructions">${paymentInstructions()}</div>
- <div class="field full"><h3>Order Summary</h3>${a.map(x=>`${safe(x.p.name)} × ${x.qty}`).join("<br>")}<h2>Total: ${money(total)}</h2></div>
- <div class="field full"><button class="primary">Place Order</button></div></form></div>`;
+ <div class="field full"><h3>Order Summary</h3>
+ ${a.map(x=>`${safe(x.p.name)} × ${x.qty}`).join("<br>")}
+ <h2>Total: ${money(total)}</h2></div>
+ <div class="field full"><button class="primary">Place Order</button></div>
+ </form></div>`;
 }
-$("#app").addEventListener("submit",async e=>{
- if(e.target.id==="checkoutForm"){
-  e.preventDefault();if(!user||user.isAnonymous){toast("Order করার জন্য Google Login করো");go("profile");return}
-  let f=new FormData(e.target),method=f.get("paymentMethod"),a=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
-  if(!a.length)return;
-  if(method==="UPI"&&!paymentSettings.upiId){toast("Admin এখনও UPI Details সেট করেনি");return}
-  if(method==="BANK"&&!paymentSettings.accountNumber){toast("Admin এখনও Bank Details সেট করেনি");return}
-  let total=a.reduce((s,x)=>s+Number(x.p.price)*x.qty,0),btn=e.target.querySelector("button");btn.disabled=true;btn.textContent="Please wait...";
-  try{
-   let ref=await addDoc(collection(db,"orders"),{
-    ownerUid:user.uid,customerName:String(f.get("name")),phone:String(f.get("phone")),address:String(f.get("address")),city:String(f.get("city")),pin:String(f.get("pin")),
-    items:a.map(x=>({productId:x.id,name:x.p.name,price:Number(x.p.price),qty:x.qty,image:x.p.image||""})),
-    total,paymentMethod:method==="COD"?"Cash on Delivery":method==="UPI"?"UPI":"Bank Transfer",
-    paymentStatus:method==="COD"?"Pay on Delivery":"Pending Verification",
-    utr:method==="COD"?"":String(f.get("utr")||"").trim(),
-    status:"Pending",createdAt:serverTimestamp()
-   });
-   cart=[];saveCart();await loadData();toast("Order সফলভাবে Place হয়েছে");go("order-"+ref.id);
-  }catch(err){toast("Order হয়নি: "+err.message);btn.disabl
+
+function wishlistView(){
+ let a=products.filter(p=>wishlist.includes(p.id));
+ return `<div class="section"><h2>My Wishlist</h2></div>
+ <div class="products">${a.map(card).join("")||empty("Wishlist খালি।")}</div>`;
+}
+
+function profileView(){
+ if(!user||user.isAnonymous)return `<div class="panel">
+ <h2>Welcome to SUDIP INDUSTRY</h2>
+ <p>Order ও Wishlist ব্যবহার করতে Google Login করো।</p>
+ <button class="primary" onclick="googleLogin()">Login with Google</button>
+ </div>`;
+ return `<div class="panel">
+ <div class="profile">
+ ${user.photoURL?`<img src="${safe(user.p
