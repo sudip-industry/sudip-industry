@@ -1,103 +1,130 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SUDIP INDUSTRY</title>
-<meta name="description" content="SUDIP INDUSTRY - Dream, Work, Success. Shop online.">
+<meta name="theme-color" content="#142b55">
+<title>SUDIP INDUSTRY | Online Shopping</title>
 <style>
-:root{--blue:#1d4ed8;--bg:#f1f5fb;--text:#111827}
+:root{--blue:#173b75;--blue2:#2458a6;--bg:#f3f6fb;--white:#fff;--text:#172033;--muted:#68758a;--line:#e4e9f1;--green:#13865c;--red:#d43d4e;--shadow:0 5px 22px #172b4d12}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--blue);color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-header a{color:white;text-decoration:none;font-size:14px;padding:5px}
-main{max-width:1000px;margin:auto;padding:16px;min-height:70vh}
-button,.btn{display:inline-block;background:var(--blue);color:white;border:0;padding:11px 15px;border-radius:7px;cursor:pointer;text-decoration:none;margin:3px}
-button:disabled{opacity:.5}
-input,textarea,select{width:100%;padding:11px;margin:7px 0 14px;border:1px solid #ccd3df;border-radius:7px;font-size:15px}
-label{font-size:14px;font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-.card,.panel{background:white;padding:14px;border-radius:12px;box-shadow:0 2px 9px #0001;margin-bottom:14px}
-.photo{height:170px;display:flex;align-items:center;justify-content:center;background:#eef2ff;border-radius:8px;overflow:hidden;font-size:40px}
-.photo img{width:100%;height:100%;object-fit:contain}
-.price{font-weight:bold;font-size:20px;margin:10px 0}
-.muted{color:#64748b;font-size:13px}
-nav{display:flex;gap:7px;flex-wrap:wrap}
-footer{background:#111827;color:white;padding:25px 16px;margin-top:25px}
-footer a{color:white}
-.footer-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.status{background:#dbeafe;color:#1e40af;padding:6px 10px;border-radius:20px;font-size:12px}
-.empty{text-align:center;padding:30px;background:white;border-radius:12px}
-hr{border:0;border-top:1px solid #e5e7eb;margin:15px 0}
-.contact-link{display:block;margin:12px 0;overflow-wrap:anywhere}
-.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;background:#e5e7eb}
-.heart{background:#fff;color:#e11d48;border:1px solid #fecdd3;font-size:18px}
-.small{font-size:12px;color:#64748b}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans Bengali",sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+a{color:inherit;text-decoration:none}
+header{background:var(--blue);color:white;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}
+.top{max-width:1200px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+.logo{font-size:20px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
+.logo small{display:block;font-size:9px;letter-spacing:2px;color:#cbd9f1;margin-top:3px}
+.search{flex:1;display:flex;background:white;border-radius:9px;overflow:hidden}
+.search input{width:100%;border:0;padding:12px;outline:0;color:#172033}
+.search button{background:#f4b942;color:#172033;padding:0 17px;font-weight:bold}
+.head-actions{display:flex;gap:8px;align-items:center}
+.head-actions button{background:#ffffff18;color:white;padding:10px;border-radius:8px}
+#userLabel{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav{max-width:1200px;margin:auto;padding:0 16px 10px;display:flex;gap:8px;overflow:auto}
+nav button{background:transparent;color:#e7eefb;padding:7px 12px;border-radius:20px;white-space:nowrap}
+nav button:hover,nav button.active{background:#ffffff24}
+main{max-width:1200px;margin:20px auto;padding:0 16px 85px}
+.hero{background:linear-gradient(115deg,#102b58,#2863b3);color:white;border-radius:18px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:20px;overflow:hidden;min-height:190px}
+.hero h1{font-size:clamp(25px,5vw,42px);margin:0 0 10px}
+.hero p{color:#dce8ff;margin:0 0 18px}
+.primary{background:#f4b942;color:#172033;padding:11px 18px;border-radius:8px;font-weight:800}
+.hero-art{font-size:80px;opacity:.9}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:25px 0 14px}
+.section-head h2{font-size:21px;margin:0}
+.muted{color:var(--muted);font-size:13px}
+.categories{display:flex;gap:10px;overflow:auto;padding-bottom:4px}
+.cat{background:white;border:1px solid var(--line);border-radius:12px;padding:13px 17px;min-width:100px;text-align:center;font-weight:700;color:var(--blue)}
+.cat span{display:block;font-size:25px;margin-bottom:6px}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:white;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:var(--shadow);min-width:0}
+.product-img{height:190px;background:#f8f9fc;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-img img{width:100%;height:100%;object-fit:contain}
+.heart{position:absolute;right:9px;top:9px;background:white;border-radius:50%;width:34px;height:34px;color:#d43d4e;font-size:19px;box-shadow:var(--shadow)}
+.product-info{padding:12px}
+.product-info h3{font-size:15px;margin:0 0 8px;min-height:36px;line-height:1.35}
+.price{font-weight:900;font-size:18px;color:var(--blue)}
+.mrp{font-size:12px;color:#8992a1;text-decoration:line-through;margin-left:6px}
+.product-info p{font-size:12px;color:var(--muted);margin:7px 0}
+.card-actions{display:flex;gap:7px;margin-top:10px}
+.card-actions button{flex:1;padding:9px 5px;border-radius:7px;font-size:12px;font-weight:700}
+.add{background:var(--blue);color:white}.view{background:#edf2fa;color:var(--blue)}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+.panel h2,.panel h3{margin-top:0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:700}
+.field input,.field textarea,.field select{width:100%;padding:11px;border:1px solid #dce2ec;border-radius:8px;outline-color:var(--blue)}
+.field textarea{min-height:75px;resize:vertical}
+.action{background:var(--blue);color:white;padding:11px 16px;border-radius:8px;font-weight:700}
+.danger{background:#fff0f1;color:var(--red);padding:8px 11px;border-radius:7px}
+.soft{background:#edf2fa;color:var(--blue);padding:9px 12px;border-radius:7px;font-weight:700}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.item-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.item-row img{width:70px;height:70px;object-fit:contain;background:#f6f7fa;border-radius:8px}
+.item-row .grow{flex:1;min-width:0}
+.item-row h3{font-size:14px;margin:0 0 5px}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{background:#edf2fa;color:var(--blue);width:28px;height:28px;border-radius:6px}
+.empty{text-align:center;padding:35px 15px;color:var(--muted)}
+.profile{display:flex;align-items:center;gap:14px}
+.profile img{width:65px;height:65px;border-radius:50%;object-fit:cover;background:#edf2fa}
+.badge{font-size:11px;background:#e8f5ef;color:var(--green);padding:4px 8px;border-radius:20px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f5f7fb}
+footer{text-align:center;padding:25px 16px;background:#10264b;color:#d9e3f5;font-size:13px}
+footer a{color:white;text-decoration:underline}
+.bottom{display:none}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px 18px;border-radius:9px;z-index:30;box-shadow:var(--shadow);max-width:90%;text-align:center}
+.hidden{display:none!important}
+@media(max-width:800px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.product-img{height:160px}.top{gap:9px}.logo{font-size:16px}.head-actions button{padding:9px 7px}}
+@media(max-width:560px){main{margin:12px auto;padding:0 11px 90px}.top{flex-wrap:wrap;padding:10px}.logo{flex:1}.search{order:3;flex-basis:100%}.head-actions{gap:5px}.head-actions button{font-size:12px}.hero{padding:22px;min-height:165px}.hero-art{font-size:55px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product-img{height:145px}.product-info{padding:9px}.product-info h3{font-size:13px}.price{font-size:16px}.card-actions button{font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.bottom{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);z-index:15;justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px #172b4d12}.bottom button{background:transparent;color:#536078;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px}.bottom b{font-size:19px}.bottom button.active{color:var(--blue)}table{min-width:570px}.table-wrap{overflow:auto}}
 </style>
 </head>
 <body>
 <header>
- <div>
-  <b>SUDIP INDUSTRY</b><br>
-  <small>DREAM • WORK • SUCCESS</small>
+ <div class="top">
+  <a class="logo" href="#home">SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></a>
+  <div class="search"><input id="searchInput" placeholder="Search products..." oninput="searchProducts(this.value)"><button onclick="searchProducts(document.getElementById('searchInput').value)">Search</button></div>
+  <div class="head-actions">
+   <button onclick="go('wishlist')">❤️ <span id="wishCount">0</span></button>
+   <button onclick="go('cart')">🛒 <span id="cartCount">0</span></button>
+   <button onclick="go('profile')" id="userLabel">Account</button>
+  </div>
  </div>
  <nav>
-  <a href="#home">Home</a>
-  <a href="#shop">Shop</a>
-  <a href="#wishlist">❤️ Wishlist</a>
-  <a href="#cart">Cart (<span id="count">0</span>)</a>
-  <a href="#myorders">My Orders</a>
-  <a href="#profile">My Profile</a>
-  <a href="#contact">Contact</a>
-  <a href="#admin">Admin</a>
+  <button onclick="go('home')" data-page="home">Home</button>
+  <button onclick="go('shop')" data-page="shop">Shop</button>
+  <button onclick="go('orders')" data-page="orders">My Orders</button>
+  <button onclick="go('contact')" data-page="contact">Contact</button>
+  <button onclick="go('admin')" data-page="admin">Admin</button>
  </nav>
 </header>
-
-<main id="app">
- <div class="empty">Loading SUDIP INDUSTRY...</div>
-</main>
-
+<main id="app"><div class="panel">Loading SUDIP INDUSTRY...</div></main>
+<div class="bottom">
+ <button onclick="go('home')" data-page="home"><b>⌂</b>Home</button>
+ <button onclick="go('shop')" data-page="shop"><b>▦</b>Shop</button>
+ <button onclick="go('wishlist')" data-page="wishlist"><b>♡</b>Wishlist</button>
+ <button onclick="go('cart')" data-page="cart"><b>🛒</b>Cart</button>
+ <button onclick="go('profile')" data-page="profile"><b>♙</b>Profile</button>
+</div>
 <footer>
- <div class="footer-grid">
-  <div>
-   <h3>SUDIP INDUSTRY</h3>
-   <p>DREAM • WORK • SUCCESS</p>
-   <p>Your online shopping destination.</p>
-  </div>
-  <div>
-   <h3>Quick Links</h3>
-   <p><a href="#home">Home</a></p>
-   <p><a href="#shop">Shop</a></p>
-   <p><a href="#wishlist">Wishlist</a></p>
-   <p><a href="#myorders">My Orders</a></p>
-   <p><a href="#profile">My Profile</a></p>
-  </div>
-  <div>
-   <h3>Business Contact</h3>
-   <p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>
-   <p>Phone: <a href="tel:+918981988831">+91 89819 88831</a></p>
-   <p>WhatsApp: <a href="https://wa.me/918981988831" target="_blank">Chat with us</a></p>
-  </div>
- </div>
- <hr>
- <p style="text-align:center">© 2026 SUDIP INDUSTRY. All Rights Reserved.</p>
+ <strong>SUDIP INDUSTRY</strong><br>
+ DREAM • WORK • SUCCESS<br><br>
+ Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a><br>
+ Phone / WhatsApp: <a href="https://wa.me/918981988831">+91 89819 88831</a><br><br>
+ © 2026 SUDIP INDUSTRY. All rights reserved.
 </footer>
+<div id="toast" class="toast hidden"></div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
-import {
- getAuth,onAuthStateChanged,signInAnonymously,
- signInWithEmailAndPassword,signOut,
- GoogleAuthProvider,signInWithPopup,linkWithPopup
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-import {
- getFirestore,collection,addDoc,getDocs,getDoc,
- doc,query,where,updateDoc,deleteDoc,setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signOut,signInAnonymously,linkWithPopup}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import{getFirestore,collection,addDoc,getDocs,getDoc,doc,updateDoc,deleteDoc,setDoc,query,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
@@ -107,7 +134,6 @@ const firebaseConfig={
  messagingSenderId:"377224435101",
  appId:"1:377224435101:web:c5e152120dec1664070b74"
 };
-
 const ADMIN_EMAIL="sudippramanick66@gmail.com";
 const BUSINESS_EMAIL="sudippramanick66@gmail.com";
 const BUSINESS_PHONE="+91 89819 88831";
@@ -116,439 +142,128 @@ const WHATSAPP_NUMBER="918981988831";
 const appFirebase=initializeApp(firebaseConfig);
 const auth=getAuth(appFirebase);
 const db=getFirestore(appFirebase);
-const googleProvider=new GoogleAuthProvider();
-googleProvider.setCustomParameters({prompt:"select_account"});
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
 
-let user=null;
-let products=[];
+let user=null,products=[],orders=[],wishlist=[],currentPage="home",searchTerm="",selectedProduct=null;
 let cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]");
-let orders=[];
-let authReady=false;
-let firstAuthCheck=true;
-let busy=false;
-let wishlist=new Set();
+const $=s=>document.querySelector(s);
+const money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const isAdmin=()=>!!user&&user.email===ADMIN_EMAIL&&!user.isAnonymous;
+const imgSrc=p=>p.image||"";
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.remove("hidden");setTimeout(()=>el.classList.add("hidden"),2500)}
+function saveCart(){localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));counts()}
+function counts(){$("#cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);$("#wishCount").textContent=wishlist.length}
+function setPage(p){currentPage=p;document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===p))}
+function go(p){location.hash=p}
+window.go=go;
 
-const $=id=>document.getElementById(id);
-const isAdmin=()=>!!user&&user.email===ADMIN_EMAIL;
-
-function esc(s){
- return String(s??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
-function money(n){
- return "₹"+Number(n||0).toLocaleString("en-IN");
-}
-function saveCart(){
- localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));
- updateCount();
-}
-function updateCount(){
- $("count").textContent=cart.reduce((n,x)=>n+x.qty,0);
-}
-function image(p){
- return p.image
- ? `<img src="${esc(p.image)}" alt="${esc(p.name)}">`
- : "📦";
-}
 async function loadProducts(){
- const snap=await getDocs(collection(db,"products"));
- products=snap.docs.map(d=>({id:d.id,...d.data()}));
+ try{const snap=await getDocs(collection(db,"products"));products=snap.docs.map(d=>({id:d.id,...d.data()}));}
+ catch(e){console.error(e);toast("Products load হয়নি। Firebase Rules পরীক্ষা করুন।");}
 }
 async function loadWishlist(){
- wishlist=new Set();
+ wishlist=[];
+ if(!user||user.isAnonymous){counts();return;}
+ try{const s=await getDocs(collection(db,"users",user.uid,"wishlist"));wishlist=s.docs.map(d=>d.id);}
+ catch(e){console.warn(e);}
+ counts();
+}
+async function loadOrders(){
+ orders=[];
  if(!user||user.isAnonymous)return;
- const snap=await getDocs(collection(db,"users",user.uid,"wishlist"));
- snap.docs.forEach(d=>wishlist.add(d.id));
-}
-async function toggleWishlist(id){
- if(!user||user.isAnonymous){
-  alert("Wishlist save করতে আগে Google দিয়ে Login করুন।");
-  location.hash="profile";
-  return;
- }
  try{
-  const ref=doc(db,"users",user.uid,"wishlist",id);
-  if(wishlist.has(id)){
-   await deleteDoc(ref);
-   wishlist.delete(id);
-   alert("Removed from Wishlist");
-  }else{
-   await setDoc(ref,{productId:id,createdAt:new Date().toISOString()});
-   wishlist.add(id);
-   alert("Added to Wishlist ❤️");
-  }
-  route();
- }catch(err){
-  alert("Wishlist error: "+err.message);
- }
+  const q=isAdmin()?collection(db,"orders"):query(collection(db,"orders"),where("ownerUid","==",user.uid));
+  const s=await getDocs(q);orders=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+ }catch(e){console.warn(e);}
 }
-async function loadMyOrders(){
- if(!user)return [];
- const q=query(collection(db,"orders"),where("ownerUid","==",user.uid));
- const snap=await getDocs(q);
- return snap.docs.map(d=>({id:d.id,...d.data()}))
- .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-}
-async function loadAllOrders(){
- const snap=await getDocs(collection(db,"orders"));
- return snap.docs.map(d=>({id:d.id,...d.data()}))
- .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-}
-
-function home(){
- return `
- <section class="panel">
-  <h1>Welcome to SUDIP INDUSTRY</h1>
-  <p>Dream • Work • Success</p>
-  <p>Explore our products and shop online.</p>
-  <a class="btn" href="#shop">Explore Products</a>
-  <a class="btn" href="#contact">Contact Us</a>
- </section>
- <h2>Our Products</h2>
- ${productGrid(products.slice(0,4))}
- <section class="panel">
-  <h2>Need Help?</h2>
-  <p>Contact our business support.</p>
-  <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">WhatsApp Us</a>
- </section>`;
-}
-function productGrid(list){
- if(!list.length)return '<div class="empty">No products available.</div>';
- return `<div class="grid">${list.map(p=>`
- <article class="card">
-  <a href="#product-${encodeURIComponent(p.id)}">
-   <div class="photo">${image(p)}</div>
-  </a>
-  <h3>${esc(p.name)}</h3>
-  <div class="price">${money(p.price)}</div>
-  <p class="muted">${Number(p.stock)>0?"In stock":"Out of stock"}</p>
-  <button class="heart" onclick="toggleWishlist('${esc(p.id)}')">
-   ${wishlist.has(p.id)?"♥":"♡"}
-  </button>
-  <a class="btn" href="#product-${encodeURIComponent(p.id)}">View Product</a>
-  <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
- </article>`).join("")}</div>`;
-}
-function shop(){
- return `<h2>Our Products</h2>${productGrid(products)}`;
-}
-function productPage(id){
- const p=products.find(x=>x.id===id);
- if(!p)return '<div class="empty">Product not found. <a href="#shop">Back to Shop</a></div>';
- return `
- <a href="#shop">← Back to Shop</a>
- <div class="panel" style="margin-top:15px">
-  <div class="photo" style="height:260px">${image(p)}</div>
-  <h2>${esc(p.name)}</h2>
-  <p class="muted">${esc(p.cat||"")}</p>
-  <div class="price">${money(p.price)}</div>
-  ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:""}
-  <p>${esc(p.desc||"")}</p>
-  <p>${Number(p.stock)>0?"In Stock: "+p.stock:"Out of Stock"}</p>
-  <button class="heart" onclick="toggleWishlist('${esc(p.id)}')">
-   ${wishlist.has(p.id)?"♥ Remove from Wishlist":"♡ Add to Wishlist"}
-  </button>
-  <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
-  <button onclick="buyNow('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Buy Now</button>
- </div>`;
-}
-function wishlistPage(){
- const list=products.filter(p=>wishlist.has(p.id));
- return `<h2>My Wishlist ❤️</h2>
- ${list.length?productGrid(list):'<div class="empty"><h3>Your Wishlist is Empty</h3><p>Save products you like.</p><a class="btn" href="#shop">Explore Products</a></div>'}`;
-}
-function addCart(id){
- const p=products.find(x=>x.id===id);
- if(!p||Number(p.stock)<=0){alert("Product out of stock");return}
- const item=cart.find(x=>x.id===id);
- if(item){
-  if(item.qty>=Number(p.stock)){alert("Stock limit reached");return}
-  item.qty++;
- }else cart.push({id,qty:1});
- saveCart();
- alert("Added to cart");
-}
-function buyNow(id){
- const p=products.find(x=>x.id===id);
- if(!p||Number(p.stock)<=0){alert("Product out of stock");return}
- if(!cart.some(x=>x.id===id))cart.push({id,qty:1});
- saveCart();
- location.hash="cart";
-}
-function total(){
- return cart.reduce((n,x)=>{
-  const p=products.find(y=>y.id===x.id);
-  return n+(p?Number(p.price)*x.qty:0);
- },0);
-}
-function cartPage(){
- const valid=cart.filter(x=>products.some(p=>p.id===x.id));
- if(!valid.length)return `
- <div class="empty"><h2>Your Cart is Empty</h2>
- <a class="btn" href="#shop">Continue Shopping</a></div>`;
- return `
- <h2>Your Cart</h2>
- ${valid.map(x=>{
-  const p=products.find(y=>y.id===x.id);
-  return `<div class="panel">
-   <div class="row"><b>${esc(p.name)}</b><b>${money(p.price*x.qty)}</b></div>
-   <p>Price: ${money(p.price)}</p>
-   <button onclick="changeQty('${esc(x.id)}',-1)">−</button>
-   <b>${x.qty}</b>
-   <button onclick="changeQty('${esc(x.id)}',1)">+</button>
-   <button onclick="removeCart('${esc(x.id)}')">Remove</button>
-  </div>`;
- }).join("")}
- <div class="panel"><h3>Total: ${money(total())}</h3>
- <button onclick="location.hash='checkout'">Proceed to Checkout</button></div>`;
-}
-function changeQty(id,n){
- const x=cart.find(y=>y.id===id);
- const p=products.find(y=>y.id===id);
- if(!x||!p)return;
- if(n>0&&x.qty>=Number(p.stock)){alert("Stock limit reached");return}
- x.qty+=n;
- if(x.qty<=0)cart=cart.filter(y=>y.id!==id);
- saveCart();route();
-}
-function removeCart(id){
- cart=cart.filter(x=>x.id!==id);
- saveCart();route();
-}
-function checkout(){
- if(!cart.length)return '<div class="empty">Your cart is empty. <a href="#shop">Shop Now</a></div>';
- return `
- <h2>Checkout</h2>
- <div class="panel">
-  <h3>Delivery Information</h3>
-  <form id="checkoutForm">
-   <label>Full Name</label>
-   <input id="customerName" required maxlength="80" placeholder="Enter your name">
-   <label>Mobile Number</label>
-   <input id="customerPhone" required type="tel" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
-   <label>Full Address</label>
-   <textarea id="customerAddress" required maxlength="500" rows="4" placeholder="House, street, area, PIN code"></textarea>
-   <label>Payment Method</label>
-   <select id="payment"><option value="Cash on Delivery">Cash on Delivery (COD)</option></select>
-   <hr><h3>Order Total: ${money(total())}</h3>
-   <button type="submit">Place Order</button>
-  </form>
- </div>`;
-}
-async function placeOrder(e){
- e.preventDefault();
- if(busy)return;
- if(!user||user.isAnonymous){
-  alert("Order করার আগে Google দিয়ে Login করুন।");
-  location.hash="profile";
-  return;
- }
- busy=true;
- try{
-  if(!cart.length)throw new Error("Cart is empty");
-  for(const x of cart){
-   const p=products.find(y=>y.id===x.id);
-   if(!p||Number(p.stock)<x.qty)throw new Error("Some products are out of stock.");
-  }
-  const order={
-   ownerUid:user.uid,
-   name:$("customerName").value.trim(),
-   phone:$("customerPhone").value.trim(),
-   address:$("customerAddress").value.trim(),
-   payment:$("payment").value,
-   items:cart.map(x=>{
-    const p=products.find(y=>y.id===x.id);
-    return {id:p.id,name:p.name,price:Number(p.price),qty:x.qty};
-   }),
-   total:total(),
-   status:"Order Placed",
-   date:new Date().toLocaleString("en-IN")
-  };
-  const ref=await addDoc(collection(db,"orders"),order);
-  cart=[];
-  saveCart();
-  alert("Your order has been placed! Order ID: "+ref.id);
-  location.hash="myorders";
- }catch(err){
-  console.error(err);
-  alert("Order failed: "+err.message);
- }finally{busy=false}
-}
-function myOrdersPage(list){
- if(!list.length)return `
- <div class="empty"><h2>My Orders</h2>
- <p>You have not placed any orders yet.</p>
- <a class="btn" href="#shop">Start Shopping</a></div>`;
- return `<h2>My Orders</h2>${list.map(o=>`
- <div class="panel">
-  <div class="row"><b>Order ${esc(o.id)}</b>
-  <span class="status">${esc(o.status)}</span></div>
-  <p class="muted">${esc(o.date)}</p>
-  <p>Total: <b>${money(o.total)}</b></p>
-  <p>${(o.items||[]).length} product(s)</p>
-  <a class="btn" href="#order-${encodeURIComponent(o.id)}">View Details</a>
- </div>`).join("")}`;
-}
-function orderDetails(o){
- if(!o)return '<div class="empty">Order not found.</div>';
- return `
- <a href="#myorders">← Back to My Orders</a>
- <div class="panel" style="margin-top:15px">
-  <h2>Order Details</h2>
-  <p><b>Order ID:</b> ${esc(o.id)}</p>
-  <p><b>Date:</b> ${esc(o.date)}</p>
-  <p><b>Status:</b> <span class="status">${esc(o.status)}</span></p>
-  <hr><h3>Products</h3>
-  ${(o.items||[]).map(x=>`<div class="row">
-   <span>${esc(x.name)} × ${x.qty}</span><b>${money(x.price*x.qty)}</b>
-  </div>`).join("")}
-  <hr><h3>Total: ${money(o.total)}</h3>
-  <p><b>Payment:</b> ${esc(o.payment)}</p>
-  <p><b>Name:</b> ${esc(o.name)}</p>
-  <p><b>Phone:</b> ${esc(o.phone)}</p>
-  <p><b>Address:</b> ${esc(o.address)}</p>
- </div>`;
-}
-function profilePage(){
- if(!user||user.isAnonymous){
-  return `<h2>My Profile</h2>
-  <div class="panel">
-   <p>You are currently browsing as Guest.</p>
-   <p class="muted">Login with Google to save your Wishlist and view your orders.</p>
-   <button onclick="googleLogin()">Continue with Google</button>
-  </div>`;
- }
- const photo=user.photoURL
- ? `<img class="avatar" src="${esc(user.photoURL)}" alt="Profile photo">`
- : `<div class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:35px">👤</div>`;
- return `<h2>My Profile</h2>
- <div class="panel">
-  ${photo}
-  <h3>${esc(user.displayName||"Customer")}</h3>
-  <p><b>Gmail:</b> ${esc(user.email||"Email not available")}</p>
-  <p class="small">Account: Google</p>
-  <hr>
-  <a class="btn" href="#wishlist">My Wishlist ❤️</a>
-  <a class="btn" href="#myorders">My Orders</a>
-  <button onclick="switchAccount()">Login with Another Account</button>
-  <button onclick="logoutUser()">Log Out</button>
- </div>`;
-}
+async function refresh(){await loadProducts();await loadWishlist();await loadOrders();render();}
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(!u){try{await signInAnonymously(auth);}catch(e){console.error(e);render();}}
+ else{await refresh();}
+ updateUserLabel();
+});
+function updateUserLabel(){$("#userLabel").textContent=user&&!user.isAnonymous?(user.displayName||user.email||"Account"):"Login";}
 async function googleLogin(){
  try{
-  if(user&&user.isAnonymous){
-   await linkWithPopup(user,googleProvider);
-  }else{
-   await signInWithPopup(auth,googleProvider);
-  }
-  alert("Google Login successful!");
-  location.hash="profile";
- }catch(err){
-  console.error(err);
-  if(err.code==="auth/credential-already-in-use"){
-   alert("এই Google account আগে থেকেই ব্যবহার করা হয়েছে। Switch Account ব্যবহার করুন।");
-  }else{
-   alert("Google Login failed: "+err.message);
-  }
- }
+  if(user?.isAnonymous){try{await linkWithPopup(user,provider);toast("Google account connected");}
+   catch(e){if(e.code==="auth/credential-already-in-use"||e.code==="auth/email-already-in-use"){await signOut(auth);await signInWithPopup(auth,provider);}else throw e;}
+  }else{await signInWithPopup(auth,provider);}
+ }catch(e){toast("Login failed: "+(e.message||e.code));}
 }
-async function switchAccount(){
- if(!confirm("বর্তমান account থেকে বের হয়ে অন্য Google account দিয়ে Login করবেন?"))return;
+async function switchAccount(){try{await signOut(auth);await signInWithPopup(auth,provider);}catch(e){toast("Account switch হয়নি: "+e.message);}}
+async function logout(){try{await signOut(auth);toast("Logged out");}catch(e){toast(e.message);}}
+window.googleLogin=googleLogin;window.switchAccount=switchAccount;window.logout=logout;
+
+function productCard(p){
+ const liked=wishlist.includes(p.id);
+ return `<article class="card">
+ <div class="product-img">${p.image?`<img src="${safe(p.image)}" alt="${safe(p.name)}" loading="lazy" onerror="this.style.display='none'">`:"<span style='font-size:45px'>🛍️</span>"}
+ <button class="heart" onclick="toggleWish('${p.id}')" title="Wishlist">${liked?"♥":"♡"}</button></div>
+ <div class="product-info"><h3>${safe(p.name||"Product")}</h3>
+ <div><span class="price">${money(p.price)}</span>${p.mrp?`<span class="mrp">${money(p.mrp)}</span>`:""}</div>
+ <p>${safe(p.category||"General")}</p>
+ <div class="card-actions"><button class="view" onclick="showProduct('${p.id}')">Details</button><button class="add" onclick="addCart('${p.id}')">Add to Cart</button></div>
+ </div></article>`;
+}
+function homeView(){
+ const featured=products.filter(p=>p.popularity==="Popular"||p.popular===true).slice(0,8);
+ return `<section class="hero"><div><h1>Welcome to SUDIP INDUSTRY</h1><p>Shop smart. Shop with confidence.</p><button class="primary" onclick="go('shop')">Explore Products →</button></div><div class="hero-art">🛍️</div></section>
+ <div class="section-head"><h2>Shop by Category</h2></div>
+ <div class="categories">${["All","Fashion","Electronics","Home","Beauty","Other"].map((c,i)=>`<button class="cat" onclick="filterCategory('${c}')"><span>${["🛍️","👕","📱","🏠","✨","🎁"][i]}</span>${c}</button>`).join("")}</div>
+ <div class="section-head"><h2>Featured Products</h2><button class="soft" onclick="go('shop')">View all →</button></div>
+ <div class="products">${(featured.length?featured:products.slice(0,8)).map(productCard).join("")||empty("এখনও কোনো পণ্য যোগ করা হয়নি।")}</div>`;
+}
+function empty(t){return `<div class="empty">${t}</div>`}
+function shopView(){
+ const list=products.filter(p=>(!searchTerm||(p.name||"").toLowerCase().includes(searchTerm)||(p.category||"").toLowerCase().includes(searchTerm))&&(!window.activeCategory||window.activeCategory==="All"||p.category===window.activeCategory));
+ return `<div class="section-head"><h2>All Products</h2><span class="muted">${list.length} products</span></div><div class="products">${list.map(productCard).join("")||empty("কোনো পণ্য পাওয়া যায়নি।")}</div>`;
+}
+window.searchProducts=v=>{searchTerm=v.trim().toLowerCase();if(currentPage!=="shop")go("shop");else render();};
+window.filterCategory=c=>{window.activeCategory=c;go("shop");};
+window.showProduct=id=>{selectedProduct=id;go("product");};
+function productView(){
+ const p=products.find(x=>x.id===selectedProduct);
+ if(!p)return empty("Product পাওয়া যায়নি।");
+ return `<div class="panel"><button class="soft" onclick="go('shop')">← Back to Shop</button><div class="row" style="align-items:flex-start;margin-top:18px"><div style="flex:1;min-width:220px;text-align:center;background:#f7f8fb;border-radius:12px;padding:15px">${p.image?`<img src="${safe(p.image)}" style="max-width:100%;height:260px;object-fit:contain">`:"🛍️"}</div><div style="flex:1;min-width:220px"><h2>${safe(p.name)}</h2><div class="price" style="font-size:25px">${money(p.price)}</div>${p.mrp?`<p class="mrp">${money(p.mrp)}</p>`:""}<p>${safe(p.description||"")}</p><p class="muted">Category: ${safe(p.category||"General")}</p><button class="action" onclick="addCart('${p.id}')">Add to Cart</button> <button class="soft" onclick="toggleWish('${p.id}')">♡ Wishlist</button></div></div></div>`;
+}
+window.addCart=id=>{const p=products.find(x=>x.id===id);if(!p)return;const old=cart.find(x=>x.id===id);if(old)old.qty++;else cart.push({id,qty:1});saveCart();toast("Cart-এ যোগ হয়েছে");};
+window.toggleWish=async id=>{
+ if(!user||user.isAnonymous){toast("Wishlist ব্যবহার করতে Google Login করুন");go("profile");return;}
  try{
-  await signOut(auth);
-  await signInWithPopup(auth,googleProvider);
-  alert("Account switched successfully");
-  location.hash="profile";
- }catch(err){
-  alert("Account switch failed: "+err.message);
- }
+  const ref=doc(db,"users",user.uid,"wishlist",id);
+  if(wishlist.includes(id)){await deleteDoc(ref);wishlist=wishlist.filter(x=>x!==id);}
+  else{await setDoc(ref,{createdAt:serverTimestamp()});wishlist.push(id);}
+  counts();render();
+ }catch(e){toast("Wishlist update হয়নি: "+e.message);}
+};
+function cartView(){
+ const lines=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
+ const total=lines.reduce((s,x)=>s+Number(x.p.price||0)*x.qty,0);
+ return `<div class="section-head"><h2>Shopping Cart</h2></div><div class="panel">${lines.map(x=>`<div class="item-row"><img src="${safe(imgSrc(x.p))}" onerror="this.style.display='none'"><div class="grow"><h3>${safe(x.p.name)}</h3><b>${money(x.p.price)}</b><div class="qty"><button onclick="changeQty('${x.id}',-1)">−</button>${x.qty}<button onclick="changeQty('${x.id}',1)">+</button><button class="danger" onclick="removeCart('${x.id}')">Remove</button></div></div></div>`).join("")||empty("তোমার Cart খালি।")}
+ ${lines.length?`<div class="row" style="margin-top:18px"><b>Total: ${money(total)}</b><button class="action" onclick="go('checkout')">Proceed to Checkout</button></div>`:""}</div>`;
 }
-async function logoutUser(){
- if(!confirm("আপনি কি Log Out করতে চান?"))return;
- try{
-  await signOut(auth);
-  location.hash="profile";
- }catch(err){alert("Logout failed: "+err.message)}
+window.changeQty=(id,n)=>{const x=cart.find(a=>a.id===id);if(x){x.qty+=n;if(x.qty<1)cart=cart.filter(a=>a.id!==id);saveCart();render();}};
+window.removeCart=id=>{cart=cart.filter(x=>x.id!==id);saveCart();render();};
+function checkoutView(){
+ const lines=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
+ const total=lines.reduce((s,x)=>s+Number(x.p.price||0)*x.qty,0);
+ if(!lines.length)return empty("Checkout করার আগে Cart-এ Product যোগ করো।");
+ return `<div class="section-head"><h2>Checkout — Cash on Delivery</h2></div><div class="panel"><p class="badge">Cash on Delivery available</p><form id="checkoutForm" class="form-grid">
+ <div class="field"><label>Full Name *</label><input name="name" required maxlength="80"></div>
+ <div class="field"><label>Mobile Number *</label><input name="phone" required pattern="[6-9][0-9]{9}" maxlength="10" inputmode="numeric"></div>
+ <div class="field full"><label>Full Delivery Address *</label><textarea name="address" required minlength="10" maxlength="500"></textarea></div>
+ <div class="field"><label>City / Town *</label><input name="city" required></div>
+ <div class="field"><label>PIN Code *</label><input name="pin" required pattern="[0-9]{6}" maxlength="6" inputmode="numeric"></div>
+ <div class="field full"><label>Order Summary</label><b>${lines.map(x=>`${safe(x.p.name)} × ${x.qty}`).join("<br>")}</b><h2>Total: ${money(total)}</h2></div>
+ <div class="field full"><button class="action" type="submit">Place COD Order</button></div></form></div>`;
 }
-function contact(){
- return `<h2>Contact Us</h2><div class="panel">
-  <h3>SUDIP INDUSTRY</h3>
-  <p>For product enquiries and business support, contact us.</p><hr>
-  <b>Business Email</b><a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
-  <b>Business Phone</b><a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
-  <b>WhatsApp Support</b>
-  <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">Chat on WhatsApp</a>
- </div>`;
-}
-function adminLogin(){
- return `<h2>Admin Login</h2><div class="panel">
-  <p>Login with your Admin account.</p>
-  <form id="adminForm">
-   <label>Admin Email</label>
-   <input id="adminEmail" type="email" value="${ADMIN_EMAIL}" readonly>
-   <label>Password</label>
-   <input id="adminPassword" type="password" required placeholder="Enter Admin password">
-   <button type="submit">Login</button>
-  </form>
-  <hr>
-  <p>অথবা Admin Gmail দিয়ে Google Login করুন।</p>
-  <button onclick="googleLogin()">Login with Google</button>
- </div>`;
-}
-function adminPage(allOrders){
- return `
- <div class="row"><h2>Admin Dashboard</h2>
- <button onclick="adminLogout()">Logout</button></div>
- <div class="panel">
-  <h3>Add Product</h3>
-  <form id="productForm">
-   <label>Product Name</label><input id="pname" required maxlength="100">
-   <label>Category</label><input id="pcat">
-   <label>Price ₹</label><input id="pprice" type="number" min="1" required>
-   <label>MRP ₹</label><input id="pmrp" type="number" min="0">
-   <label>Stock</label><input id="pstock" type="number" min="0" required>
-   <label>Product Image URL</label><input id="pimage" type="url">
-   <label>Description</label><textarea id="pdesc"></textarea>
-   <button type="submit">Save Product</button>
-  </form>
- </div>
- <h3>Manage Products</h3>
- ${products.map(p=>`<div class="panel">
-  <div class="row"><b>${esc(p.name)}</b><span>${money(p.price)}</span></div>
-  <p>Stock: ${Number(p.stock)||0}</p>
-  <button onclick="deleteProduct('${esc(p.id)}')">Delete</button>
- </div>`).join("")||'<p>No products yet.</p>'}
- <h2>All Orders (${allOrders.length})</h2>
- ${allOrders.map(o=>`<div class="panel">
-  <b>${esc(o.id)}</b>
-  <p>${esc(o.name)} — ${money(o.total)}</p>
-  <p>Phone: ${esc(o.phone)}</p>
-  <p>Status: ${esc(o.status)}</p>
-  <select id="status-${esc(o.id)}">
-   ${["Order Placed","Confirmed","Processing","Shipped","Out for Delivery","Delivered","Cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
-  </select>
-  <button onclick="updateOrder('${esc(o.id)}')">Update Status</button>
-  <a class="btn" href="#order-${encodeURIComponent(o.id)}">Details</a>
- </div>`).join("")||'<p>No orders yet.</p>'}
- `;
-}
-async function addProduct(e){
- e.preventDefault();
- if(!isAdmin())return alert("Admin login required");
- try{
-  const name=$("pname").value.trim();
-  const price=Number($("pprice").value);
-  if(!name||price<=0)throw new Error("Enter a valid name and price");
-  await addDoc(collection(db,"products"),{
-   name,cat:$("pcat").value.trim(),price,
-   mrp:Number($("pmrp").value)||0,
-   stock:Number($("pstock").value)||0,
-   image:$("pimage").value.trim(),
-   desc:$("pdesc").value.trim()
-  });
-  alert("Product saved");
-  await route();
- }catch(err){alert("Could not save product: "+err.message)}
-}
-async function deleteProduct(id){
+$("#app").addEventListener("submit",async e=>{
+ if(e.target.id!=="checkoutForm")return;e.preventDefault();
+ if(!user||user.isAnonymous){toast("Order করতে Google Login প্রয়োজন");go("profile");return;}
+ const f=new FormData(e.target),lines=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
+ if(!lines.length)return;
+ const total=lines.reduce((s,x)=>s+Number(x.p.price||0)*x.qty,0);
+ const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="Placing
