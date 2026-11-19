@@ -10,7 +10,7 @@
 :root{--blue:#1d4ed8;--bg:#f1f5fb;--text:#111827}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--blue);color:white;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header{background:var(--blue);color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 header a{color:white;text-decoration:none;font-size:14px;padding:5px}
 main{max-width:1000px;margin:auto;padding:16px;min-height:70vh}
 button,.btn{display:inline-block;background:var(--blue);color:white;border:0;padding:11px 15px;border-radius:7px;cursor:pointer;text-decoration:none;margin:3px}
@@ -23,7 +23,7 @@ label{font-size:14px;font-weight:bold}
 .photo img{width:100%;height:100%;object-fit:contain}
 .price{font-weight:bold;font-size:20px;margin:10px 0}
 .muted{color:#64748b;font-size:13px}
-nav{display:flex;gap:8px;flex-wrap:wrap}
+nav{display:flex;gap:7px;flex-wrap:wrap}
 footer{background:#111827;color:white;padding:25px 16px;margin-top:25px}
 footer a{color:white}
 .footer-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px}
@@ -32,63 +32,71 @@ footer a{color:white}
 .empty{text-align:center;padding:30px;background:white;border-radius:12px}
 hr{border:0;border-top:1px solid #e5e7eb;margin:15px 0}
 .contact-link{display:block;margin:12px 0;overflow-wrap:anywhere}
+.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;background:#e5e7eb}
+.heart{background:#fff;color:#e11d48;border:1px solid #fecdd3;font-size:18px}
+.small{font-size:12px;color:#64748b}
 </style>
 </head>
 <body>
-
 <header>
-<div>
-<b>SUDIP INDUSTRY</b><br>
-<small>DREAM • WORK • SUCCESS</small>
-</div>
-<nav>
-<a href="#home">Home</a>
-<a href="#shop">Shop</a>
-<a href="#cart">Cart (<span id="count">0</span>)</a>
-<a href="#myorders">My Orders</a>
-<a href="#contact">Contact</a>
-<a href="#admin">Admin</a>
-</nav>
+ <div>
+  <b>SUDIP INDUSTRY</b><br>
+  <small>DREAM • WORK • SUCCESS</small>
+ </div>
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#shop">Shop</a>
+  <a href="#wishlist">❤️ Wishlist</a>
+  <a href="#cart">Cart (<span id="count">0</span>)</a>
+  <a href="#myorders">My Orders</a>
+  <a href="#profile">My Profile</a>
+  <a href="#contact">Contact</a>
+  <a href="#admin">Admin</a>
+ </nav>
 </header>
 
 <main id="app">
-<div class="empty">Loading SUDIP INDUSTRY...</div>
+ <div class="empty">Loading SUDIP INDUSTRY...</div>
 </main>
 
 <footer>
-<div class="footer-grid">
-<div>
-<h3>SUDIP INDUSTRY</h3>
-<p>DREAM • WORK • SUCCESS</p>
-<p>Your online shopping destination.</p>
-</div>
-<div>
-<h3>Quick Links</h3>
-<p><a href="#home">Home</a></p>
-<p><a href="#shop">Shop</a></p>
-<p><a href="#myorders">My Orders</a></p>
-<p><a href="#contact">Contact Us</a></p>
-</div>
-<div>
-<h3>Business Contact</h3>
-<p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>
-<p>Phone: <a href="tel:+918981988831">+91 89819 88831</a></p>
-<p>WhatsApp: <a href="https://wa.me/918981988831" target="_blank" rel="noopener">Chat with us</a></p>
-</div>
-</div>
-<hr>
-<p style="text-align:center">© 2026 SUDIP INDUSTRY. All Rights Reserved.</p>
+ <div class="footer-grid">
+  <div>
+   <h3>SUDIP INDUSTRY</h3>
+   <p>DREAM • WORK • SUCCESS</p>
+   <p>Your online shopping destination.</p>
+  </div>
+  <div>
+   <h3>Quick Links</h3>
+   <p><a href="#home">Home</a></p>
+   <p><a href="#shop">Shop</a></p>
+   <p><a href="#wishlist">Wishlist</a></p>
+   <p><a href="#myorders">My Orders</a></p>
+   <p><a href="#profile">My Profile</a></p>
+  </div>
+  <div>
+   <h3>Business Contact</h3>
+   <p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>
+   <p>Phone: <a href="tel:+918981988831">+91 89819 88831</a></p>
+   <p>WhatsApp: <a href="https://wa.me/918981988831" target="_blank">Chat with us</a></p>
+  </div>
+ </div>
+ <hr>
+ <p style="text-align:center">© 2026 SUDIP INDUSTRY. All Rights Reserved.</p>
 </footer>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
 import {
  getAuth,onAuthStateChanged,signInAnonymously,
- signInWithEmailAndPassword,signOut
+ signInWithEmailAndPassword,signOut,
+ GoogleAuthProvider,signInWithPopup,linkWithPopup
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
 import {
  getFirestore,collection,addDoc,getDocs,getDoc,
- doc,query,where,updateDoc,deleteDoc
+ doc,query,where,updateDoc,deleteDoc,setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig={
@@ -108,13 +116,17 @@ const WHATSAPP_NUMBER="918981988831";
 const appFirebase=initializeApp(firebaseConfig);
 const auth=getAuth(appFirebase);
 const db=getFirestore(appFirebase);
+const googleProvider=new GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:"select_account"});
 
 let user=null;
 let products=[];
 let cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]");
 let orders=[];
 let authReady=false;
+let firstAuthCheck=true;
 let busy=false;
+let wishlist=new Set();
 
 const $=id=>document.getElementById(id);
 const isAdmin=()=>!!user&&user.email===ADMIN_EMAIL;
@@ -143,6 +155,34 @@ async function loadProducts(){
  const snap=await getDocs(collection(db,"products"));
  products=snap.docs.map(d=>({id:d.id,...d.data()}));
 }
+async function loadWishlist(){
+ wishlist=new Set();
+ if(!user||user.isAnonymous)return;
+ const snap=await getDocs(collection(db,"users",user.uid,"wishlist"));
+ snap.docs.forEach(d=>wishlist.add(d.id));
+}
+async function toggleWishlist(id){
+ if(!user||user.isAnonymous){
+  alert("Wishlist save করতে আগে Google দিয়ে Login করুন।");
+  location.hash="profile";
+  return;
+ }
+ try{
+  const ref=doc(db,"users",user.uid,"wishlist",id);
+  if(wishlist.has(id)){
+   await deleteDoc(ref);
+   wishlist.delete(id);
+   alert("Removed from Wishlist");
+  }else{
+   await setDoc(ref,{productId:id,createdAt:new Date().toISOString()});
+   wishlist.add(id);
+   alert("Added to Wishlist ❤️");
+  }
+  route();
+ }catch(err){
+  alert("Wishlist error: "+err.message);
+ }
+}
 async function loadMyOrders(){
  if(!user)return [];
  const q=query(collection(db,"orders"),where("ownerUid","==",user.uid));
@@ -159,31 +199,35 @@ async function loadAllOrders(){
 function home(){
  return `
  <section class="panel">
- <h1>Welcome to SUDIP INDUSTRY</h1>
- <p>Dream • Work • Success</p>
- <p>Explore our products and shop online.</p>
- <a class="btn" href="#shop">Explore Products</a>
- <a class="btn" href="#contact">Contact Us</a>
+  <h1>Welcome to SUDIP INDUSTRY</h1>
+  <p>Dream • Work • Success</p>
+  <p>Explore our products and shop online.</p>
+  <a class="btn" href="#shop">Explore Products</a>
+  <a class="btn" href="#contact">Contact Us</a>
  </section>
  <h2>Our Products</h2>
  ${productGrid(products.slice(0,4))}
  <section class="panel">
- <h2>Need Help?</h2>
- <p>Contact our business support.</p>
- <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">WhatsApp Us</a>
+  <h2>Need Help?</h2>
+  <p>Contact our business support.</p>
+  <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">WhatsApp Us</a>
  </section>`;
 }
 function productGrid(list){
  if(!list.length)return '<div class="empty">No products available.</div>';
  return `<div class="grid">${list.map(p=>`
  <article class="card">
- <a href="#product-${encodeURIComponent(p.id)}">
- <div class="photo">${image(p)}</div></a>
- <h3>${esc(p.name)}</h3>
- <div class="price">${money(p.price)}</div>
- <p class="muted">${Number(p.stock)>0?"In stock":"Out of stock"}</p>
- <a class="btn" href="#product-${encodeURIComponent(p.id)}">View Product</a>
- <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
+  <a href="#product-${encodeURIComponent(p.id)}">
+   <div class="photo">${image(p)}</div>
+  </a>
+  <h3>${esc(p.name)}</h3>
+  <div class="price">${money(p.price)}</div>
+  <p class="muted">${Number(p.stock)>0?"In stock":"Out of stock"}</p>
+  <button class="heart" onclick="toggleWishlist('${esc(p.id)}')">
+   ${wishlist.has(p.id)?"♥":"♡"}
+  </button>
+  <a class="btn" href="#product-${encodeURIComponent(p.id)}">View Product</a>
+  <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
  </article>`).join("")}</div>`;
 }
 function shop(){
@@ -195,16 +239,24 @@ function productPage(id){
  return `
  <a href="#shop">← Back to Shop</a>
  <div class="panel" style="margin-top:15px">
- <div class="photo" style="height:260px">${image(p)}</div>
- <h2>${esc(p.name)}</h2>
- <p class="muted">${esc(p.cat||"")}</p>
- <div class="price">${money(p.price)}</div>
- ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:""}
- <p>${esc(p.desc||"")}</p>
- <p>${Number(p.stock)>0?"In Stock: "+p.stock:"Out of Stock"}</p>
- <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
- <button onclick="buyNow('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Buy Now</button>
+  <div class="photo" style="height:260px">${image(p)}</div>
+  <h2>${esc(p.name)}</h2>
+  <p class="muted">${esc(p.cat||"")}</p>
+  <div class="price">${money(p.price)}</div>
+  ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:""}
+  <p>${esc(p.desc||"")}</p>
+  <p>${Number(p.stock)>0?"In Stock: "+p.stock:"Out of Stock"}</p>
+  <button class="heart" onclick="toggleWishlist('${esc(p.id)}')">
+   ${wishlist.has(p.id)?"♥ Remove from Wishlist":"♡ Add to Wishlist"}
+  </button>
+  <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
+  <button onclick="buyNow('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Buy Now</button>
  </div>`;
+}
+function wishlistPage(){
+ const list=products.filter(p=>wishlist.has(p.id));
+ return `<h2>My Wishlist ❤️</h2>
+ ${list.length?productGrid(list):'<div class="empty"><h3>Your Wishlist is Empty</h3><p>Save products you like.</p><a class="btn" href="#shop">Explore Products</a></div>'}`;
 }
 function addCart(id){
  const p=products.find(x=>x.id===id);
@@ -226,8 +278,8 @@ function buyNow(id){
 }
 function total(){
  return cart.reduce((n,x)=>{
- const p=products.find(y=>y.id===x.id);
- return n+(p?Number(p.price)*x.qty:0);
+  const p=products.find(y=>y.id===x.id);
+  return n+(p?Number(p.price)*x.qty:0);
  },0);
 }
 function cartPage(){
@@ -238,15 +290,15 @@ function cartPage(){
  return `
  <h2>Your Cart</h2>
  ${valid.map(x=>{
- const p=products.find(y=>y.id===x.id);
- return `<div class="panel">
- <div class="row"><b>${esc(p.name)}</b><b>${money(p.price*x.qty)}</b></div>
- <p>Price: ${money(p.price)}</p>
- <button onclick="changeQty('${esc(x.id)}',-1)">−</button>
- <b>${x.qty}</b>
- <button onclick="changeQty('${esc(x.id)}',1)">+</button>
- <button onclick="removeCart('${esc(x.id)}')">Remove</button>
- </div>`;
+  const p=products.find(y=>y.id===x.id);
+  return `<div class="panel">
+   <div class="row"><b>${esc(p.name)}</b><b>${money(p.price*x.qty)}</b></div>
+   <p>Price: ${money(p.price)}</p>
+   <button onclick="changeQty('${esc(x.id)}',-1)">−</button>
+   <b>${x.qty}</b>
+   <button onclick="changeQty('${esc(x.id)}',1)">+</button>
+   <button onclick="removeCart('${esc(x.id)}')">Remove</button>
+  </div>`;
  }).join("")}
  <div class="panel"><h3>Total: ${money(total())}</h3>
  <button onclick="location.hash='checkout'">Proceed to Checkout</button></div>`;
@@ -269,23 +321,29 @@ function checkout(){
  return `
  <h2>Checkout</h2>
  <div class="panel">
- <h3>Delivery Information</h3>
- <form id="checkoutForm">
- <label>Full Name</label>
- <input id="customerName" required maxlength="80" placeholder="Enter your name">
- <label>Mobile Number</label>
- <input id="customerPhone" required type="tel" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
- <label>Full Address</label>
- <textarea id="customerAddress" required maxlength="500" rows="4" placeholder="House, street, area, PIN code"></textarea>
- <label>Payment Method</label>
- <select id="payment"><option value="Cash on Delivery">Cash on Delivery (COD)</option></select>
- <hr><h3>Order Total: ${money(total())}</h3>
- <button type="submit">Place Order</button>
- </form></div>`;
+  <h3>Delivery Information</h3>
+  <form id="checkoutForm">
+   <label>Full Name</label>
+   <input id="customerName" required maxlength="80" placeholder="Enter your name">
+   <label>Mobile Number</label>
+   <input id="customerPhone" required type="tel" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
+   <label>Full Address</label>
+   <textarea id="customerAddress" required maxlength="500" rows="4" placeholder="House, street, area, PIN code"></textarea>
+   <label>Payment Method</label>
+   <select id="payment"><option value="Cash on Delivery">Cash on Delivery (COD)</option></select>
+   <hr><h3>Order Total: ${money(total())}</h3>
+   <button type="submit">Place Order</button>
+  </form>
+ </div>`;
 }
 async function placeOrder(e){
  e.preventDefault();
  if(busy)return;
+ if(!user||user.isAnonymous){
+  alert("Order করার আগে Google দিয়ে Login করুন।");
+  location.hash="profile";
+  return;
+ }
  busy=true;
  try{
   if(!cart.length)throw new Error("Cart is empty");
@@ -324,12 +382,12 @@ function myOrdersPage(list){
  <a class="btn" href="#shop">Start Shopping</a></div>`;
  return `<h2>My Orders</h2>${list.map(o=>`
  <div class="panel">
- <div class="row"><b>Order ${esc(o.id)}</b>
- <span class="status">${esc(o.status)}</span></div>
- <p class="muted">${esc(o.date)}</p>
- <p>Total: <b>${money(o.total)}</b></p>
- <p>${(o.items||[]).length} product(s)</p>
- <a class="btn" href="#order-${encodeURIComponent(o.id)}">View Details</a>
+  <div class="row"><b>Order ${esc(o.id)}</b>
+  <span class="status">${esc(o.status)}</span></div>
+  <p class="muted">${esc(o.date)}</p>
+  <p>Total: <b>${money(o.total)}</b></p>
+  <p>${(o.items||[]).length} product(s)</p>
+  <a class="btn" href="#order-${encodeURIComponent(o.id)}">View Details</a>
  </div>`).join("")}`;
 }
 function orderDetails(o){
@@ -337,75 +395,141 @@ function orderDetails(o){
  return `
  <a href="#myorders">← Back to My Orders</a>
  <div class="panel" style="margin-top:15px">
- <h2>Order Details</h2>
- <p><b>Order ID:</b> ${esc(o.id)}</p>
- <p><b>Date:</b> ${esc(o.date)}</p>
- <p><b>Status:</b> <span class="status">${esc(o.status)}</span></p>
- <hr><h3>Products</h3>
- ${(o.items||[]).map(x=>`<div class="row">
- <span>${esc(x.name)} × ${x.qty}</span><b>${money(x.price*x.qty)}</b>
- </div>`).join("")}
- <hr><h3>Total: ${money(o.total)}</h3>
- <p><b>Payment:</b> ${esc(o.payment)}</p>
- <p><b>Name:</b> ${esc(o.name)}</p>
- <p><b>Phone:</b> ${esc(o.phone)}</p>
- <p><b>Address:</b> ${esc(o.address)}</p>
+  <h2>Order Details</h2>
+  <p><b>Order ID:</b> ${esc(o.id)}</p>
+  <p><b>Date:</b> ${esc(o.date)}</p>
+  <p><b>Status:</b> <span class="status">${esc(o.status)}</span></p>
+  <hr><h3>Products</h3>
+  ${(o.items||[]).map(x=>`<div class="row">
+   <span>${esc(x.name)} × ${x.qty}</span><b>${money(x.price*x.qty)}</b>
+  </div>`).join("")}
+  <hr><h3>Total: ${money(o.total)}</h3>
+  <p><b>Payment:</b> ${esc(o.payment)}</p>
+  <p><b>Name:</b> ${esc(o.name)}</p>
+  <p><b>Phone:</b> ${esc(o.phone)}</p>
+  <p><b>Address:</b> ${esc(o.address)}</p>
  </div>`;
+}
+function profilePage(){
+ if(!user||user.isAnonymous){
+  return `<h2>My Profile</h2>
+  <div class="panel">
+   <p>You are currently browsing as Guest.</p>
+   <p class="muted">Login with Google to save your Wishlist and view your orders.</p>
+   <button onclick="googleLogin()">Continue with Google</button>
+  </div>`;
+ }
+ const photo=user.photoURL
+ ? `<img class="avatar" src="${esc(user.photoURL)}" alt="Profile photo">`
+ : `<div class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:35px">👤</div>`;
+ return `<h2>My Profile</h2>
+ <div class="panel">
+  ${photo}
+  <h3>${esc(user.displayName||"Customer")}</h3>
+  <p><b>Gmail:</b> ${esc(user.email||"Email not available")}</p>
+  <p class="small">Account: Google</p>
+  <hr>
+  <a class="btn" href="#wishlist">My Wishlist ❤️</a>
+  <a class="btn" href="#myorders">My Orders</a>
+  <button onclick="switchAccount()">Login with Another Account</button>
+  <button onclick="logoutUser()">Log Out</button>
+ </div>`;
+}
+async function googleLogin(){
+ try{
+  if(user&&user.isAnonymous){
+   await linkWithPopup(user,googleProvider);
+  }else{
+   await signInWithPopup(auth,googleProvider);
+  }
+  alert("Google Login successful!");
+  location.hash="profile";
+ }catch(err){
+  console.error(err);
+  if(err.code==="auth/credential-already-in-use"){
+   alert("এই Google account আগে থেকেই ব্যবহার করা হয়েছে। Switch Account ব্যবহার করুন।");
+  }else{
+   alert("Google Login failed: "+err.message);
+  }
+ }
+}
+async function switchAccount(){
+ if(!confirm("বর্তমান account থেকে বের হয়ে অন্য Google account দিয়ে Login করবেন?"))return;
+ try{
+  await signOut(auth);
+  await signInWithPopup(auth,googleProvider);
+  alert("Account switched successfully");
+  location.hash="profile";
+ }catch(err){
+  alert("Account switch failed: "+err.message);
+ }
+}
+async function logoutUser(){
+ if(!confirm("আপনি কি Log Out করতে চান?"))return;
+ try{
+  await signOut(auth);
+  location.hash="profile";
+ }catch(err){alert("Logout failed: "+err.message)}
 }
 function contact(){
  return `<h2>Contact Us</h2><div class="panel">
- <h3>SUDIP INDUSTRY</h3>
- <p>For product enquiries and business support, contact us.</p><hr>
- <b>Business Email</b><a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
- <b>Business Phone</b><a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
- <b>WhatsApp Support</b>
- <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">Chat on WhatsApp</a>
+  <h3>SUDIP INDUSTRY</h3>
+  <p>For product enquiries and business support, contact us.</p><hr>
+  <b>Business Email</b><a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
+  <b>Business Phone</b><a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
+  <b>WhatsApp Support</b>
+  <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">Chat on WhatsApp</a>
  </div>`;
 }
 function adminLogin(){
  return `<h2>Admin Login</h2><div class="panel">
- <p>Login with your Admin account.</p>
- <form id="adminForm">
- <label>Admin Email</label>
- <input id="adminEmail" type="email" value="${ADMIN_EMAIL}" readonly>
- <label>Password</label>
- <input id="adminPassword" type="password" required placeholder="Enter Admin password">
- <button type="submit">Login</button>
- </form></div>`;
+  <p>Login with your Admin account.</p>
+  <form id="adminForm">
+   <label>Admin Email</label>
+   <input id="adminEmail" type="email" value="${ADMIN_EMAIL}" readonly>
+   <label>Password</label>
+   <input id="adminPassword" type="password" required placeholder="Enter Admin password">
+   <button type="submit">Login</button>
+  </form>
+  <hr>
+  <p>অথবা Admin Gmail দিয়ে Google Login করুন।</p>
+  <button onclick="googleLogin()">Login with Google</button>
+ </div>`;
 }
 function adminPage(allOrders){
  return `
  <div class="row"><h2>Admin Dashboard</h2>
  <button onclick="adminLogout()">Logout</button></div>
  <div class="panel">
- <h3>Add Product</h3>
- <form id="productForm">
- <label>Product Name</label><input id="pname" required maxlength="100">
- <label>Category</label><input id="pcat">
- <label>Price ₹</label><input id="pprice" type="number" min="1" required>
- <label>MRP ₹</label><input id="pmrp" type="number" min="0">
- <label>Stock</label><input id="pstock" type="number" min="0" required>
- <label>Product Image URL</label><input id="pimage" type="url">
- <label>Description</label><textarea id="pdesc"></textarea>
- <button type="submit">Save Product</button>
- </form></div>
+  <h3>Add Product</h3>
+  <form id="productForm">
+   <label>Product Name</label><input id="pname" required maxlength="100">
+   <label>Category</label><input id="pcat">
+   <label>Price ₹</label><input id="pprice" type="number" min="1" required>
+   <label>MRP ₹</label><input id="pmrp" type="number" min="0">
+   <label>Stock</label><input id="pstock" type="number" min="0" required>
+   <label>Product Image URL</label><input id="pimage" type="url">
+   <label>Description</label><textarea id="pdesc"></textarea>
+   <button type="submit">Save Product</button>
+  </form>
+ </div>
  <h3>Manage Products</h3>
  ${products.map(p=>`<div class="panel">
- <div class="row"><b>${esc(p.name)}</b><span>${money(p.price)}</span></div>
- <p>Stock: ${Number(p.stock)||0}</p>
- <button onclick="deleteProduct('${esc(p.id)}')">Delete</button>
+  <div class="row"><b>${esc(p.name)}</b><span>${money(p.price)}</span></div>
+  <p>Stock: ${Number(p.stock)||0}</p>
+  <button onclick="deleteProduct('${esc(p.id)}')">Delete</button>
  </div>`).join("")||'<p>No products yet.</p>'}
  <h2>All Orders (${allOrders.length})</h2>
  ${allOrders.map(o=>`<div class="panel">
- <b>${esc(o.id)}</b>
- <p>${esc(o.name)} — ${money(o.total)}</p>
- <p>Phone: ${esc(o.phone)}</p>
- <p>Status: ${esc(o.status)}</p>
- <select id="status-${esc(o.id)}">
- ${["Order Placed","Confirmed","Processing","Shipped","Out for Delivery","Delivered","Cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
- </select>
- <button onclick="updateOrder('${esc(o.id)}')">Update Status</button>
- <a class="btn" href="#order-${encodeURIComponent(o.id)}">Details</a>
+  <b>${esc(o.id)}</b>
+  <p>${esc(o.name)} — ${money(o.total)}</p>
+  <p>Phone: ${esc(o.phone)}</p>
+  <p>Status: ${esc(o.status)}</p>
+  <select id="status-${esc(o.id)}">
+   ${["Order Placed","Confirmed","Processing","Shipped","Out for Delivery","Delivered","Cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
+  </select>
+  <button onclick="updateOrder('${esc(o.id)}')">Update Status</button>
+  <a class="btn" href="#order-${encodeURIComponent(o.id)}">Details</a>
  </div>`).join("")||'<p>No orders yet.</p>'}
  `;
 }
@@ -428,109 +552,3 @@ async function addProduct(e){
  }catch(err){alert("Could not save product: "+err.message)}
 }
 async function deleteProduct(id){
- if(!isAdmin()||!confirm("Delete this product?"))return;
- try{
-  await deleteDoc(doc(db,"products",id));
-  alert("Product deleted");
-  await route();
- }catch(err){alert("Delete failed: "+err.message)}
-}
-async function updateOrder(id){
- if(!isAdmin())return;
- const select=$("status-"+id);
- if(!select)return;
- try{
-  await updateDoc(doc(db,"orders",id),{status:select.value});
-  alert("Order status updated");
-  await route();
- }catch(err){alert("Update failed: "+err.message)}
-}
-async function adminLoginAction(e){
- e.preventDefault();
- try{
-  const email=$("adminEmail").value.trim();
-  const password=$("adminPassword").value;
-  if(email!==ADMIN_EMAIL)throw new Error("Wrong Admin email");
-  await signInWithEmailAndPassword(auth,email,password);
-  alert("Admin login successful");
-  location.hash="admin";
- }catch(err){alert("Login failed: "+err.message)}
-}
-async function adminLogout(){
- if(!confirm("Logout from Admin?"))return;
- try{
-  await signOut(auth);
-  location.hash="home";
- }catch(err){alert(err.message)}
-}
-async function route(){
- if(!authReady){$("app").innerHTML='<div class="empty">Connecting to Firebase...</div>';return}
- const h=location.hash.slice(1)||"home";
- try{
-  await loadProducts();
-  if(h==="home")$("app").innerHTML=home();
-  else if(h==="shop")$("app").innerHTML=shop();
-  else if(h==="cart")$("app").innerHTML=cartPage();
-  else if(h==="checkout")$("app").innerHTML=checkout();
-  else if(h==="myorders"){
-   const list=await loadMyOrders();
-   $("app").innerHTML=myOrdersPage(list);
-  }
-  else if(h==="contact")$("app").innerHTML=contact();
-  else if(h==="admin"){
-   if(!isAdmin())$("app").innerHTML=adminLogin();
-   else{
-    const list=await loadAllOrders();
-    $("app").innerHTML=adminPage(list);
-   }
-  }
-  else if(h.startsWith("product-")){
-   $("app").innerHTML=productPage(decodeURIComponent(h.slice(8)));
-  }
-  else if(h.startsWith("order-")){
-   const id=decodeURIComponent(h.slice(6));
-   const snap=await getDoc(doc(db,"orders",id));
-   $("app").innerHTML=orderDetails(snap.exists()?{id:snap.id,...snap.data()}:null);
-  }
-  else $("app").innerHTML=home();
-
-  const cf=$("checkoutForm");
-  if(cf)cf.addEventListener("submit",placeOrder);
-  const af=$("adminForm");
-  if(af)af.addEventListener("submit",adminLoginAction);
-  const pf=$("productForm");
-  if(pf)pf.addEventListener("submit",addProduct);
-  updateCount();
- }catch(err){
-  console.error(err);
-  $("app").innerHTML=`<div class="panel"><h2>Something went wrong</h2><p>${esc(err.message)}</p><button onclick="route()">Try Again</button></div>`;
- }
-}
-
-window.addCart=addCart;
-window.buyNow=buyNow;
-window.changeQty=changeQty;
-window.removeCart=removeCart;
-window.deleteProduct=deleteProduct;
-window.updateOrder=updateOrder;
-window.adminLogout=adminLogout;
-window.route=route;
-
-window.addEventListener("hashchange",route);
-
-onAuthStateChanged(auth,async u=>{
- if(!u){
-  try{await signInAnonymously(auth)}
-  catch(err){
-   console.error(err);
-   $("app").innerHTML='<div class="empty">Firebase login failed. Check Anonymous Authentication.</div>';
-  }
-  return;
- }
- user=u;
- authReady=true;
- route();
-});
-</script>
-</body>
-</html>
