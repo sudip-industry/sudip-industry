@@ -51,7 +51,9 @@ hr{border:0;border-top:1px solid #e5e7eb;margin:15px 0}
 </nav>
 </header>
 
-<main id="app"></main>
+<main id="app">
+<div class="empty">Loading SUDIP INDUSTRY...</div>
+</main>
 
 <footer>
 <div class="footer-grid">
@@ -78,46 +80,80 @@ hr{border:0;border-top:1px solid #e5e7eb;margin:15px 0}
 <p style="text-align:center">© 2026 SUDIP INDUSTRY. All Rights Reserved.</p>
 </footer>
 
-<script>
-const KEY='sudip_products_v1';
-const CART='sudip_cart_v1';
-const ORDER='sudip_orders_v1';
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+ getAuth,onAuthStateChanged,signInAnonymously,
+ signInWithEmailAndPassword,signOut
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import {
+ getFirestore,collection,addDoc,getDocs,getDoc,
+ doc,query,where,updateDoc,deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-const BUSINESS_EMAIL='sudippramanick66@gmail.com';
-const BUSINESS_PHONE='+91 89819 88831';
-const WHATSAPP_NUMBER='918981988831';
+const firebaseConfig={
+ apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
+ authDomain:"sudip-industry.firebaseapp.com",
+ projectId:"sudip-industry",
+ storageBucket:"sudip-industry.firebasestorage.app",
+ messagingSenderId:"377224435101",
+ appId:"1:377224435101:web:c5e152120dec1664070b74"
+};
 
-let products=JSON.parse(localStorage.getItem(KEY)||'[]');
-let cart=JSON.parse(localStorage.getItem(CART)||'[]');
-let orders=JSON.parse(localStorage.getItem(ORDER)||'[]');
+const ADMIN_EMAIL="sudippramanick66@gmail.com";
+const BUSINESS_EMAIL="sudippramanick66@gmail.com";
+const BUSINESS_PHONE="+91 89819 88831";
+const WHATSAPP_NUMBER="918981988831";
 
-function save(){
- localStorage.setItem(KEY,JSON.stringify(products));
- localStorage.setItem(CART,JSON.stringify(cart));
- localStorage.setItem(ORDER,JSON.stringify(orders));
- updateCount();
-}
+const appFirebase=initializeApp(firebaseConfig);
+const auth=getAuth(appFirebase);
+const db=getFirestore(appFirebase);
 
-function updateCount(){
- document.getElementById('count').textContent=
- cart.reduce((n,x)=>n+x.qty,0);
-}
+let user=null;
+let products=[];
+let cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]");
+let orders=[];
+let authReady=false;
+let busy=false;
 
-function money(n){
- return '₹'+Number(n||0).toLocaleString('en-IN');
-}
+const $=id=>document.getElementById(id);
+const isAdmin=()=>!!user&&user.email===ADMIN_EMAIL;
 
-function escapeHTML(s){
- return String(s??'').replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;',
- '"':'&quot;',"'":'&#39;'
+function esc(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
-
+function money(n){
+ return "₹"+Number(n||0).toLocaleString("en-IN");
+}
+function saveCart(){
+ localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));
+ updateCount();
+}
+function updateCount(){
+ $("count").textContent=cart.reduce((n,x)=>n+x.qty,0);
+}
 function image(p){
  return p.image
- ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}">`
- : '📦';
+ ? `<img src="${esc(p.image)}" alt="${esc(p.name)}">`
+ : "📦";
+}
+async function loadProducts(){
+ const snap=await getDocs(collection(db,"products"));
+ products=snap.docs.map(d=>({id:d.id,...d.data()}));
+}
+async function loadMyOrders(){
+ if(!user)return [];
+ const q=query(collection(db,"orders"),where("ownerUid","==",user.uid));
+ const snap=await getDocs(q);
+ return snap.docs.map(d=>({id:d.id,...d.data()}))
+ .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+async function loadAllOrders(){
+ const snap=await getDocs(collection(db,"orders"));
+ return snap.docs.map(d=>({id:d.id,...d.data()}))
+ .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 }
 
 function home(){
@@ -134,29 +170,25 @@ function home(){
  <section class="panel">
  <h2>Need Help?</h2>
  <p>Contact our business support.</p>
- <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">WhatsApp Us</a>
+ <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">WhatsApp Us</a>
  </section>`;
 }
-
 function productGrid(list){
  if(!list.length)return '<div class="empty">No products available.</div>';
  return `<div class="grid">${list.map(p=>`
  <article class="card">
  <a href="#product-${encodeURIComponent(p.id)}">
- <div class="photo">${image(p)}</div>
- </a>
- <h3>${escapeHTML(p.name)}</h3>
+ <div class="photo">${image(p)}</div></a>
+ <h3>${esc(p.name)}</h3>
  <div class="price">${money(p.price)}</div>
- <p class="muted">${p.stock>0?'In stock':'Out of stock'}</p>
+ <p class="muted">${Number(p.stock)>0?"In stock":"Out of stock"}</p>
  <a class="btn" href="#product-${encodeURIComponent(p.id)}">View Product</a>
- <button onclick="addCart('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Add to Cart</button>
- </article>`).join('')}</div>`;
+ <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
+ </article>`).join("")}</div>`;
 }
-
 function shop(){
  return `<h2>Our Products</h2>${productGrid(products)}`;
 }
-
 function productPage(id){
  const p=products.find(x=>x.id===id);
  if(!p)return '<div class="empty">Product not found. <a href="#shop">Back to Shop</a></div>';
@@ -164,95 +196,81 @@ function productPage(id){
  <a href="#shop">← Back to Shop</a>
  <div class="panel" style="margin-top:15px">
  <div class="photo" style="height:260px">${image(p)}</div>
- <h2>${escapeHTML(p.name)}</h2>
- <p class="muted">${escapeHTML(p.cat||'')}</p>
+ <h2>${esc(p.name)}</h2>
+ <p class="muted">${esc(p.cat||"")}</p>
  <div class="price">${money(p.price)}</div>
- ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:''}
- <p>${escapeHTML(p.desc||'')}</p>
- <p>${p.stock>0?'In Stock: '+p.stock:'Out of Stock'}</p>
- <button onclick="addCart('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Add to Cart</button>
- <button onclick="buyNow('${escapeHTML(p.id)}')" ${p.stock<=0?'disabled':''}>Buy Now</button>
+ ${p.mrp>p.price?`<p><s>${money(p.mrp)}</s></p>`:""}
+ <p>${esc(p.desc||"")}</p>
+ <p>${Number(p.stock)>0?"In Stock: "+p.stock:"Out of Stock"}</p>
+ <button onclick="addCart('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Add to Cart</button>
+ <button onclick="buyNow('${esc(p.id)}')" ${Number(p.stock)<=0?"disabled":""}>Buy Now</button>
  </div>`;
 }
-
 function addCart(id){
  const p=products.find(x=>x.id===id);
- if(!p||p.stock<=0){alert('Product out of stock');return}
+ if(!p||Number(p.stock)<=0){alert("Product out of stock");return}
  const item=cart.find(x=>x.id===id);
  if(item){
-  if(item.qty>=p.stock){alert('Stock limit reached');return}
+  if(item.qty>=Number(p.stock)){alert("Stock limit reached");return}
   item.qty++;
  }else cart.push({id,qty:1});
- save();
- alert('Added to cart');
+ saveCart();
+ alert("Added to cart");
 }
-
 function buyNow(id){
  const p=products.find(x=>x.id===id);
- if(!p||p.stock<=0){alert('Product out of stock');return}
+ if(!p||Number(p.stock)<=0){alert("Product out of stock");return}
  if(!cart.some(x=>x.id===id))cart.push({id,qty:1});
- save();
- location.hash='cart';
+ saveCart();
+ location.hash="cart";
 }
-
 function total(){
  return cart.reduce((n,x)=>{
  const p=products.find(y=>y.id===x.id);
- return n+(p?p.price*x.qty:0);
+ return n+(p?Number(p.price)*x.qty:0);
  },0);
 }
-
 function cartPage(){
  const valid=cart.filter(x=>products.some(p=>p.id===x.id));
  if(!valid.length)return `
- <div class="empty">
- <h2>Your Cart is Empty</h2>
- <a class="btn" href="#shop">Continue Shopping</a>
- </div>`;
+ <div class="empty"><h2>Your Cart is Empty</h2>
+ <a class="btn" href="#shop">Continue Shopping</a></div>`;
  return `
  <h2>Your Cart</h2>
  ${valid.map(x=>{
  const p=products.find(y=>y.id===x.id);
  return `<div class="panel">
- <div class="row">
- <b>${escapeHTML(p.name)}</b>
- <b>${money(p.price*x.qty)}</b>
- </div>
+ <div class="row"><b>${esc(p.name)}</b><b>${money(p.price*x.qty)}</b></div>
  <p>Price: ${money(p.price)}</p>
- <button onclick="changeQty('${escapeHTML(x.id)}',-1)">−</button>
+ <button onclick="changeQty('${esc(x.id)}',-1)">−</button>
  <b>${x.qty}</b>
- <button onclick="changeQty('${escapeHTML(x.id)}',1)">+</button>
- <button onclick="removeCart('${escapeHTML(x.id)}')">Remove</button>
+ <button onclick="changeQty('${esc(x.id)}',1)">+</button>
+ <button onclick="removeCart('${esc(x.id)}')">Remove</button>
  </div>`;
- }).join('')}
- <div class="panel">
- <h3>Total: ${money(total())}</h3>
- <button onclick="location.hash='checkout'">Proceed to Checkout</button>
- </div>`;
+ }).join("")}
+ <div class="panel"><h3>Total: ${money(total())}</h3>
+ <button onclick="location.hash='checkout'">Proceed to Checkout</button></div>`;
 }
-
 function changeQty(id,n){
  const x=cart.find(y=>y.id===id);
  const p=products.find(y=>y.id===id);
  if(!x||!p)return;
- if(n>0&&x.qty>=p.stock){alert('Stock limit reached');return}
+ if(n>0&&x.qty>=Number(p.stock)){alert("Stock limit reached");return}
  x.qty+=n;
  if(x.qty<=0)cart=cart.filter(y=>y.id!==id);
- save();route();
+ saveCart();route();
 }
-
 function removeCart(id){
  cart=cart.filter(x=>x.id!==id);
- save();route();
+ saveCart();route();
 }
-
 function checkout(){
  if(!cart.length)return '<div class="empty">Your cart is empty. <a href="#shop">Shop Now</a></div>';
  return `
  <h2>Checkout</h2>
  <div class="panel">
  <h3>Delivery Information</h3>
- <form onsubmit="placeOrder(event)">
+ <form id="checkoutForm">
  <label>Full Name</label>
  <input id="customerName" required maxlength="80" placeholder="Enter your name">
  <label>Mobile Number</label>
@@ -260,208 +278,259 @@ function checkout(){
  <label>Full Address</label>
  <textarea id="customerAddress" required maxlength="500" rows="4" placeholder="House, street, area, PIN code"></textarea>
  <label>Payment Method</label>
- <select id="payment">
- <option value="Cash on Delivery">Cash on Delivery (COD)</option>
- </select>
- <hr>
- <h3>Order Total: ${money(total())}</h3>
+ <select id="payment"><option value="Cash on Delivery">Cash on Delivery (COD)</option></select>
+ <hr><h3>Order Total: ${money(total())}</h3>
  <button type="submit">Place Order</button>
- </form>
- </div>`;
+ </form></div>`;
 }
-
-function placeOrder(event){
- event.preventDefault();
- if(!cart.length){alert('Cart is empty');return}
- for(const x of cart){
-  const p=products.find(y=>y.id===x.id);
-  if(!p||p.stock<x.qty){
-   alert('Some products are out of stock. Please check your cart.');
-   location.hash='cart';
-   return;
-  }
- }
- const order={
-  id:'SI'+Date.now(),
-  name:document.getElementById('customerName').value.trim(),
-  phone:document.getElementById('customerPhone').value.trim(),
-  address:document.getElementById('customerAddress').value.trim(),
-  payment:document.getElementById('payment').value,
-  items:cart.map(x=>{
+async function placeOrder(e){
+ e.preventDefault();
+ if(busy)return;
+ busy=true;
+ try{
+  if(!cart.length)throw new Error("Cart is empty");
+  for(const x of cart){
    const p=products.find(y=>y.id===x.id);
-   return {id:p.id,name:p.name,price:p.price,qty:x.qty};
-  }),
-  total:total(),
-  status:'Order Placed',
-  date:new Date().toLocaleString('en-IN')
- };
- for(const x of cart){
-  const p=products.find(y=>y.id===x.id);
-  p.stock-=x.qty;
- }
- orders.unshift(order);
- cart=[];
- save();
- location.hash='myorders';
- alert('Your order has been placed!');
+   if(!p||Number(p.stock)<x.qty)throw new Error("Some products are out of stock.");
+  }
+  const order={
+   ownerUid:user.uid,
+   name:$("customerName").value.trim(),
+   phone:$("customerPhone").value.trim(),
+   address:$("customerAddress").value.trim(),
+   payment:$("payment").value,
+   items:cart.map(x=>{
+    const p=products.find(y=>y.id===x.id);
+    return {id:p.id,name:p.name,price:Number(p.price),qty:x.qty};
+   }),
+   total:total(),
+   status:"Order Placed",
+   date:new Date().toLocaleString("en-IN")
+  };
+  const ref=await addDoc(collection(db,"orders"),order);
+  cart=[];
+  saveCart();
+  alert("Your order has been placed! Order ID: "+ref.id);
+  location.hash="myorders";
+ }catch(err){
+  console.error(err);
+  alert("Order failed: "+err.message);
+ }finally{busy=false}
 }
-
-function myOrders(){
- if(!orders.length)return `
- <div class="empty">
- <h2>My Orders</h2>
+function myOrdersPage(list){
+ if(!list.length)return `
+ <div class="empty"><h2>My Orders</h2>
  <p>You have not placed any orders yet.</p>
- <a class="btn" href="#shop">Start Shopping</a>
- </div>`;
- return `
- <h2>My Orders</h2>
- ${orders.map(o=>`
+ <a class="btn" href="#shop">Start Shopping</a></div>`;
+ return `<h2>My Orders</h2>${list.map(o=>`
  <div class="panel">
- <div class="row">
- <b>Order ${escapeHTML(o.id)}</b>
- <span class="status">${escapeHTML(o.status)}</span>
- </div>
- <p class="muted">${escapeHTML(o.date)}</p>
+ <div class="row"><b>Order ${esc(o.id)}</b>
+ <span class="status">${esc(o.status)}</span></div>
+ <p class="muted">${esc(o.date)}</p>
  <p>Total: <b>${money(o.total)}</b></p>
- <p>${o.items.length} product(s)</p>
+ <p>${(o.items||[]).length} product(s)</p>
  <a class="btn" href="#order-${encodeURIComponent(o.id)}">View Details</a>
- </div>`).join('')}`;
+ </div>`).join("")}`;
 }
-
-function orderDetails(id){
- const o=orders.find(x=>x.id===id);
- if(!o)return '<div class="empty">Order not found. <a href="#myorders">My Orders</a></div>';
+function orderDetails(o){
+ if(!o)return '<div class="empty">Order not found.</div>';
  return `
  <a href="#myorders">← Back to My Orders</a>
  <div class="panel" style="margin-top:15px">
  <h2>Order Details</h2>
- <p><b>Order ID:</b> ${escapeHTML(o.id)}</p>
- <p><b>Date:</b> ${escapeHTML(o.date)}</p>
- <p><b>Status:</b> <span class="status">${escapeHTML(o.status)}</span></p>
- <hr>
- <h3>Products</h3>
- ${o.items.map(x=>`
- <div class="row">
- <span>${escapeHTML(x.name)} × ${x.qty}</span>
- <b>${money(x.price*x.qty)}</b>
- </div>`).join('')}
- <hr>
- <h3>Total: ${money(o.total)}</h3>
- <p><b>Payment:</b> ${escapeHTML(o.payment)}</p>
- <p><b>Name:</b> ${escapeHTML(o.name)}</p>
- <p><b>Phone:</b> ${escapeHTML(o.phone)}</p>
- <p><b>Address:</b> ${escapeHTML(o.address)}</p>
+ <p><b>Order ID:</b> ${esc(o.id)}</p>
+ <p><b>Date:</b> ${esc(o.date)}</p>
+ <p><b>Status:</b> <span class="status">${esc(o.status)}</span></p>
+ <hr><h3>Products</h3>
+ ${(o.items||[]).map(x=>`<div class="row">
+ <span>${esc(x.name)} × ${x.qty}</span><b>${money(x.price*x.qty)}</b>
+ </div>`).join("")}
+ <hr><h3>Total: ${money(o.total)}</h3>
+ <p><b>Payment:</b> ${esc(o.payment)}</p>
+ <p><b>Name:</b> ${esc(o.name)}</p>
+ <p><b>Phone:</b> ${esc(o.phone)}</p>
+ <p><b>Address:</b> ${esc(o.address)}</p>
  </div>`;
 }
-
 function contact(){
- return `
- <h2>Contact Us</h2>
- <div class="panel">
+ return `<h2>Contact Us</h2><div class="panel">
  <h3>SUDIP INDUSTRY</h3>
- <p>For product enquiries and business support, contact us.</p>
- <hr>
- <b>Business Email</b>
- <a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
- <b>Business Phone</b>
- <a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
+ <p>For product enquiries and business support, contact us.</p><hr>
+ <b>Business Email</b><a class="contact-link" href="mailto:${BUSINESS_EMAIL}">${BUSINESS_EMAIL}</a>
+ <b>Business Phone</b><a class="contact-link" href="tel:+918981988831">${BUSINESS_PHONE}</a>
  <b>WhatsApp Support</b>
- <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">Chat on WhatsApp</a>
+ <a class="btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">Chat on WhatsApp</a>
  </div>`;
 }
-
-function admin(){
+function adminLogin(){
+ return `<h2>Admin Login</h2><div class="panel">
+ <p>Login with your Admin account.</p>
+ <form id="adminForm">
+ <label>Admin Email</label>
+ <input id="adminEmail" type="email" value="${ADMIN_EMAIL}" readonly>
+ <label>Password</label>
+ <input id="adminPassword" type="password" required placeholder="Enter Admin password">
+ <button type="submit">Login</button>
+ </form></div>`;
+}
+function adminPage(allOrders){
  return `
- <h2>Admin Dashboard</h2>
+ <div class="row"><h2>Admin Dashboard</h2>
+ <button onclick="adminLogout()">Logout</button></div>
  <div class="panel">
  <h3>Add Product</h3>
- <label>Product Name</label><input id="name">
- <label>Category</label><input id="cat">
- <label>Price ₹</label><input id="price" type="number">
- <label>MRP ₹</label><input id="mrp" type="number">
- <label>Stock</label><input id="stock" type="number">
- <label>Product Image URL</label><input id="image" type="url">
- <label>Description</label><textarea id="desc"></textarea>
- <button onclick="addProduct()">Save Product</button>
- </div>
+ <form id="productForm">
+ <label>Product Name</label><input id="pname" required maxlength="100">
+ <label>Category</label><input id="pcat">
+ <label>Price ₹</label><input id="pprice" type="number" min="1" required>
+ <label>MRP ₹</label><input id="pmrp" type="number" min="0">
+ <label>Stock</label><input id="pstock" type="number" min="0" required>
+ <label>Product Image URL</label><input id="pimage" type="url">
+ <label>Description</label><textarea id="pdesc"></textarea>
+ <button type="submit">Save Product</button>
+ </form></div>
  <h3>Manage Products</h3>
- ${products.map(p=>`
- <div class="panel">
- <div class="row">
- <b>${escapeHTML(p.name)}</b>
- <span>${money(p.price)}</span>
- </div>
- <button onclick="deleteProduct('${escapeHTML(p.id)}')">Delete</button>
- </div>`).join('')}
- <h2>All Orders (${orders.length})</h2>
- ${orders.map(o=>`
- <div class="panel">
- <b>${escapeHTML(o.id)}</b>
- <p>${escapeHTML(o.name)} — ${money(o.total)}</p>
- <p>Status: ${escapeHTML(o.status)}</p>
- <select id="status-${escapeHTML(o.id)}">
- ${['Order Placed','Confirmed','Processing','Shipped','Out for Delivery','Delivered','Cancelled'].map(s=>`
- <option ${o.status===s?'selected':''}>${s}</option>`).join('')}
+ ${products.map(p=>`<div class="panel">
+ <div class="row"><b>${esc(p.name)}</b><span>${money(p.price)}</span></div>
+ <p>Stock: ${Number(p.stock)||0}</p>
+ <button onclick="deleteProduct('${esc(p.id)}')">Delete</button>
+ </div>`).join("")||'<p>No products yet.</p>'}
+ <h2>All Orders (${allOrders.length})</h2>
+ ${allOrders.map(o=>`<div class="panel">
+ <b>${esc(o.id)}</b>
+ <p>${esc(o.name)} — ${money(o.total)}</p>
+ <p>Phone: ${esc(o.phone)}</p>
+ <p>Status: ${esc(o.status)}</p>
+ <select id="status-${esc(o.id)}">
+ ${["Order Placed","Confirmed","Processing","Shipped","Out for Delivery","Delivered","Cancelled"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
  </select>
- <button onclick="updateOrder('${escapeHTML(o.id)}')">Update Status</button>
+ <button onclick="updateOrder('${esc(o.id)}')">Update Status</button>
  <a class="btn" href="#order-${encodeURIComponent(o.id)}">Details</a>
- </div>`).join('')}
+ </div>`).join("")||'<p>No orders yet.</p>'}
  `;
 }
+async function addProduct(e){
+ e.preventDefault();
+ if(!isAdmin())return alert("Admin login required");
+ try{
+  const name=$("pname").value.trim();
+  const price=Number($("pprice").value);
+  if(!name||price<=0)throw new Error("Enter a valid name and price");
+  await addDoc(collection(db,"products"),{
+   name,cat:$("pcat").value.trim(),price,
+   mrp:Number($("pmrp").value)||0,
+   stock:Number($("pstock").value)||0,
+   image:$("pimage").value.trim(),
+   desc:$("pdesc").value.trim()
+  });
+  alert("Product saved");
+  await route();
+ }catch(err){alert("Could not save product: "+err.message)}
+}
+async function deleteProduct(id){
+ if(!isAdmin()||!confirm("Delete this product?"))return;
+ try{
+  await deleteDoc(doc(db,"products",id));
+  alert("Product deleted");
+  await route();
+ }catch(err){alert("Delete failed: "+err.message)}
+}
+async function updateOrder(id){
+ if(!isAdmin())return;
+ const select=$("status-"+id);
+ if(!select)return;
+ try{
+  await updateDoc(doc(db,"orders",id),{status:select.value});
+  alert("Order status updated");
+  await route();
+ }catch(err){alert("Update failed: "+err.message)}
+}
+async function adminLoginAction(e){
+ e.preventDefault();
+ try{
+  const email=$("adminEmail").value.trim();
+  const password=$("adminPassword").value;
+  if(email!==ADMIN_EMAIL)throw new Error("Wrong Admin email");
+  await signInWithEmailAndPassword(auth,email,password);
+  alert("Admin login successful");
+  location.hash="admin";
+ }catch(err){alert("Login failed: "+err.message)}
+}
+async function adminLogout(){
+ if(!confirm("Logout from Admin?"))return;
+ try{
+  await signOut(auth);
+  location.hash="home";
+ }catch(err){alert(err.message)}
+}
+async function route(){
+ if(!authReady){$("app").innerHTML='<div class="empty">Connecting to Firebase...</div>';return}
+ const h=location.hash.slice(1)||"home";
+ try{
+  await loadProducts();
+  if(h==="home")$("app").innerHTML=home();
+  else if(h==="shop")$("app").innerHTML=shop();
+  else if(h==="cart")$("app").innerHTML=cartPage();
+  else if(h==="checkout")$("app").innerHTML=checkout();
+  else if(h==="myorders"){
+   const list=await loadMyOrders();
+   $("app").innerHTML=myOrdersPage(list);
+  }
+  else if(h==="contact")$("app").innerHTML=contact();
+  else if(h==="admin"){
+   if(!isAdmin())$("app").innerHTML=adminLogin();
+   else{
+    const list=await loadAllOrders();
+    $("app").innerHTML=adminPage(list);
+   }
+  }
+  else if(h.startsWith("product-")){
+   $("app").innerHTML=productPage(decodeURIComponent(h.slice(8)));
+  }
+  else if(h.startsWith("order-")){
+   const id=decodeURIComponent(h.slice(6));
+   const snap=await getDoc(doc(db,"orders",id));
+   $("app").innerHTML=orderDetails(snap.exists()?{id:snap.id,...snap.data()}:null);
+  }
+  else $("app").innerHTML=home();
 
-function addProduct(){
- const name=document.getElementById('name').value.trim();
- const price=Number(document.getElementById('price').value);
- if(!name||price<=0){alert('Enter product name and valid price');return}
- products.push({
- id:'SI'+Date.now(),
- name,
- cat:document.getElementById('cat').value,
- price,
- mrp:Number(document.getElementById('mrp').value),
- stock:Math.max(0,Number(document.getElementById('stock').value)||0),
- image:document.getElementById('image').value.trim(),
- desc:document.getElementById('desc').value
- });
- save();
- alert('Product saved');
+  const cf=$("checkoutForm");
+  if(cf)cf.addEventListener("submit",placeOrder);
+  const af=$("adminForm");
+  if(af)af.addEventListener("submit",adminLoginAction);
+  const pf=$("productForm");
+  if(pf)pf.addEventListener("submit",addProduct);
+  updateCount();
+ }catch(err){
+  console.error(err);
+  $("app").innerHTML=`<div class="panel"><h2>Something went wrong</h2><p>${esc(err.message)}</p><button onclick="route()">Try Again</button></div>`;
+ }
+}
+
+window.addCart=addCart;
+window.buyNow=buyNow;
+window.changeQty=changeQty;
+window.removeCart=removeCart;
+window.deleteProduct=deleteProduct;
+window.updateOrder=updateOrder;
+window.adminLogout=adminLogout;
+window.route=route;
+
+window.addEventListener("hashchange",route);
+
+onAuthStateChanged(auth,async u=>{
+ if(!u){
+  try{await signInAnonymously(auth)}
+  catch(err){
+   console.error(err);
+   $("app").innerHTML='<div class="empty">Firebase login failed. Check Anonymous Authentication.</div>';
+  }
+  return;
+ }
+ user=u;
+ authReady=true;
  route();
-}
-
-function deleteProduct(id){
- if(!confirm('Delete this product?'))return;
- products=products.filter(p=>p.id!==id);
- save();route();
-}
-
-function updateOrder(id){
- const o=orders.find(x=>x.id===id);
- const select=document.getElementById('status-'+id);
- if(!o||!select)return;
- o.status=select.value;
- save();
- alert('Order status updated');
- route();
-}
-
-function route(){
- const h=location.hash.slice(1)||'home';
- const app=document.getElementById('app');
- if(h==='home')app.innerHTML=home();
- else if(h==='shop')app.innerHTML=shop();
- else if(h==='cart')app.innerHTML=cartPage();
- else if(h==='checkout')app.innerHTML=checkout();
- else if(h==='myorders')app.innerHTML=myOrders();
- else if(h==='contact')app.innerHTML=contact();
- else if(h==='admin')app.innerHTML=admin();
- else if(h.startsWith('product-'))app.innerHTML=productPage(decodeURIComponent(h.slice(8)));
- else if(h.startsWith('order-'))app.innerHTML=orderDetails(decodeURIComponent(h.slice(6)));
- else app.innerHTML=home();
- updateCount();
-}
-
-window.addEventListener('hashchange',route);
-route();
+});
 </script>
 </body>
 </html>
