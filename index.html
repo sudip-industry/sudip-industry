@@ -52,12 +52,12 @@ table{width:100%;border-collapse:collapse}
 .btn,a,button,select,label{touch-action:manipulation}.sc{overflow-x:auto}
 </style></head><body>
 <header><div class="w hd"><a class="logo" href="#home"><i>S</i><span>SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></span></a>
-<nav><div class="nl" id="nl"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></div><button class="btn s" id="lg">Sign in</button><a class="cartb" href="#cart">🛒<b id="cc">0</b></a><button id="mb" aria-label="Menu">☰</button></nav></div></header>
+<nav><div class="nl" id="nl"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a><a class="admlink" style="display:none" href="#admin">Admin</a></div><button class="btn s" id="lg">Sign in</button><a class="cartb" href="#cart">🛒<b id="cc">0</b></a><button id="mb" aria-label="Menu">☰</button></nav></div></header>
 <main id="app"></main>
 <footer><div class="w"><div class="fg"><div><b style="color:#fff;letter-spacing:.06em">SUDIP INDUSTRY</b><br>DREAM • WORK • SUCCESS<br><br>Email: <a style="display:inline" href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></div>
 <div><a href="#about">About</a><a href="#contact">Contact</a><a href="#shop">Shop</a><a href="#orders">My Orders</a></div>
 <div><a href="#policy-privacy">Privacy Policy</a><a href="#policy-terms">Terms &amp; Conditions</a><a href="#policy-shipping">Shipping Policy</a><a href="#policy-returns">Return &amp; Refund Policy</a></div></div>
-<p style="margin-top:20px">© <span id="yr"></span> SUDIP INDUSTRY. All rights reserved. · <a style="display:inline" href="#admin">Admin</a></p></div></footer>
+<p style="margin-top:20px">© <span id="yr"></span> SUDIP INDUSTRY. All rights reserved. · <a class="admlink" data-d="inline" style="display:none" href="#admin">Admin</a></p></div></footer>
 <script>
 const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -170,9 +170,10 @@ function subscribe(){unsubs.forEach(f=>f());unsubs=[];if(!db)return;const er=()=
  unsubs.push(db.doc('settings/store').onSnapshot(s=>{if(s.exists)settings={...settings,...s.data()}},er));
  if(isAdmin){unsubs.push(db.collection('orders').onSnapshot(s=>{orders=s.docs.map(d=>({id:d.id,...d.data()}));q()},er));unsubs.push(db.collection('messages').onSnapshot(s=>{msgs=s.docs.map(d=>d.data());q()},er))}}
 const loginErr=e=>({'auth/popup-closed-by-user':'Sign-in was cancelled.','auth/cancelled-popup-request':'Sign-in was cancelled.','auth/unauthorized-domain':'This website address is not authorised in Firebase (Authentication > Settings > Authorized domains).','auth/network-request-failed':'Network problem. Check your internet and try again.','auth/popup-blocked':'Your browser blocked the sign-in window. Please allow pop-ups and try again.','auth/operation-not-allowed':'This sign-in method is not enabled in Firebase.','si/exists':'This email already has an account. If you signed up with Google or forgot the password, tap "Forgot password?" below to set one, or use Continue with Google.','auth/invalid-credential':'Wrong email or password. If you signed up with Google, tap "Forgot password?" below to set a password.','auth/wrong-password':'Wrong email or password.','auth/user-not-found':'No account found for this email.','auth/invalid-email':'Please enter a valid email address.','auth/email-already-in-use':'This email already has an account. Tap Sign in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/too-many-requests':'Too many attempts. Please wait a few minutes and try again.'}[e&&e.code]||'Sign-in failed. Please try again.');
-function authUI(){const b=$('#lg');b.disabled=signing;b.textContent=signing?'Please wait…':curUser?'Sign out':'Sign in';b.onclick=async()=>{if(signing)return;
+function authUI(){document.querySelectorAll('.admlink').forEach(a=>a.style.display=isAdmin?(a.dataset.d||''):'none');const b=$('#lg');b.disabled=signing;b.textContent=signing?'Please wait…':curUser?'Sign out':'Sign in';b.onclick=async()=>{if(signing)return;
  if(curUser){try{await FB.signOut();toast('Signed out')}catch(e){toast('Sign-out failed. Please try again.')}return}
  const h=location.hash.slice(1)||'home';if(h!=='login')backTo=h;location.hash='login'}}
+const ADMIN_EMAIL='sudippramanick66@gmail.com';
 const GOOGLE_LOGIN=false; // set to true to show the Google button again once it works
 function loginView(){if(curUser)return `<div class="w sec"><h1>You are signed in</h1><p>${esc(curUser.email||'')}</p><a class="btn" href="#shop">Continue shopping</a></div>`;
  return `<div class="w sec" style="max-width:460px"><h1>Sign in</h1><form id="lf"><label>Email</label><input type="email" name="email" required autocomplete="email"><label>Password</label><input type="password" name="pw" required minlength="6" autocomplete="current-password"><p id="le" class="er"></p><button class="btn" style="width:100%" id="li">Sign in</button><button type="button" class="btn k" style="width:100%;margin-top:10px" id="lc">Create new account</button><p><a href="#login" id="lr">Forgot password?</a></p></form>${GOOGLE_LOGIN?'<p class="mut" style="text-align:center">or</p><button type="button" class="btn g" style="width:100%" id="lgg">Continue with Google</button>':''}<p class="mut" style="margin-top:14px">New customer? Enter your email and a password (at least 6 characters), then tap Create new account.</p></div>`}
@@ -184,7 +185,7 @@ function loginInit(){const f=$('#lf');if(!f)return;const em=$('#le');
  $('#lc').onclick=()=>{if(!f.reportValidity())return;const v=val();run(async()=>{try{await FB.emailSignUp(v.e,v.p)}catch(x){if(x&&x.code==='auth/email-already-in-use'){try{await FB.emailSignIn(v.e,v.p)}catch(y){if(y&&(y.code==='auth/invalid-credential'||y.code==='auth/wrong-password'))throw {code:'si/exists'};throw y}}else throw x}})};
  const gb=$('#lgg');if(gb)gb.onclick=()=>run(()=>FB.signIn());
  $('#lr').onclick=async ev=>{ev.preventDefault();const e=f.email.value.trim();if(!e){em.className='er';em.textContent='Enter your email first.';return}if(!window.FB)return;try{await FB.resetPw(e);em.className='ok';em.textContent='Password reset email sent. Check your inbox and spam folder.'}catch(x){em.className='er';em.textContent=loginErr(x)}}}
-function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=false;if(u){try{isAdmin=(await db.doc('admins/'+u.uid).get()).exists}catch(e){}}authUI();subscribe();if(u&&location.hash==='#login')location.hash='#'+backTo;else softRoute()})}
+function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=false;if(u&&String(u.email||'').toLowerCase()===ADMIN_EMAIL){try{isAdmin=(await db.doc('admins/'+u.uid).get()).exists}catch(e){}}authUI();subscribe();if(u&&location.hash==='#login')location.hash='#'+backTo;else softRoute()})}
 window.FB?boot():addEventListener('fbready',boot);
 </script>
 <script type="module">
