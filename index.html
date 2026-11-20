@@ -18,166 +18,51 @@
  --line:#e5eaf2;
 }
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:var(--bg);
- color:var(--text);
-}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
 button,input,select,textarea{font:inherit}
-button{
- border:0;
- border-radius:9px;
- padding:11px 15px;
- background:var(--blue);
- color:white;
- cursor:pointer;
-}
-button:active{transform:scale(.97)}
+button{border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:white;cursor:pointer;margin:3px}
 button:disabled{opacity:.5;cursor:not-allowed}
-input,select,textarea{
- width:100%;
- padding:12px;
- border:1px solid var(--line);
- border-radius:8px;
- margin:6px 0 12px;
- background:white;
-}
-header{
- background:var(--blue);
- color:white;
- padding:14px;
- position:sticky;
- top:0;
- z-index:10;
-}
-.header{
- max-width:1100px;
- margin:auto;
- display:flex;
- align-items:center;
- gap:12px;
- flex-wrap:wrap;
-}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;margin:6px 0 12px;background:white}
+header{background:var(--blue);color:white;padding:14px;position:sticky;top:0;z-index:10}
+.header{max-width:1100px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .logo{font-size:21px;font-weight:bold}
 .search{flex:1;min-width:150px}
 .search input{margin:0}
-nav{
- display:flex;
- gap:7px;
- flex-wrap:wrap;
- max-width:1100px;
- margin:12px auto 0;
-}
+nav{display:flex;gap:7px;flex-wrap:wrap;max-width:1100px;margin:12px auto 0}
 nav button{background:#ffffff20}
-main{
- max-width:1100px;
- margin:18px auto;
- padding:0 12px 85px;
-}
-.hero{
- background:linear-gradient(120deg,#173b75,#2865b5);
- color:white;
- padding:35px 20px;
- border-radius:15px;
- margin-bottom:20px;
-}
+main{max-width:1100px;margin:18px auto;padding:0 12px 85px}
+.hero{background:linear-gradient(120deg,#173b75,#2865b5);color:white;padding:35px 20px;border-radius:15px;margin-bottom:20px}
 .hero h1{font-size:27px}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
- gap:13px;
-}
-.card{
- background:white;
- border:1px solid var(--line);
- border-radius:12px;
- padding:12px;
-}
-.card img{
- width:100%;
- height:145px;
- object-fit:contain;
- border-radius:8px;
- background:#f7f8fa;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px}
+.card{background:white;border:1px solid var(--line);border-radius:12px;padding:12px;overflow:hidden}
+.card img{width:100%;height:145px;object-fit:contain;border-radius:8px;background:#f7f8fa}
 .card h3{font-size:15px}
 .price{font-weight:bold;color:var(--blue)}
 .page{display:none}
 .page.active{display:block}
-.panel{
- background:white;
- padding:16px;
- border-radius:12px;
- margin-bottom:15px;
-}
-.row{
- display:flex;
- gap:10px;
- align-items:center;
- flex-wrap:wrap;
-}
+.panel{background:white;padding:16px;border-radius:12px;margin-bottom:15px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .row>*{flex:1}
 .small{font-size:12px;color:#64748b}
 .hidden{display:none!important}
-footer{
- text-align:center;
- padding:22px;
- background:white;
-}
-.bottom-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- background:white;
- border-top:1px solid var(--line);
- display:flex;
- justify-content:space-around;
- padding:8px 3px;
- z-index:20;
-}
-.bottom-nav button{
- background:white;
- color:var(--blue);
- padding:7px 5px;
- font-size:12px;
-}
-#toast{
- position:fixed;
- bottom:75px;
- left:50%;
- transform:translateX(-50%);
- background:#172033;
- color:white;
- padding:12px 18px;
- border-radius:9px;
- z-index:50;
- display:none;
-}
-.product-gallery{
- display:flex;
- gap:8px;
- overflow:auto;
-}
-.product-gallery img{
- width:65px;
- height:65px;
- object-fit:contain;
- border:1px solid var(--line);
- border-radius:7px;
- cursor:pointer;
-}
-.admin-card{
- background:#fff;
- padding:14px;
- border-radius:10px;
- margin-bottom:12px;
- border:1px solid var(--line);
-}
-@media(min-width:700px){
- .bottom-nav{display:none}
-}
+footer{text-align:center;padding:22px;background:white}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px;z-index:20}
+.bottom-nav button{background:white;color:var(--blue);padding:7px 5px;font-size:12px}
+#toast{position:fixed;bottom:75px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px 18px;border-radius:9px;z-index:50;display:none;max-width:90%;text-align:center}
+.product-gallery{display:flex;gap:8px;overflow:auto}
+.product-gallery img{width:65px;height:65px;object-fit:contain;border:1px solid var(--line);border-radius:7px;cursor:pointer}
+.admin-card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid var(--line);overflow-wrap:anywhere}
+.order-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
+.order-filters button{flex:1;min-width:105px}
+.delete-btn{background:#dc2626}
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:12px;margin:12px 0 22px}
+.category-card{background:white;border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center;cursor:pointer;min-width:0}
+.category-card img{width:100%;height:105px;object-fit:cover;border-radius:8px;background:#f1f5f9}
+.category-card b{display:block;margin-top:8px;font-size:14px;overflow-wrap:anywhere}
+.category-card.selected{border:2px solid var(--blue)}
+.category-admin-img{width:90px;height:75px;object-fit:cover;border-radius:8px}
+.preview-img{width:100px;height:100px;object-fit:cover;border-radius:9px;display:none;margin:5px 0}
+@media(min-width:700px){.bottom-nav{display:none}}
 </style>
 </head>
 
@@ -217,12 +102,20 @@ footer{
   <p id="heroText">Shop your favourite products easily.</p>
   <button onclick="showPage('shop')" id="shopNowButton" style="background:#f4b942;color:#172033">Shop Now</button>
  </div>
+
+ <h2>Shop by Category</h2>
+ <div id="homeCategories" class="category-grid"></div>
+
  <h2>Featured Products</h2>
  <div id="homeProducts" class="grid"></div>
 </section>
 
 <section id="shop" class="page">
  <h2>All Products</h2>
+ <h3>Categories</h3>
+ <div id="shopCategories" class="category-grid"></div>
+ <button onclick="clearCategoryFilter()">All Products</button>
+ <p id="activeCategoryLabel"></p>
  <select id="sortProducts" onchange="renderShop()">
   <option value="latest">Latest</option>
   <option value="low">Price: Low to High</option>
@@ -251,31 +144,23 @@ footer{
   <form id="checkoutForm" onsubmit="placeOrder(event)">
    <label>Your Name</label>
    <input id="customerName" required maxlength="100">
-
    <label>Mobile Number</label>
    <input id="customerPhone" type="tel" required maxlength="15">
-
    <label>Full Address</label>
    <textarea id="customerAddress" required maxlength="500"></textarea>
-
    <label>City / District</label>
    <input id="customerCity" required>
-
    <label>PIN Code</label>
    <input id="customerPin" required maxlength="10">
-
    <label>Payment Method</label>
    <select id="paymentMethod" onchange="updatePaymentInstructions()">
     <option value="COD">Cash on Delivery</option>
     <option value="UPI">UPI Payment</option>
     <option value="BANK">Bank Transfer</option>
    </select>
-
    <div id="paymentInstructions"></div>
-
    <label>Transaction ID (for prepaid payments)</label>
    <input id="utrInput" maxlength="100">
-
    <div id="checkoutSummary"></div>
    <button type="submit" id="placeOrderButton">Place Order</button>
   </form>
@@ -334,6 +219,11 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+ getStorage,ref,uploadBytes,getDownloadURL,deleteObject
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 const firebaseConfig={
  apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
  authDomain:"sudip-industry.firebaseapp.com",
@@ -346,16 +236,25 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
 const auth=getAuth(app);
+const storage=getStorage(app);
 const ADMIN_EMAIL="sudippramanick66@gmail.com";
 
 let currentUser=null;
 let products=[];
+let categories=[];
 let orders=[];
 let wishlist=[];
 let cart=JSON.parse(localStorage.getItem("si_cart")||"[]");
 let paymentSettings={};
 let selectedProduct=null;
 let currentLanguage="en";
+let activeOrderFilter="All";
+let activeCategoryFilter="All";
+
+const ORDER_STATUSES=[
+ "Pending","Confirmed","Processing","Shipped",
+ "Delivered","Cancelled","Return Requested","Returned"
+];
 
 const translations={
  en:{
@@ -386,36 +285,31 @@ const translations={
   welcome:"SUDIP INDUSTRY-ലേക്ക് സ്വാഗതം",
   hero:"നിങ്ങളുടെ പ്രിയപ്പെട്ട ഉൽപ്പന്നങ്ങൾ എളുപ്പത്തിൽ ഓർഡർ ചെയ്യൂ.",
   shopNow:"ഇപ്പോൾ വാങ്ങുക",empty:"ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
-  emptyCart:"കാർട്ട് ശൂന്യമാണ്",
-  orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി",
-  productAdded:"ഉൽപ്പന്നം ചേർത്തു",
-  addCart:"കാർട്ടിൽ ചേർക്കുക",buyNow:"ഇപ്പോൾ വാങ്ങുക",
-  remove:"നീക്കം ചെയ്യുക",total:"ആകെ"
+  emptyCart:"കാർട്ട് ശൂന്യമാണ്",orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി",
+  productAdded:"ഉൽപ്പന്നം ചേർത്തു",addCart:"കാർട്ടിൽ ചേർക്കുക",
+  buyNow:"ഇപ്പോൾ വാങ്ങുക",remove:"നീക്കം ചെയ്യുക",total:"ആകെ"
  },
  ne:{
   welcome:"SUDIP INDUSTRY मा स्वागत छ",
   hero:"आफ्ना मनपर्ने सामान सजिलै अर्डर गर्नुहोस्।",
   shopNow:"अहिले किन्नुहोस्",empty:"कुनै सामान भेटिएन",
-  emptyCart:"कार्ट खाली छ",
-  orderSuccess:"अर्डर सफलतापूर्वक गरियो",
-  productAdded:"सामान थपियो",
-  addCart:"कार्टमा थप्नुहोस्",buyNow:"अहिले किन्नुहोस्",
-  remove:"हटाउनुहोस्",total:"जम्मा"
+  emptyCart:"कार्ट खाली छ",orderSuccess:"अर्डर सफलतापूर्वक गरियो",
+  productAdded:"सामान थपियो",addCart:"कार्टमा थप्नुहोस्",
+  buyNow:"अहिले किन्नुहोस्",remove:"हटाउनुहोस्",total:"जम्मा"
  }
 };
 
 function $(id){return document.getElementById(id)}
 
 function tr(key){
- return translations[currentLanguage]?.[key] ||
- translations.en[key] || key;
+ return translations[currentLanguage]?.[key]||translations.en[key]||key;
 }
 
 function toast(message){
  const el=$("toast");
  el.textContent=message;
  el.style.display="block";
- setTimeout(()=>el.style.display="none",2500);
+ setTimeout(()=>el.style.display="none",3000);
 }
 
 function money(value){
@@ -466,27 +360,33 @@ function productImage(p){
 }
 
 function productImages(p){
- return Array.isArray(p.images)&&p.images.length
- ?p.images:[productImage(p)];
+ return Array.isArray(p.images)&&p.images.length?p.images:[productImage(p)];
 }
+
+/* LOAD FIREBASE DATA */
 
 async function loadData(){
  try{
   const snap=await getDocs(collection(db,"products"));
   products=snap.docs.map(d=>({id:d.id,...d.data()}));
 
+  const categorySnap=await getDocs(collection(db,"categories"));
+  categories=categorySnap.docs.map(d=>({id:d.id,...d.data()}));
+
+  paymentSettings={};
   const settings=await getDocs(collection(db,"paymentSettings"));
   settings.forEach(d=>paymentSettings[d.id]=d.data());
+
+  wishlist=[];
+  orders=[];
 
   if(currentUser&&!currentUser.isAnonymous){
    const w=await getDocs(collection(db,"users",currentUser.uid,"wishlist"));
    wishlist=w.docs.map(d=>d.id);
 
    const o=await getDocs(collection(db,"orders"));
-   orders=o.docs
-    .map(d=>({id:d.id,...d.data()}))
-    .filter(x=>x.ownerUid===currentUser.uid||
-      currentUser.email===ADMIN_EMAIL);
+   orders=o.docs.map(d=>({id:d.id,...d.data()}))
+    .filter(x=>x.ownerUid===currentUser.uid||currentUser.email===ADMIN_EMAIL);
   }
 
   renderHome();
@@ -500,11 +400,30 @@ async function loadData(){
  }
 }
 
+/* CATEGORY DISPLAY */
+
+function renderCategoryCards(containerId){
+ const box=$(containerId);
+ if(!box)return;
+
+ box.innerHTML=categories.map(c=>`
+  <div class="category-card ${activeCategoryFilter===c.name?"selected":""}"
+   onclick="selectCategory('${c.id}')">
+   <img src="${safeText(c.imageUrl||"https://placehold.co/300x200?text=Category")}"
+    alt="${safeText(c.name)}">
+   <b>${safeText(c.name)}</b>
+  </div>
+ `).join("")||"<p>No categories added yet.</p>";
+}
+
 function renderHome(){
+ renderCategoryCards("homeCategories");
+
  $("homeProducts").innerHTML=products.slice(0,8).map(p=>`
   <div class="card">
    <img src="${safeText(productImage(p))}" alt="${safeText(p.name)}">
    <h3>${safeText(p.name)}</h3>
+   <p class="small">${safeText(p.category||"")}</p>
    <p class="price">${money(p.price)}</p>
    <button onclick="openProduct('${p.id}')">View Product</button>
   </div>
@@ -512,6 +431,8 @@ function renderHome(){
 }
 
 function renderShop(){
+ renderCategoryCards("shopCategories");
+
  let list=[...products];
  const query=$("searchInput").value.toLowerCase().trim();
 
@@ -522,6 +443,13 @@ function renderShop(){
   );
  }
 
+ if(activeCategoryFilter!=="All"){
+  list=list.filter(p=>p.category===activeCategoryFilter);
+ }
+
+ $("activeCategoryLabel").textContent=
+  activeCategoryFilter==="All"?"Showing all products":"Category: "+activeCategoryFilter;
+
  const sort=$("sortProducts").value;
  if(sort==="low")list.sort((a,b)=>Number(a.price)-Number(b.price));
  if(sort==="high")list.sort((a,b)=>Number(b.price)-Number(a.price));
@@ -531,12 +459,25 @@ function renderShop(){
   <div class="card">
    <img src="${safeText(productImage(p))}" alt="${safeText(p.name)}">
    <h3>${safeText(p.name)}</h3>
+   <p class="small">${safeText(p.category||"Uncategorized")}</p>
    <p class="price">${money(p.price)}</p>
    <button onclick="openProduct('${p.id}')">View</button>
    <button onclick="addToCart('${p.id}')">Add</button>
    <button onclick="toggleWishlist('${p.id}')">♡</button>
   </div>
  `).join("")||`<p>${tr("empty")}</p>`;
+}
+
+function selectCategory(id){
+ const c=categories.find(x=>x.id===id);
+ if(!c)return;
+ activeCategoryFilter=c.name;
+ showPage("shop");
+}
+
+function clearCategoryFilter(){
+ activeCategoryFilter="All";
+ renderShop();
 }
 
 function openProduct(id){
@@ -550,11 +491,11 @@ function openProduct(id){
   <img id="mainProductImage" src="${safeText(productImage(p))}"
    style="width:100%;max-height:320px;object-fit:contain">
   <div class="product-gallery">
-   ${productImages(p).map((im,i)=>`
-    <img src="${safeText(im)}"
-     onclick="changeMainImage('${safeText(im)}')">
+   ${productImages(p).map(im=>`
+    <img src="${safeText(im)}" onclick="changeMainImage(this.src)">
    `).join("")}
   </div>
+  <p>Category: ${safeText(p.category||"Uncategorized")}</p>
   <h2 class="price">${money(p.price)}</h2>
   <p>${safeText(p.description||"No description available.")}</p>
   <button onclick="addToCart('${p.id}')">${tr("addCart")}</button>
@@ -568,13 +509,18 @@ window.changeMainImage=function(src){
  $("mainProductImage").src=src;
 };
 
+/* CART */
+
 function addToCart(id){
  const p=products.find(x=>x.id===id);
  if(!p)return;
 
  const item=cart.find(x=>x.id===id);
  if(item)item.qty++;
- else cart.push({id:p.id,name:p.name,price:Number(p.price),image:productImage(p),qty:1});
+ else cart.push({
+  id:p.id,name:p.name,price:Number(p.price),
+  image:productImage(p),qty:1
+ });
 
  saveCart();
  toast(tr("productAdded"));
@@ -584,40 +530,6 @@ function buyNow(id){
  addToCart(id);
  renderCheckoutSummary();
  showPage("checkout");
-}
-
-function toggleWishlist(id){
- if(!currentUser){
-  toast("Please login first");
-  return;
- }
-
- if(wishlist.includes(id)){
-  wishlist=wishlist.filter(x=>x!==id);
-  deleteDoc(doc(db,"users",currentUser.uid,"wishlist",id)).catch(console.error);
- }else{
-  wishlist.push(id);
-  setDoc(doc(db,"users",currentUser.uid,"wishlist",id),{
-   productId:id,createdAt:serverTimestamp()
-  }).catch(console.error);
- }
- renderWishlist();
- toast("Wishlist updated");
-}
-
-function renderWishlist(){
- $("wishlistContent").innerHTML=wishlist.map(id=>{
-  const p=products.find(x=>x.id===id);
-  if(!p)return "";
-  return `
-   <div class="card">
-    <img src="${safeText(productImage(p))}">
-    <h3>${safeText(p.name)}</h3>
-    <p>${money(p.price)}</p>
-    <button onclick="openProduct('${p.id}')">View</button>
-    <button onclick="toggleWishlist('${p.id}')">Remove</button>
-   </div>`;
- }).join("")||"<p>Your wishlist is empty.</p>";
 }
 
 function renderCart(){
@@ -662,6 +574,45 @@ function removeCart(id){
  renderCart();
 }
 
+/* WISHLIST */
+
+function toggleWishlist(id){
+ if(!currentUser||currentUser.isAnonymous){
+  toast("Please login with Google first");
+  return;
+ }
+
+ if(wishlist.includes(id)){
+  wishlist=wishlist.filter(x=>x!==id);
+  deleteDoc(doc(db,"users",currentUser.uid,"wishlist",id)).catch(console.error);
+ }else{
+  wishlist.push(id);
+  setDoc(doc(db,"users",currentUser.uid,"wishlist",id),{
+   productId:id,createdAt:serverTimestamp()
+  }).catch(console.error);
+ }
+
+ renderWishlist();
+ toast("Wishlist updated");
+}
+
+function renderWishlist(){
+ $("wishlistContent").innerHTML=wishlist.map(id=>{
+  const p=products.find(x=>x.id===id);
+  if(!p)return "";
+  return `
+   <div class="card">
+    <img src="${safeText(productImage(p))}">
+    <h3>${safeText(p.name)}</h3>
+    <p>${money(p.price)}</p>
+    <button onclick="openProduct('${p.id}')">View</button>
+    <button onclick="toggleWishlist('${p.id}')">Remove</button>
+   </div>`;
+ }).join("")||"<p>Your wishlist is empty.</p>";
+}
+
+/* CHECKOUT */
+
 function renderCheckoutSummary(){
  $("checkoutSummary").innerHTML=`
   <h3>Order Summary</h3>
@@ -683,20 +634,20 @@ function updatePaymentInstructions(){
   const s=paymentSettings.main||{};
   box.innerHTML=s.upiId
    ?`<p>UPI ID: <b>${safeText(s.upiId)}</b></p>`
-   :"<p>UPI payment is not configured yet. Contact the administrator.</p>";
+   :"<p>UPI payment is not configured yet.</p>";
  }else{
   const s=paymentSettings.main||{};
   box.innerHTML=s.bankName
    ?`<p>Bank: ${safeText(s.bankName)}<br>Account holder: ${safeText(s.accountName||"")}<br>Account number: ${safeText(s.accountNumber||"")}<br>IFSC: ${safeText(s.ifsc||"")}</p>`
-   :"<p>Bank transfer is not configured yet. Contact the administrator.</p>";
+   :"<p>Bank transfer is not configured yet.</p>";
  }
 }
 
 async function placeOrder(event){
  event.preventDefault();
 
- if(!currentUser){
-  toast("Please login first");
+ if(!currentUser||currentUser.isAnonymous){
+  toast("Please login with Google before ordering");
   return;
  }
  if(!cart.length){
@@ -754,6 +705,8 @@ async function placeOrder(event){
  }
 }
 
+/* ACCOUNT */
+
 async function loginGoogle(){
  try{
   await signInWithPopup(auth,new GoogleAuthProvider());
@@ -772,21 +725,21 @@ async function logout(){
 }
 
 function renderProfile(){
- $("profileContent").innerHTML=currentUser?`
+ $("profileContent").innerHTML=currentUser&&!currentUser.isAnonymous?`
   <h3>${safeText(currentUser.displayName||"Customer")}</h3>
-  <p>${safeText(currentUser.email||"Guest account")}</p>
+  <p>${safeText(currentUser.email||"")}</p>
   ${currentUser.photoURL?`<img src="${safeText(currentUser.photoURL)}" style="width:65px;border-radius:50%">`:""}
   <p><button onclick="logout()">Logout</button></p>
   <button onclick="loginGoogle()">Switch / Login with Google</button>
  `:`
-  <p>You are not logged in.</p>
+  <p>You are using a guest session.</p>
   <button onclick="loginGoogle()">Login with Google</button>
  `;
 }
 
 function renderOrders(){
- if(!currentUser){
-  $("myOrders").innerHTML='<p>Please login to see your orders.</p>';
+ if(!currentUser||currentUser.isAnonymous){
+  $("myOrders").innerHTML='<p>Please login with Google to see your orders.</p>';
   return;
  }
 
@@ -796,14 +749,16 @@ function renderOrders(){
    <p>Date: ${o.createdAt?.toDate?.().toLocaleString("en-IN")||"Processing"}</p>
    <p>Status: <b>${safeText(o.status||"Pending")}</b></p>
    <p>Payment: ${safeText(o.paymentStatus||"Pending")}</p>
-   ${o.items?.map(i=>`
+   ${(o.items||[]).map(i=>`
     <p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i.qty)}</p>
-   `).join("")||""}
+   `).join("")}
    <h3>Total: ${money(o.total)}</h3>
    <p>Delivery: ${safeText(o.address||"")}, ${safeText(o.city||"")} - ${safeText(o.pin||"")}</p>
   </div>
  `).join("")||"<p>No orders yet.</p>";
 }
+
+/* ADMIN DASHBOARD */
 
 function renderAdmin(){
  if(currentUser?.email!==ADMIN_EMAIL){
@@ -818,22 +773,58 @@ function renderAdmin(){
   <div class="panel">
    <h3>Dashboard Statistics</h3>
    <p>Total Products: ${products.length}</p>
+   <p>Total Categories: ${categories.length}</p>
    <p>Total Orders: ${orders.length}</p>
+   <p>Delivered: ${orders.filter(o=>o.status==="Delivered").length}</p>
+   <p>Cancelled: ${orders.filter(o=>o.status==="Cancelled").length}</p>
   </div>
 
   <div class="panel">
-   <h3>Add Product</h3>
+   <h3>📁 Add New Category</h3>
+   <form id="addCategoryForm">
+    <label>Category Name</label>
+    <input id="newCategoryName" placeholder="Example: Electronics" required maxlength="60">
+
+    <label>Category Photo URL (Optional)</label>
+    <input id="newCategoryImageUrl" type="url" placeholder="Paste image URL">
+
+    <label>Or Upload Photo from Gallery</label>
+    <input id="newCategoryImageFile" type="file" accept="image/*" onchange="previewCategoryImage(this,'categoryPreview')">
+
+    <img id="categoryPreview" class="preview-img" alt="Category preview">
+
+    <button type="submit" id="addCategoryButton">Add Category</button>
+   </form>
+  </div>
+
+  <div class="panel">
+   <h3>Manage Categories</h3>
+   <div id="adminCategories"></div>
+  </div>
+
+  <div class="panel">
+   <h3>➕ Add Product</h3>
    <form id="addProductForm">
     <label>Product Name</label>
-    <input id="newProductName" required>
+    <input id="newProductName" required maxlength="100">
+
     <label>Price</label>
     <input id="newProductPrice" type="number" min="0" required>
-    <label>Image URL</label>
+
+    <label>Select Category</label>
+    <select id="newProductCategory" required>
+     <option value="">Select Category</option>
+    </select>
+
+    <label>Product Image URL</label>
     <input id="newProductImage" type="url" required>
+
     <label>Additional Image URLs (comma separated)</label>
     <input id="newProductImages">
+
     <label>Description</label>
     <textarea id="newProductDescription"></textarea>
+
     <button type="submit">Add Product</button>
    </form>
   </div>
@@ -861,8 +852,19 @@ function renderAdmin(){
   </div>
 
   <div class="panel">
-   <h3>Orders</h3>
-   <div id="adminOrders"></div>
+   <h3>Order Management</h3>
+   <div class="order-filters">
+    <button onclick="filterOrders('All')">All Orders</button>
+    <button onclick="filterOrders('Pending')">New Orders</button>
+    <button onclick="filterOrders('Confirmed')">Confirmed</button>
+    <button onclick="filterOrders('Processing')">Processing</button>
+    <button onclick="filterOrders('Shipped')">Shipped</button>
+    <button onclick="filterOrders('Delivered')">Delivered</button>
+    <button onclick="filterOrders('Cancelled')">Cancelled</button>
+    <button onclick="filterOrders('Return Requested')">Return Requests</button>
+    <button onclick="filterOrders('Returned')">Returned</button>
+   </div>
+   <div id="orderFilterResult"></div>
   </div>
  `;
 
@@ -872,70 +874,259 @@ function renderAdmin(){
  $("adminAccountNumber").value=paymentSettings.main?.accountNumber||"";
  $("adminIfsc").value=paymentSettings.main?.ifsc||"";
 
+ const categorySelect=$("newProductCategory");
+ categorySelect.innerHTML='<option value="">Select Category</option>'+
+  categories.map(c=>`<option value="${safeText(c.name)}">${safeText(c.name)}</option>`).join("");
+
+ $("addCategoryForm").onsubmit=addCategory;
  $("addProductForm").onsubmit=addProduct;
  $("paymentSettingsForm").onsubmit=savePaymentSettings;
+
+ renderAdminCategories();
 
  $("adminProducts").innerHTML=products.map(p=>`
   <div class="admin-card">
    <b>${safeText(p.name)}</b>
+   <p>Category: ${safeText(p.category||"Uncategorized")}</p>
    <p>${money(p.price)}</p>
-   <button onclick="deleteProduct('${p.id}')">Delete</button>
+   <button onclick="deleteProduct('${p.id}')">Delete Product</button>
   </div>
- `).join("");
+ `).join("")||"<p>No products found.</p>";
 
- $("adminOrders").innerHTML=orders.map(o=>`
-  <div class="admin-card">
-   <b>Order: ${safeText(o.id)}</b>
-   <p>Customer: ${safeText(o.customerName)}</p>
-   <p>Phone: ${safeText(o.phone)}</p>
-   <p>Address: ${safeText(o.address)}, ${safeText(o.city)} ${safeText(o.pin)}</p>
-   <p>Total: ${money(o.total)}</p>
-   <p>Payment: ${safeText(o.paymentMethod)} / ${safeText(o.paymentStatus)}</p>
-   <p>UTR: ${safeText(o.utr||"Not provided")}</p>
-   <p>Products:</p>
-   ${(o.items||[]).map(i=>`
-    <p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i.qty)}</p>
-   `).join("")}
-   <label>Order Status</label>
-   <select id="status-${o.id}">
-    ${["Pending","Confirmed","Shipped","Delivered","Cancelled"].map(s=>`
-     <option value="${s}" ${o.status===s?"selected":""}>${s}</option>
-    `).join("")}
-   </select>
-   <button onclick="updateOrderStatus('${o.id}')">Update Status</button>
-  </div>
- `).join("")||"<p>No orders found.</p>";
+ renderAdminOrdersList(activeOrderFilter);
 }
+
+/* CATEGORY IMAGE PREVIEW */
+
+function previewCategoryImage(input,previewId){
+ const file=input.files?.[0];
+ const preview=$(previewId);
+ if(!file){
+  preview.style.display="none";
+  return;
+ }
+ if(!file.type.startsWith("image/")){
+  toast("Please select an image file");
+  input.value="";
+  preview.style.display="none";
+  return;
+ }
+ if(file.size>5*1024*1024){
+  toast("Image must be smaller than 5 MB");
+  input.value="";
+  preview.style.display="none";
+  return;
+ }
+ preview.src=URL.createObjectURL(file);
+ preview.style.display="block";
+}
+
+/* UPLOAD CATEGORY IMAGE */
+
+async function uploadCategoryPhoto(file){
+ if(!file)return "";
+ if(!file.type.startsWith("image/"))throw new Error("Select a valid image");
+ if(file.size>5*1024*1024)throw new Error("Image must be under 5 MB");
+
+ const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+ const path="category-images/"+Date.now()+"_"+safeName;
+ const imageRef=ref(storage,path);
+
+ await uploadBytes(imageRef,file,{contentType:file.type});
+ return await getDownloadURL(imageRef);
+}
+
+/* ADD CATEGORY */
+
+async function addCategory(event){
+ event.preventDefault();
+
+ if(currentUser?.email!==ADMIN_EMAIL){
+  toast("Admin login required");
+  return;
+ }
+
+ const name=$("newCategoryName").value.trim();
+ const imageUrl=$("newCategoryImageUrl").value.trim();
+ const file=$("newCategoryImageFile").files[0];
+
+ if(!name){
+  toast("Enter category name");
+  return;
+ }
+
+ if(categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){
+  toast("This category already exists");
+  return;
+ }
+
+ if(!imageUrl&&!file){
+  toast("Add a photo URL or upload a photo");
+  return;
+ }
+
+ try{
+  $("addCategoryButton").disabled=true;
+
+  let finalImage=imageUrl;
+  let imagePath="";
+
+  if(file){
+   finalImage=await uploadCategoryPhoto(file);
+   imagePath="category-images";
+  }
+
+  await addDoc(collection(db,"categories"),{
+   name,
+   imageUrl:finalImage,
+   imagePath,
+   createdAt:serverTimestamp()
+  });
+
+  $("addCategoryForm").reset();
+  $("categoryPreview").style.display="none";
+
+  await loadData();
+  renderAdmin();
+  toast("Category added successfully");
+ }catch(error){
+  console.error(error);
+  toast("Category error: "+error.message);
+ }finally{
+  $("addCategoryButton").disabled=false;
+ }
+}
+
+/* DISPLAY ADMIN CATEGORIES */
+
+function renderAdminCategories(){
+ const box=$("adminCategories");
+ if(!box)return;
+
+ box.innerHTML=categories.map(c=>`
+  <div class="admin-card">
+   <div class="row">
+    <img class="category-admin-img"
+     src="${safeText(c.imageUrl||"https://placehold.co/150x100")}"
+     alt="${safeText(c.name)}">
+    <div>
+     <b>${safeText(c.name)}</b>
+     <p class="small">Category ID: ${safeText(c.id)}</p>
+    </div>
+   </div>
+   <button onclick="editCategory('${c.id}')">Edit</button>
+   <button class="delete-btn" onclick="deleteCategory('${c.id}')">Delete</button>
+  </div>
+ `).join("")||"<p>No categories added yet.</p>";
+}
+
+/* EDIT CATEGORY */
+
+async function editCategory(id){
+ const c=categories.find(x=>x.id===id);
+ if(!c)return;
+
+ const name=prompt("Enter new category name:",c.name);
+ if(name===null)return;
+
+ const cleanName=name.trim();
+ if(!cleanName){
+  toast("Category name cannot be empty");
+  return;
+ }
+
+ const imageUrl=prompt("Enter new photo URL. Leave blank to keep the existing photo:",c.imageUrl||"");
+ if(imageUrl===null)return;
+
+ if(categories.some(x=>x.id!==id&&x.name.toLowerCase()===cleanName.toLowerCase())){
+  toast("This category name already exists");
+  return;
+ }
+
+ try{
+  const data={name:cleanName};
+  if(imageUrl.trim())data.imageUrl=imageUrl.trim();
+
+  await updateDoc(doc(db,"categories",id),data);
+  await loadData();
+  renderAdmin();
+  toast("Category updated");
+ }catch(error){
+  toast("Update failed: "+error.message);
+ }
+}
+
+/* DELETE CATEGORY */
+
+async function deleteCategory(id){
+ const c=categories.find(x=>x.id===id);
+ if(!c)return;
+
+ const used=products.some(p=>p.category===c.name);
+
+ if(used){
+  const proceed=confirm(
+   "Products are using this category. Deleting it will not delete those products. They will become uncategorized. Continue?"
+  );
+  if(!proceed)return;
+ }else{
+  if(!confirm("Permanently delete category "+c.name+"?"))return;
+ }
+
+ try{
+  await deleteDoc(doc(db,"categories",id));
+
+  await loadData();
+  renderAdmin();
+  toast("Category deleted");
+ }catch(error){
+  toast("Delete failed: "+error.message);
+ }
+}
+
+/* ADD PRODUCT */
 
 async function addProduct(event){
  event.preventDefault();
+
+ if(currentUser?.email!==ADMIN_EMAIL){
+  toast("Admin login required");
+  return;
+ }
+
  try{
   const name=$("newProductName").value.trim();
   const price=Number($("newProductPrice").value);
+  const category=$("newProductCategory").value;
   const image=$("newProductImage").value.trim();
   const images=$("newProductImages").value.split(",").map(x=>x.trim()).filter(Boolean);
   const description=$("newProductDescription").value.trim();
 
-  if(!name||!Number.isFinite(price)||price<0||!image){
-   toast("Enter valid product details");
+  if(!name||!Number.isFinite(price)||price<0||!image||!category){
+   toast("Enter valid product details and select a category");
    return;
   }
 
   await addDoc(collection(db,"products"),{
-   name,price,image,images:[image,...images],
-   description,createdAt:serverTimestamp()
+   name,price,category,image,
+   images:[image,...images],
+   description,
+   createdAt:serverTimestamp()
   });
 
-  toast("Product added");
+  $("addProductForm").reset();
   await loadData();
   renderAdmin();
+  toast("Product added successfully");
  }catch(error){
   toast(error.message);
  }
 }
 
 async function deleteProduct(id){
+ if(currentUser?.email!==ADMIN_EMAIL)return;
  if(!confirm("Delete this product?"))return;
+
  try{
   await deleteDoc(doc(db,"products",id));
   await loadData();
@@ -946,8 +1137,13 @@ async function deleteProduct(id){
  }
 }
 
+/* PAYMENT SETTINGS */
+
 async function savePaymentSettings(event){
  event.preventDefault();
+
+ if(currentUser?.email!==ADMIN_EMAIL)return;
+
  try{
   const data={
    upiId:$("adminUpiId").value.trim(),
@@ -956,6 +1152,7 @@ async function savePaymentSettings(event){
    accountNumber:$("adminAccountNumber").value.trim(),
    ifsc:$("adminIfsc").value.trim()
   };
+
   await setDoc(doc(db,"paymentSettings","main"),data);
   paymentSettings.main=data;
   toast("Payment settings saved");
@@ -964,7 +1161,64 @@ async function savePaymentSettings(event){
  }
 }
 
+/* ORDER MANAGEMENT */
+
+function filterOrders(status){
+ activeOrderFilter=status;
+ renderAdminOrdersList(status);
+}
+
+function renderAdminOrdersList(status="All"){
+ const box=$("orderFilterResult");
+ if(!box)return;
+
+ const filtered=status==="All"
+  ?orders
+  :orders.filter(o=>(o.status||"Pending")===status);
+
+ box.innerHTML=`
+  <h3>${safeText(status)} Orders (${filtered.length})</h3>
+
+  ${filtered.map(o=>`
+   <div class="admin-card">
+    <h3>Order #${safeText(o.id)}</h3>
+    <p><b>Customer:</b> ${safeText(o.customerName)}</p>
+    <p><b>Email:</b> ${safeText(o.customerEmail)}</p>
+    <p><b>Phone:</b> ${safeText(o.phone)}</p>
+    <p><b>Address:</b> ${safeText(o.address)}, ${safeText(o.city)} - ${safeText(o.pin)}</p>
+    <p><b>Payment:</b> ${safeText(o.paymentMethod)}</p>
+    <p><b>Payment Status:</b> ${safeText(o.paymentStatus)}</p>
+    <p><b>UTR:</b> ${safeText(o.utr||"Not provided")}</p>
+    <p><b>Total:</b> ${money(o.total)}</p>
+    <p><b>Order Status:</b> ${safeText(o.status||"Pending")}</p>
+
+    <h4>Products</h4>
+    ${(o.items||[]).map(i=>`
+     <p>${safeText(i.name)} × ${Number(i.qty||0)} — ${money(Number(i.price||0)*Number(i.qty||0))}</p>
+    `).join("")}
+
+    <label>Update Order Status</label>
+    <select id="status-${o.id}">
+     ${ORDER_STATUSES.map(s=>`
+      <option value="${s}" ${(o.status||"Pending")===s?"selected":""}>${s}</option>
+     `).join("")}
+    </select>
+
+    <button onclick="updateOrderStatus('${o.id}')">Update Status</button>
+
+    ${["Delivered","Cancelled"].includes(o.status)?`
+     <button class="delete-btn" onclick="deleteOrder('${o.id}')">
+      Delete ${safeText(o.status)} Order
+     </button>
+    `:""}
+   </div>
+  `).join("")||"<p>No orders found in this category.</p>"}
+ `;
+}
+
 async function updateOrderStatus(id){
+ if(currentUser?.email!==ADMIN_EMAIL)return;
+
  try{
   const status=$("status-"+id).value;
   await updateDoc(doc(db,"orders",id),{status});
@@ -975,6 +1229,31 @@ async function updateOrderStatus(id){
   toast(error.message);
  }
 }
+
+async function deleteOrder(id){
+ if(currentUser?.email!==ADMIN_EMAIL)return;
+
+ const order=orders.find(o=>o.id===id);
+ if(!order)return;
+
+ if(!["Delivered","Cancelled"].includes(order.status)){
+  toast("Only Delivered and Cancelled orders can be deleted");
+  return;
+ }
+
+ if(!confirm("Permanently delete this "+order.status+" order?"))return;
+
+ try{
+  await deleteDoc(doc(db,"orders",id));
+  orders=orders.filter(o=>o.id!==id);
+  renderAdmin();
+  toast("Order deleted successfully");
+ }catch(error){
+  toast("Delete failed: "+error.message);
+ }
+}
+
+/* GLOBAL FUNCTIONS */
 
 window.showPage=showPage;
 window.changeLanguage=changeLanguage;
@@ -991,6 +1270,13 @@ window.loginGoogle=loginGoogle;
 window.logout=logout;
 window.deleteProduct=deleteProduct;
 window.updateOrderStatus=updateOrderStatus;
+window.filterOrders=filterOrders;
+window.deleteOrder=deleteOrder;
+window.selectCategory=selectCategory;
+window.clearCategoryFilter=clearCategoryFilter;
+window.previewCategoryImage=previewCategoryImage;
+window.editCategory=editCategory;
+window.deleteCategory=deleteCategory;
 
 onAuthStateChanged(auth,async user=>{
  currentUser=user;
@@ -1010,7 +1296,9 @@ onAuthStateChanged(auth,async user=>{
 });
 
 saveCart();
-applyTranslations();
+$("heroTitle").textContent=tr("welcome");
+$("heroText").textContent=tr("hero");
+$("shopNowButton").textContent=tr("shopNow");
 
 </script>
 </body>
