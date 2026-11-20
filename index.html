@@ -62,6 +62,7 @@ footer{text-align:center;padding:22px;background:white}
 .category-card.selected{border:2px solid var(--blue)}
 .category-admin-img{width:90px;height:75px;object-fit:cover;border-radius:8px}
 .preview-img{width:100px;height:100px;object-fit:cover;border-radius:9px;display:none;margin:5px 0}
+.remark-box{background:#fff7e6;border-left:4px solid var(--gold);padding:10px;border-radius:6px;margin:10px 0}
 @media(min-width:700px){.bottom-nav{display:none}}
 </style>
 </head>
@@ -102,10 +103,8 @@ footer{text-align:center;padding:22px;background:white}
   <p id="heroText">Shop your favourite products easily.</p>
   <button onclick="showPage('shop')" id="shopNowButton" style="background:#f4b942;color:#172033">Shop Now</button>
  </div>
-
  <h2>Shop by Category</h2>
  <div id="homeCategories" class="category-grid"></div>
-
  <h2>Featured Products</h2>
  <div id="homeProducts" class="grid"></div>
 </section>
@@ -220,7 +219,7 @@ import {
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
- getStorage,ref,uploadBytes,getDownloadURL,deleteObject
+ getStorage,ref,uploadBytes,getDownloadURL
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
@@ -257,53 +256,15 @@ const ORDER_STATUSES=[
 ];
 
 const translations={
- en:{
-  welcome:"Welcome to SUDIP INDUSTRY",
-  hero:"Shop your favourite products easily.",
-  shopNow:"Shop Now",empty:"No products found",
-  emptyCart:"Your cart is empty",orderSuccess:"Order placed successfully",
-  productAdded:"Product added",addCart:"Add to Cart",
-  buyNow:"Buy Now",remove:"Remove",total:"Total"
- },
- bn:{
-  welcome:"SUDIP INDUSTRY-তে স্বাগতম",
-  hero:"সহজেই আপনার পছন্দের পণ্য অর্ডার করুন।",
-  shopNow:"এখনই কিনুন",empty:"কোনো পণ্য পাওয়া যায়নি",
-  emptyCart:"কার্ট খালি",orderSuccess:"অর্ডার সফলভাবে দেওয়া হয়েছে",
-  productAdded:"পণ্য যোগ হয়েছে",addCart:"কার্টে যোগ করুন",
-  buyNow:"এখনই কিনুন",remove:"সরান",total:"মোট"
- },
- hi:{
-  welcome:"SUDIP INDUSTRY में आपका स्वागत है",
-  hero:"अपने पसंदीदा उत्पाद आसानी से ऑर्डर करें।",
-  shopNow:"अभी खरीदें",empty:"कोई उत्पाद नहीं मिला",
-  emptyCart:"कार्ट खाली है",orderSuccess:"ऑर्डर सफलतापूर्वक दिया गया",
-  productAdded:"उत्पाद जोड़ा गया",addCart:"कार्ट में जोड़ें",
-  buyNow:"अभी खरीदें",remove:"हटाएं",total:"कुल"
- },
- ml:{
-  welcome:"SUDIP INDUSTRY-ലേക്ക് സ്വാഗതം",
-  hero:"നിങ്ങളുടെ പ്രിയപ്പെട്ട ഉൽപ്പന്നങ്ങൾ എളുപ്പത്തിൽ ഓർഡർ ചെയ്യൂ.",
-  shopNow:"ഇപ്പോൾ വാങ്ങുക",empty:"ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
-  emptyCart:"കാർട്ട് ശൂന്യമാണ്",orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി",
-  productAdded:"ഉൽപ്പന്നം ചേർത്തു",addCart:"കാർട്ടിൽ ചേർക്കുക",
-  buyNow:"ഇപ്പോൾ വാങ്ങുക",remove:"നീക്കം ചെയ്യുക",total:"ആകെ"
- },
- ne:{
-  welcome:"SUDIP INDUSTRY मा स्वागत छ",
-  hero:"आफ्ना मनपर्ने सामान सजिलै अर्डर गर्नुहोस्।",
-  shopNow:"अहिले किन्नुहोस्",empty:"कुनै सामान भेटिएन",
-  emptyCart:"कार्ट खाली छ",orderSuccess:"अर्डर सफलतापूर्वक गरियो",
-  productAdded:"सामान थपियो",addCart:"कार्टमा थप्नुहोस्",
-  buyNow:"अहिले किन्नुहोस्",remove:"हटाउनुहोस्",total:"जम्मा"
- }
+ en:{welcome:"Welcome to SUDIP INDUSTRY",hero:"Shop your favourite products easily.",shopNow:"Shop Now",empty:"No products found",emptyCart:"Your cart is empty",orderSuccess:"Order placed successfully",productAdded:"Product added",addCart:"Add to Cart",buyNow:"Buy Now",remove:"Remove",total:"Total"},
+ bn:{welcome:"SUDIP INDUSTRY-তে স্বাগতম",hero:"সহজেই আপনার পছন্দের পণ্য অর্ডার করুন।",shopNow:"এখনই কিনুন",empty:"কোনো পণ্য পাওয়া যায়নি",emptyCart:"কার্ট খালি",orderSuccess:"অর্ডার সফলভাবে দেওয়া হয়েছে",productAdded:"পণ্য যোগ হয়েছে",addCart:"কার্টে যোগ করুন",buyNow:"এখনই কিনুন",remove:"সরান",total:"মোট"},
+ hi:{welcome:"SUDIP INDUSTRY में आपका स्वागत है",hero:"अपने पसंदीदा उत्पाद आसानी से ऑर्डर करें।",shopNow:"अभी खरीदें",empty:"कोई उत्पाद नहीं मिला",emptyCart:"कार्ट खाली है",orderSuccess:"ऑर्डर सफलतापूर्वक दिया गया",productAdded:"उत्पाद जोड़ा गया",addCart:"कार्ट में जोड़ें",buyNow:"अभी खरीदें",remove:"हटाएं",total:"कुल"},
+ ml:{welcome:"SUDIP INDUSTRY-ലേക്ക് സ്വാഗതം",hero:"നിങ്ങളുടെ പ്രിയപ്പെട്ട ഉൽപ്പന്നങ്ങൾ എളുപ്പത്തിൽ ഓർഡർ ചെയ്യൂ.",shopNow:"ഇപ്പോൾ വാങ്ങുക",empty:"ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല",emptyCart:"കാർട്ട് ശൂന്യമാണ്",orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി",productAdded:"ഉൽപ്പന്നം ചേർത്തു",addCart:"കാർട്ടിൽ ചേർക്കുക",buyNow:"ഇപ്പോൾ വാങ്ങുക",remove:"നീക്കം ചെയ്യുക",total:"ആകെ"},
+ ne:{welcome:"SUDIP INDUSTRY मा स्वागत छ",hero:"आफ्ना मनपर्ने सामान सजिलै अर्डर गर्नुहोस्।",shopNow:"अहिले किन्नुहोस्",empty:"कुनै सामान भेटिएन",emptyCart:"कार्ट खाली छ",orderSuccess:"अर्डर सफलतापूर्वक गरियो",productAdded:"सामान थपियो",addCart:"कार्टमा थप्नुहोस्",buyNow:"अहिले किन्नुहोस्",remove:"हटाउनुहोस्",total:"जम्मा"}
 };
 
 function $(id){return document.getElementById(id)}
-
-function tr(key){
- return translations[currentLanguage]?.[key]||translations.en[key]||key;
-}
+function tr(key){return translations[currentLanguage]?.[key]||translations.en[key]||key}
 
 function toast(message){
  const el=$("toast");
@@ -312,14 +273,11 @@ function toast(message){
  setTimeout(()=>el.style.display="none",3000);
 }
 
-function money(value){
- return "₹"+Number(value||0).toLocaleString("en-IN");
-}
+function money(value){return "₹"+Number(value||0).toLocaleString("en-IN")}
 
 function safeText(value){
  return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#39;"
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  })[c]);
 }
 
@@ -331,7 +289,6 @@ function saveCart(){
 function showPage(page){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  $(page)?.classList.add("active");
-
  if(page==="shop")renderShop();
  if(page==="wishlist")renderWishlist();
  if(page==="cart")renderCart();
@@ -339,7 +296,6 @@ function showPage(page){
  if(page==="profile")renderProfile();
  if(page==="admin")renderAdmin();
  if(page==="checkout")renderCheckoutSummary();
-
  window.scrollTo(0,0);
 }
 
@@ -355,15 +311,12 @@ function changeLanguage(language){
 }
 
 function productImage(p){
- return p.image||p.imageUrl||p.images?.[0]||
- "https://placehold.co/300x300?text=Product";
+ return p.image||p.imageUrl||p.images?.[0]||"https://placehold.co/300x300?text=Product";
 }
 
 function productImages(p){
  return Array.isArray(p.images)&&p.images.length?p.images:[productImage(p)];
 }
-
-/* LOAD FIREBASE DATA */
 
 async function loadData(){
  try{
@@ -398,19 +351,16 @@ async function loadData(){
   console.error(error);
   toast("Database error: "+error.message);
  }
-}
 
-/* CATEGORY DISPLAY */
+}
 
 function renderCategoryCards(containerId){
  const box=$(containerId);
  if(!box)return;
 
  box.innerHTML=categories.map(c=>`
-  <div class="category-card ${activeCategoryFilter===c.name?"selected":""}"
-   onclick="selectCategory('${c.id}')">
-   <img src="${safeText(c.imageUrl||"https://placehold.co/300x200?text=Category")}"
-    alt="${safeText(c.name)}">
+  <div class="category-card ${activeCategoryFilter===c.name?"selected":""}" onclick="selectCategory('${c.id}')">
+   <img src="${safeText(c.imageUrl||"https://placehold.co/300x200?text=Category")}" alt="${safeText(c.name)}">
    <b>${safeText(c.name)}</b>
   </div>
  `).join("")||"<p>No categories added yet.</p>";
@@ -447,8 +397,7 @@ function renderShop(){
   list=list.filter(p=>p.category===activeCategoryFilter);
  }
 
- $("activeCategoryLabel").textContent=
-  activeCategoryFilter==="All"?"Showing all products":"Category: "+activeCategoryFilter;
+ $("activeCategoryLabel").textContent=activeCategoryFilter==="All"?"Showing all products":"Category: "+activeCategoryFilter;
 
  const sort=$("sortProducts").value;
  if(sort==="low")list.sort((a,b)=>Number(a.price)-Number(b.price));
@@ -488,12 +437,9 @@ function openProduct(id){
  $("productDetail").innerHTML=`
   <button onclick="showPage('shop')">← Back</button>
   <h2>${safeText(p.name)}</h2>
-  <img id="mainProductImage" src="${safeText(productImage(p))}"
-   style="width:100%;max-height:320px;object-fit:contain">
+  <img id="mainProductImage" src="${safeText(productImage(p))}" style="width:100%;max-height:320px;object-fit:contain">
   <div class="product-gallery">
-   ${productImages(p).map(im=>`
-    <img src="${safeText(im)}" onclick="changeMainImage(this.src)">
-   `).join("")}
+   ${productImages(p).map(im=>`<img src="${safeText(im)}" onclick="changeMainImage(this.src)">`).join("")}
   </div>
   <p>Category: ${safeText(p.category||"Uncategorized")}</p>
   <h2 class="price">${money(p.price)}</h2>
@@ -505,23 +451,14 @@ function openProduct(id){
  showPage("detailPage");
 }
 
-window.changeMainImage=function(src){
- $("mainProductImage").src=src;
-};
-
-/* CART */
+window.changeMainImage=function(src){$("mainProductImage").src=src};
 
 function addToCart(id){
  const p=products.find(x=>x.id===id);
  if(!p)return;
-
  const item=cart.find(x=>x.id===id);
  if(item)item.qty++;
- else cart.push({
-  id:p.id,name:p.name,price:Number(p.price),
-  image:productImage(p),qty:1
- });
-
+ else cart.push({id:p.id,name:p.name,price:Number(p.price),image:productImage(p),qty:1});
  saveCart();
  toast(tr("productAdded"));
 }
@@ -574,8 +511,6 @@ function removeCart(id){
  renderCart();
 }
 
-/* WISHLIST */
-
 function toggleWishlist(id){
  if(!currentUser||currentUser.isAnonymous){
   toast("Please login with Google first");
@@ -611,14 +546,10 @@ function renderWishlist(){
  }).join("")||"<p>Your wishlist is empty.</p>";
 }
 
-/* CHECKOUT */
-
 function renderCheckoutSummary(){
  $("checkoutSummary").innerHTML=`
   <h3>Order Summary</h3>
-  ${cart.map(x=>`
-   <p>${safeText(x.name)} × ${x.qty} — ${money(x.price*x.qty)}</p>
-  `).join("")}
+  ${cart.map(x=>`<p>${safeText(x.name)} × ${x.qty} — ${money(x.price*x.qty)}</p>`).join("")}
   <h3>Total: ${money(cart.reduce((s,x)=>s+x.price*x.qty,0))}</h3>
  `;
  updatePaymentInstructions();
@@ -632,14 +563,10 @@ function updatePaymentInstructions(){
   box.innerHTML="<p>Pay cash when your order is delivered.</p>";
  }else if(method==="UPI"){
   const s=paymentSettings.main||{};
-  box.innerHTML=s.upiId
-   ?`<p>UPI ID: <b>${safeText(s.upiId)}</b></p>`
-   :"<p>UPI payment is not configured yet.</p>";
+  box.innerHTML=s.upiId?`<p>UPI ID: <b>${safeText(s.upiId)}</b></p>`:"<p>UPI payment is not configured yet.</p>";
  }else{
   const s=paymentSettings.main||{};
-  box.innerHTML=s.bankName
-   ?`<p>Bank: ${safeText(s.bankName)}<br>Account holder: ${safeText(s.accountName||"")}<br>Account number: ${safeText(s.accountNumber||"")}<br>IFSC: ${safeText(s.ifsc||"")}</p>`
-   :"<p>Bank transfer is not configured yet.</p>";
+  box.innerHTML=s.bankName?`<p>Bank: ${safeText(s.bankName)}<br>Account holder: ${safeText(s.accountName||"")}<br>Account number: ${safeText(s.accountNumber||"")}<br>IFSC: ${safeText(s.ifsc||"")}</p>`:"<p>Bank transfer is not configured yet.</p>";
  }
 }
 
@@ -678,13 +605,11 @@ async function placeOrder(event){
   pin:$("customerPin").value.trim(),
   paymentMethod:method,
   utr:$("utrInput").value.trim(),
-  items:cart.map(x=>({
-   productId:x.id,name:x.name,price:x.price,
-   qty:x.qty,image:x.image
-  })),
+  items:cart.map(x=>({productId:x.id,name:x.name,price:x.price,qty:x.qty,image:x.image})),
   total,
   status:"Pending",
   paymentStatus:method==="COD"?"COD":"Pending Verification",
+  remark:"",
   createdAt:serverTimestamp()
  };
 
@@ -704,8 +629,6 @@ async function placeOrder(event){
   $("placeOrderButton").disabled=false;
  }
 }
-
-/* ACCOUNT */
 
 async function loginGoogle(){
  try{
@@ -748,24 +671,23 @@ function renderOrders(){
    <h3>Order #${safeText(o.id)}</h3>
    <p>Date: ${o.createdAt?.toDate?.().toLocaleString("en-IN")||"Processing"}</p>
    <p>Status: <b>${safeText(o.status||"Pending")}</b></p>
+   ${o.status==="Cancelled"&&o.remark?`
+    <div class="remark-box">
+     <b>Cancellation Remark:</b>
+     <p>${safeText(o.remark)}</p>
+    </div>
+   `:""}
    <p>Payment: ${safeText(o.paymentStatus||"Pending")}</p>
-   ${(o.items||[]).map(i=>`
-    <p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i.qty)}</p>
-   `).join("")}
+   ${(o.items||[]).map(i=>`<p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i.qty)}</p>`).join("")}
    <h3>Total: ${money(o.total)}</h3>
    <p>Delivery: ${safeText(o.address||"")}, ${safeText(o.city||"")} - ${safeText(o.pin||"")}</p>
   </div>
  `).join("")||"<p>No orders yet.</p>";
 }
 
-/* ADMIN DASHBOARD */
-
 function renderAdmin(){
  if(currentUser?.email!==ADMIN_EMAIL){
-  $("adminContent").innerHTML=`
-   <p>Administrator login required.</p>
-   <button onclick="loginGoogle()">Login with Google</button>
-  `;
+  $("adminContent").innerHTML=`<p>Administrator login required.</p><button onclick="loginGoogle()">Login with Google</button>`;
   return;
  }
 
@@ -784,15 +706,11 @@ function renderAdmin(){
    <form id="addCategoryForm">
     <label>Category Name</label>
     <input id="newCategoryName" placeholder="Example: Electronics" required maxlength="60">
-
     <label>Category Photo URL (Optional)</label>
     <input id="newCategoryImageUrl" type="url" placeholder="Paste image URL">
-
     <label>Or Upload Photo from Gallery</label>
     <input id="newCategoryImageFile" type="file" accept="image/*" onchange="previewCategoryImage(this,'categoryPreview')">
-
     <img id="categoryPreview" class="preview-img" alt="Category preview">
-
     <button type="submit" id="addCategoryButton">Add Category</button>
    </form>
   </div>
@@ -807,24 +725,18 @@ function renderAdmin(){
    <form id="addProductForm">
     <label>Product Name</label>
     <input id="newProductName" required maxlength="100">
-
     <label>Price</label>
     <input id="newProductPrice" type="number" min="0" required>
-
     <label>Select Category</label>
     <select id="newProductCategory" required>
      <option value="">Select Category</option>
     </select>
-
     <label>Product Image URL</label>
     <input id="newProductImage" type="url" required>
-
     <label>Additional Image URLs (comma separated)</label>
     <input id="newProductImages">
-
     <label>Description</label>
     <textarea id="newProductDescription"></textarea>
-
     <button type="submit">Add Product</button>
    </form>
   </div>
@@ -874,8 +786,7 @@ function renderAdmin(){
  $("adminAccountNumber").value=paymentSettings.main?.accountNumber||"";
  $("adminIfsc").value=paymentSettings.main?.ifsc||"";
 
- const categorySelect=$("newProductCategory");
- categorySelect.innerHTML='<option value="">Select Category</option>'+
+ $("newProductCategory").innerHTML='<option value="">Select Category</option>'+
   categories.map(c=>`<option value="${safeText(c.name)}">${safeText(c.name)}</option>`).join("");
 
  $("addCategoryForm").onsubmit=addCategory;
@@ -895,8 +806,6 @@ function renderAdmin(){
 
  renderAdminOrdersList(activeOrderFilter);
 }
-
-/* CATEGORY IMAGE PREVIEW */
 
 function previewCategoryImage(input,previewId){
  const file=input.files?.[0];
@@ -921,8 +830,6 @@ function previewCategoryImage(input,previewId){
  preview.style.display="block";
 }
 
-/* UPLOAD CATEGORY IMAGE */
-
 async function uploadCategoryPhoto(file){
  if(!file)return "";
  if(!file.type.startsWith("image/"))throw new Error("Select a valid image");
@@ -931,12 +838,9 @@ async function uploadCategoryPhoto(file){
  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
  const path="category-images/"+Date.now()+"_"+safeName;
  const imageRef=ref(storage,path);
-
  await uploadBytes(imageRef,file,{contentType:file.type});
  return await getDownloadURL(imageRef);
 }
-
-/* ADD CATEGORY */
 
 async function addCategory(event){
  event.preventDefault();
@@ -954,12 +858,10 @@ async function addCategory(event){
   toast("Enter category name");
   return;
  }
-
  if(categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){
   toast("This category already exists");
   return;
  }
-
  if(!imageUrl&&!file){
   toast("Add a photo URL or upload a photo");
   return;
@@ -967,7 +869,6 @@ async function addCategory(event){
 
  try{
   $("addCategoryButton").disabled=true;
-
   let finalImage=imageUrl;
   let imagePath="";
 
@@ -985,7 +886,6 @@ async function addCategory(event){
 
   $("addCategoryForm").reset();
   $("categoryPreview").style.display="none";
-
   await loadData();
   renderAdmin();
   toast("Category added successfully");
@@ -997,8 +897,6 @@ async function addCategory(event){
  }
 }
 
-/* DISPLAY ADMIN CATEGORIES */
-
 function renderAdminCategories(){
  const box=$("adminCategories");
  if(!box)return;
@@ -1006,9 +904,7 @@ function renderAdminCategories(){
  box.innerHTML=categories.map(c=>`
   <div class="admin-card">
    <div class="row">
-    <img class="category-admin-img"
-     src="${safeText(c.imageUrl||"https://placehold.co/150x100")}"
-     alt="${safeText(c.name)}">
+    <img class="category-admin-img" src="${safeText(c.imageUrl||"https://placehold.co/150x100")}" alt="${safeText(c.name)}">
     <div>
      <b>${safeText(c.name)}</b>
      <p class="small">Category ID: ${safeText(c.id)}</p>
@@ -1019,8 +915,6 @@ function renderAdminCategories(){
   </div>
  `).join("")||"<p>No categories added yet.</p>";
 }
-
-/* EDIT CATEGORY */
 
 async function editCategory(id){
  const c=categories.find(x=>x.id===id);
@@ -1046,7 +940,6 @@ async function editCategory(id){
  try{
   const data={name:cleanName};
   if(imageUrl.trim())data.imageUrl=imageUrl.trim();
-
   await updateDoc(doc(db,"categories",id),data);
   await loadData();
   renderAdmin();
@@ -1056,8 +949,6 @@ async function editCategory(id){
  }
 }
 
-/* DELETE CATEGORY */
-
 async function deleteCategory(id){
  const c=categories.find(x=>x.id===id);
  if(!c)return;
@@ -1065,9 +956,7 @@ async function deleteCategory(id){
  const used=products.some(p=>p.category===c.name);
 
  if(used){
-  const proceed=confirm(
-   "Products are using this category. Deleting it will not delete those products. They will become uncategorized. Continue?"
-  );
+  const proceed=confirm("Products are using this category. Deleting it will not delete those products. They will become uncategorized. Continue?");
   if(!proceed)return;
  }else{
   if(!confirm("Permanently delete category "+c.name+"?"))return;
@@ -1075,7 +964,6 @@ async function deleteCategory(id){
 
  try{
   await deleteDoc(doc(db,"categories",id));
-
   await loadData();
   renderAdmin();
   toast("Category deleted");
@@ -1083,8 +971,6 @@ async function deleteCategory(id){
   toast("Delete failed: "+error.message);
  }
 }
-
-/* ADD PRODUCT */
 
 async function addProduct(event){
  event.preventDefault();
@@ -1137,11 +1023,8 @@ async function deleteProduct(id){
  }
 }
 
-/* PAYMENT SETTINGS */
-
 async function savePaymentSettings(event){
  event.preventDefault();
-
  if(currentUser?.email!==ADMIN_EMAIL)return;
 
  try{
@@ -1157,11 +1040,12 @@ async function savePaymentSettings(event){
   paymentSettings.main=data;
   toast("Payment settings saved");
  }catch(error){
-  toast(error.message);
+  console.error(error);
+  toast("Payment settings error: "+error.message);
  }
 }
 
-/* ORDER MANAGEMENT */
+/* ORDER FILTERS */
 
 function filterOrders(status){
  activeOrderFilter=status;
@@ -1172,13 +1056,11 @@ function renderAdminOrdersList(status="All"){
  const box=$("orderFilterResult");
  if(!box)return;
 
- const filtered=status==="All"
-  ?orders
-  :orders.filter(o=>(o.status||"Pending")===status);
+ const filtered=status==="All"?orders:
+  orders.filter(o=>(o.status||"Pending")===status);
 
  box.innerHTML=`
   <h3>${safeText(status)} Orders (${filtered.length})</h3>
-
   ${filtered.map(o=>`
    <div class="admin-card">
     <h3>Order #${safeText(o.id)}</h3>
@@ -1191,6 +1073,13 @@ function renderAdminOrdersList(status="All"){
     <p><b>UTR:</b> ${safeText(o.utr||"Not provided")}</p>
     <p><b>Total:</b> ${money(o.total)}</p>
     <p><b>Order Status:</b> ${safeText(o.status||"Pending")}</p>
+
+    ${o.status==="Cancelled"&&o.remark?`
+     <div class="remark-box">
+      <b>Cancellation Remark:</b>
+      <p>${safeText(o.remark)}</p>
+     </div>
+    `:""}
 
     <h4>Products</h4>
     ${(o.items||[]).map(i=>`
@@ -1207,26 +1096,46 @@ function renderAdminOrdersList(status="All"){
     <button onclick="updateOrderStatus('${o.id}')">Update Status</button>
 
     ${["Delivered","Cancelled"].includes(o.status)?`
-     <button class="delete-btn" onclick="deleteOrder('${o.id}')">
-      Delete ${safeText(o.status)} Order
-     </button>
+     <button class="delete-btn" onclick="deleteOrder('${o.id}')">Delete ${safeText(o.status)} Order</button>
     `:""}
    </div>
   `).join("")||"<p>No orders found in this category.</p>"}
  `;
+
 }
+
+/* UPDATE STATUS + OPTIONAL CANCEL REMARK */
 
 async function updateOrderStatus(id){
  if(currentUser?.email!==ADMIN_EMAIL)return;
 
  try{
   const status=$("status-"+id).value;
-  await updateDoc(doc(db,"orders",id),{status});
+  const order=orders.find(o=>o.id===id);
+  if(!order)return;
+
+  let remark=order.remark||"";
+
+  if(status==="Cancelled"){
+   remark=prompt("Cancellation Remark (Optional):",order.remark||"");
+   if(remark===null)return;
+   remark=remark.trim();
+  }
+
+  const updateData={
+   status,
+   remark:status==="Cancelled"?remark:""
+  };
+
+  await updateDoc(doc(db,"orders",id),updateData);
+
   await loadData();
   renderAdmin();
   toast("Order status updated");
+
  }catch(error){
-  toast(error.message);
+  console.error(error);
+  toast("Update failed: "+error.message);
  }
 }
 
