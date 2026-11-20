@@ -6,487 +6,563 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#173b75">
 <title>SUDIP INDUSTRY</title>
+<meta name="description" content="SUDIP INDUSTRY - Dream, Work, Success.">
+
 <style>
-:root{--blue:#173b75;--gold:#f4b942;--bg:#f3f6fb;--line:#e3e8f0}
+:root{
+--blue:#173b75;--blue2:#2456a6;--gold:#f4b942;
+--bg:#f3f6fb;--white:#fff;--text:#172033;
+--muted:#64748b;--line:#e5eaf2;
+--green:#16834a;--red:#d93636;
+--shadow:0 5px 20px rgba(20,40,80,.08);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#172033;font-family:Arial,sans-serif}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0}
-header{background:var(--blue);color:white;position:sticky;top:0;z-index:10}
-.top{max-width:1150px;margin:auto;padding:12px;display:flex;align-items:center;gap:10px}
-.logo{font-size:17px;font-weight:bold;color:white;text-decoration:none}
-.logo small{display:block;font-size:9px;letter-spacing:2px}
-.search{flex:1;display:flex;background:white;border-radius:8px;overflow:hidden}
-.search input{width:100%;padding:11px;border:0}
-.search button{background:var(--gold);padding:10px}
-.headbtn{background:#ffffff20;color:white;padding:10px;border-radius:7px}
-nav{display:flex;gap:8px;padding:0 12px 10px;overflow:auto}
-nav button{background:transparent;color:white;padding:8px}
-main{max-width:1150px;margin:20px auto;padding:0 15px 90px;min-height:55vh}
-.hero{background:linear-gradient(120deg,#10264b,#2863b3);color:white;padding:30px;border-radius:15px}
-.hero h1{font-size:30px}
-.section{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}
-.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
-.card,.panel{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.product-img{height:180px;background:#f7f8fb;display:grid;place-items:center;position:relative}
-.product-img img{width:100%;height:100%;object-fit:contain}
-.heart{position:absolute;right:8px;top:8px;background:white;border-radius:50%;padding:8px;color:red}
-.info{padding:11px}
-.info h3{font-size:14px;min-height:34px}
-.price{font-size:18px;font-weight:bold;color:var(--blue)}
-.actions{display:flex;gap:6px;margin-top:10px}
-.actions button{flex:1;padding:9px 4px;border-radius:7px;font-size:12px}
-.primary{background:var(--blue);color:white;padding:11px 15px;border-radius:8px}
-.soft{background:#edf2fa;color:var(--blue);padding:9px 12px;border-radius:7px}
-.gold{background:var(--gold);padding:11px 16px;border-radius:8px}
-.danger{background:#fff0f1;color:#c33345;padding:8px;border-radius:7px}
-.panel{padding:17px;margin-bottom:15px}
-.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.hidden{display:none!important}
+header{background:var(--blue);color:white;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+.topbar{max-width:1200px;margin:auto;padding:12px 15px;display:flex;align-items:center;gap:12px}
+.logo{font-size:20px;font-weight:900;white-space:nowrap}
+.logo span{color:var(--gold)}
+.searchbox{flex:1;display:flex;background:white;border-radius:8px;overflow:hidden}
+.searchbox input{width:100%;min-width:0;padding:11px;border:0;outline:0}
+.searchbox button{background:var(--gold);border:0;padding:0 15px;font-weight:bold}
+.header-actions{display:flex;gap:6px}
+.header-actions button{background:transparent;color:white;border:1px solid #ffffff55;padding:8px;border-radius:7px}
+#languageSelect{max-width:125px;padding:9px;border:0;border-radius:7px;font-weight:bold}
+.container{max-width:1200px;margin:20px auto;padding:0 14px 90px}
+.hero{background:linear-gradient(120deg,#173b75,#3974c8);color:white;padding:30px 24px;border-radius:14px;margin-bottom:20px}
+.hero h1{margin:0 0 10px;font-size:28px}
+.hero p{margin:0;color:#e5edff}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 13px}
+.section-title h2{font-size:20px;margin:0}
+.btn{border:0;border-radius:8px;padding:10px 14px;background:var(--blue);color:white;font-weight:bold}
+.btn.gold{background:var(--gold);color:#29200b}
+.btn.light{background:#e9effa;color:var(--blue)}
+.btn.green{background:var(--green)}
+.btn.red{background:var(--red)}
+.btn.small{padding:7px 10px;font-size:13px}
+.categories{display:flex;gap:9px;overflow:auto;padding:3px 0 12px}
+.category{border:1px solid var(--line);background:white;border-radius:20px;padding:9px 16px;white-space:nowrap}
+.category.active{background:var(--blue);color:white}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.product-card{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.product-card img{width:100%;height:190px;object-fit:contain;background:white;padding:10px}
+.product-info{padding:12px}
+.product-name{font-weight:bold;min-height:38px;line-height:1.4}
+.price{font-size:19px;font-weight:900;color:var(--blue);margin:8px 0}
+.old-price{text-decoration:line-through;color:#8b95a5;font-size:13px;margin-left:6px}
+.card-actions{display:flex;gap:7px}
+.card-actions button{flex:1}
+.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow);margin-bottom:15px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .field{display:flex;flex-direction:column;gap:6px}
 .field.full{grid-column:1/-1}
-.field input,.field textarea,.field select{padding:11px;border:1px solid #dce2ec;border-radius:8px;width:100%}
-.field textarea{min-height:75px}
-.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
-.gallery img{width:100%;height:75px;object-fit:contain;background:#f3f6fb;border:1px solid var(--line);border-radius:7px;cursor:pointer}
-.main-photo{width:100%;height:280px;object-fit:contain;background:#f7f8fb}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.muted{font-size:13px;color:#69758a}
-.empty{text-align:center;padding:25px;color:#69758a}
-.item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.item img{width:65px;height:65px;object-fit:contain}
-.grow{flex:1}
-.qty{display:flex;gap:8px;align-items:center;margin-top:7px}
-.qty button{padding:5px 10px;background:#edf2fa}
-.paybox{background:#f3f6fb;padding:14px;border-radius:9px;margin:10px 0}
-footer{background:#10264b;color:white;text-align:center;padding:25px}
-footer a{color:white}
-.bottom{display:none}
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px;border-radius:8px;z-index:30}
-.hidden{display:none!important}
-@media(max-width:800px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:560px){
-.top{flex-wrap:wrap}.logo{flex:1}.search{order:3;flex-basis:100%}
+.field label{font-size:13px;font-weight:bold;color:#475569}
+.field input,.field textarea,.field select{width:100%;border:1px solid #d7deea;border-radius:8px;padding:11px;outline-color:var(--blue2);background:white}
+.field textarea{min-height:85px;resize:vertical}
+.muted{color:var(--muted);font-size:13px}
+.notice{padding:12px;background:#fff8e6;border:1px solid #f5dda0;border-radius:8px;color:#6b4a00;font-size:13px}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.space{justify-content:space-between}
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.detail-image{width:100%;height:350px;object-fit:contain;background:white;border-radius:12px}
+.gallery{display:flex;gap:8px;overflow:auto;margin-top:8px}
+.gallery img{width:65px;height:65px;object-fit:contain;background:white;border:1px solid var(--line);border-radius:7px;cursor:pointer}
+.cart-item,.order-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.cart-item img,.order-item img{width:75px;height:75px;object-fit:contain;border:1px solid var(--line);border-radius:8px}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{width:28px;height:28px;border:0;border-radius:6px;background:#e9effa;color:var(--blue)}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:#f1f5fb;border-radius:9px;padding:14px}
+.stat strong{display:block;font-size:22px;color:var(--blue)}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line);font-size:13px}
+th{background:#f1f5fb}
+.status{display:inline-block;border-radius:20px;padding:5px 9px;font-size:12px;font-weight:bold;background:#fff2cc;color:#805800}
+.status.done{background:#dff7e8;color:#126438}
+.status.cancel{background:#ffe3e3;color:#a11}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+footer{background:#10294f;color:#dbe7ff;padding:25px 15px;text-align:center}
+footer a{color:var(--gold)}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);z-index:30;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom))}
+.bottom-nav button{background:none;border:0;color:var(--muted);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bottom-nav b{font-size:19px}
+@media(max-width:850px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+.topbar{flex-wrap:wrap;gap:8px}
+.logo{font-size:18px}
+.searchbox{order:5;flex-basis:100%}
+.header-actions{margin-left:auto}
+.header-actions button{padding:7px}
+.container{margin:13px auto;padding-left:10px;padding-right:10px}
+.hero{padding:23px 17px}
+.hero h1{font-size:23px}
 .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.product-img{height:140px}.form{grid-template-columns:1fr}
-.field.full{grid-column:auto}
-.bottom{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;justify-content:space-around;padding:10px 2px;z-index:15}
-.bottom button{background:none;font-size:11px}
+.product-card img{height:145px}
+.product-info{padding:9px}
+.product-name{font-size:13px;min-height:36px}
+.price{font-size:17px}
+.card-actions{flex-direction:column}
+.form-grid,.product-detail{grid-template-columns:1fr}
+.detail-image{height:260px}
+.bottom-nav{display:flex}
+.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
 </head>
+
 <body>
 <header>
- <div class="top">
-  <a class="logo" href="#home">SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></a>
-  <div class="search">
-   <input id="search" placeholder="Search products..." oninput="searchProducts(this.value)">
-   <button onclick="searchProducts(document.getElementById('search').value)">Search</button>
-  </div>
-  <button class="headbtn" onclick="go('wishlist')">❤️ <span id="wc">0</span></button>
-  <button class="headbtn" onclick="go('cart')">🛒 <span id="cc">0</span></button>
-  <button class="headbtn" onclick="go('profile')" id="accountBtn">Login</button>
- </div>
- <nav>
-  <button onclick="go('home')">Home</button>
-  <button onclick="go('shop')">Shop</button>
-  <button onclick="go('orders')">My Orders</button>
-  <button onclick="go('contact')">Contact</button>
-  <button onclick="go('admin')">Admin</button>
- </nav>
-</header>
-<main id="app">Connecting to store...</main>
-<div class="bottom">
- <button onclick="go('home')">⌂ Home</button>
- <button onclick="go('shop')">▦ Shop</button>
- <button onclick="go('wishlist')">♡ Wishlist</button>
- <button onclick="go('cart')">🛒 Cart</button>
- <button onclick="go('profile')">♙ Profile</button>
+<div class="topbar">
+<a class="logo" href="#" onclick="showPage('home')">SUDIP <span>INDUSTRY</span></a>
+
+<select id="languageSelect" onchange="changeLanguage(this.value)" aria-label="Select language">
+<option value="bn">বাংলা</option>
+<option value="en">English</option>
+<option value="hi">हिन्दी</option>
+<option value="ur">اردو</option>
+<option value="as">অসমীয়া</option>
+<option value="or">ଓଡ଼ିଆ</option>
+<option value="pa">ਪੰਜਾਬੀ</option>
+<option value="gu">ગુજરાતી</option>
+<option value="mr">मराठी</option>
+<option value="ta">தமிழ்</option>
+<option value="te">తెలుగు</option>
+<option value="kn">ಕನ್ನಡ</option>
+<option value="ml">മലയാളം</option>
+<option value="ne">नेपाली</option>
+<option value="sa">संस्कृतम्</option>
+<option value="fr">Français</option>
+<option value="es">Español</option>
+<option value="ar">العربية</option>
+<option value="zh">中文</option>
+<option value="ja">日本語</option>
+<option value="de">Deutsch</option>
+<option value="ru">Русский</option>
+</select>
+
+<div class="searchbox">
+<input id="searchInput" type="search" placeholder="পণ্য খুঁজুন..." oninput="searchProducts()">
+<button onclick="searchProducts()" data-i18n="search">Search</button>
 </div>
+
+<div class="header-actions">
+<button onclick="showPage('orders')" data-i18n="orders">Orders</button>
+<button onclick="showPage('cart')"><span data-i18n="cart">Cart</span> <span id="cartCount">0</span></button>
+<button onclick="loginGoogle()" data-i18n="login">Login</button>
+</div>
+</div>
+</header>
+
+<main class="container">
+
+<section id="homePage">
+<div class="hero">
+<h1 data-i18n="welcome">Welcome to SUDIP INDUSTRY</h1>
+<p>DREAM • WORK • SUCCESS</p>
+<p style="margin-top:14px" data-i18n="heroText">আপনার পছন্দের পণ্য সহজেই অর্ডার করুন।</p>
+<button class="btn gold" style="margin-top:15px" onclick="showPage('shop')" data-i18n="shopNow">Shop Now</button>
+</div>
+<div class="section-title"><h2 data-i18n="categories">Categories</h2></div>
+<div id="categoryList" class="categories"></div>
+<div class="section-title">
+<h2 data-i18n="featured">Featured Products</h2>
+<button class="btn light small" onclick="showPage('shop')" data-i18n="viewAll">View All</button>
+</div>
+<div id="homeProducts" class="products"></div>
+</section>
+
+<section id="shopPage" class="hidden">
+<div class="section-title">
+<h2 data-i18n="allProducts">All Products</h2>
+<select id="sortProducts" onchange="renderShop()">
+<option value="latest" data-i18n="latest">Latest</option>
+<option value="low" data-i18n="priceLow">Price: Low to High</option>
+<option value="high" data-i18n="priceHigh">Price: High to Low</option>
+</select>
+</div>
+<div id="shopProducts" class="products"></div>
+</section>
+
+<section id="detailPage" class="hidden"></section>
+
+<section id="cartPage" class="hidden">
+<div class="section-title"><h2 data-i18n="shoppingCart">Shopping Cart</h2></div>
+<div class="panel" id="cartContent"></div>
+</section>
+
+<section id="checkoutPage" class="hidden">
+<div class="section-title"><h2 data-i18n="checkout">Checkout</h2></div>
+<div class="panel">
+<form id="checkoutForm" onsubmit="placeOrder(event)">
+<div class="form-grid">
+<div class="field">
+<label data-i18n="yourName">Your Name</label>
+<input id="customerName" required maxlength="70">
+</div>
+<div class="field">
+<label data-i18n="mobile">Mobile Number</label>
+<input id="customerPhone" type="tel" pattern="[6-9][0-9]{9}" maxlength="10" required>
+</div>
+<div class="field full">
+<label data-i18n="address">Full Address</label>
+<textarea id="customerAddress" required maxlength="500"></textarea>
+</div>
+<div class="field">
+<label data-i18n="city">City / District</label>
+<input id="customerCity" required maxlength="80">
+</div>
+<div class="field">
+<label>PIN Code</label>
+<input id="customerPin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required>
+</div>
+<div class="field full">
+<label data-i18n="paymentMethod">Payment Method</label>
+<select id="paymentMethod" onchange="updatePaymentInstructions()" required>
+<option value="COD">Cash on Delivery</option>
+<option value="UPI">UPI Payment</option>
+<option value="Bank">Bank Transfer</option>
+</select>
+</div>
+<div class="field full" id="paymentInstructions"></div>
+<div class="field full hidden" id="utrField">
+<label>UTR / Transaction ID</label>
+<input id="utrInput" maxlength="100">
+</div>
+</div>
+<hr>
+<div id="checkoutSummary"></div>
+<button class="btn green" type="submit" style="width:100%;margin-top:15px" data-i18n="placeOrder">Place Order</button>
+</form>
+</div>
+</section>
+
+<section id="ordersPage" class="hidden">
+<div class="section-title"><h2 data-i18n="myOrders">My Orders</h2></div>
+<div id="myOrders"></div>
+</section>
+
+<section id="wishlistPage" class="hidden">
+<div class="section-title"><h2 data-i18n="wishlist">My Wishlist</h2></div>
+<div id="wishlistProducts" class="products"></div>
+</section>
+
+<section id="profilePage" class="hidden">
+<div class="section-title"><h2 data-i18n="account">My Account</h2></div>
+<div class="panel" id="profileContent"></div>
+</section>
+
+<section id="adminPage" class="hidden">
+<div class="section-title"><h2 data-i18n="adminDashboard">Admin Dashboard</h2></div>
+<div id="adminContent"></div>
+</section>
+
+</main>
+
+<nav class="bottom-nav">
+<button onclick="showPage('home')"><b>⌂</b><span data-i18n="home">Home</span></button>
+<button onclick="showPage('shop')"><b>▦</b><span data-i18n="shop">Shop</span></button>
+<button onclick="showPage('wishlist')"><b>♡</b><span data-i18n="wishlist">Wishlist</span></button>
+<button onclick="showPage('orders')"><b>▤</b><span data-i18n="orders">Orders</span></button>
+<button onclick="showPage('profile')"><b>☻</b><span data-i18n="account">Account</span></button>
+</nav>
+
 <footer>
- <b>SUDIP INDUSTRY</b><br>DREAM • WORK • SUCCESS<br><br>
- Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a><br>
- WhatsApp: <a href="https://wa.me/918981988831">+91 89819 88831</a><br><br>
- © 2026 SUDIP INDUSTRY
+<h3>SUDIP INDUSTRY</h3>
+<p>DREAM • WORK • SUCCESS</p>
+<p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>
+<p>WhatsApp: <a href="https://wa.me/918981988831" target="_blank">+91 89819 88831</a></p>
+<p>© 2026 SUDIP INDUSTRY. All rights reserved.</p>
 </footer>
-<div id="toast" class="toast hidden"></div>
 
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import{getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signOut,signInAnonymously,linkWithPopup}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import{getFirestore,collection,addDoc,getDocs,doc,updateDoc,deleteDoc,setDoc,getDoc,query,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getAuth,GoogleAuthProvider,signInWithPopup,signInAnonymously,
+onAuthStateChanged,signOut,linkWithPopup
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+getFirestore,collection,doc,getDoc,getDocs,addDoc,setDoc,
+updateDoc,deleteDoc,query,where,orderBy,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig={
- apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
- authDomain:"sudip-industry.firebaseapp.com",
- projectId:"sudip-industry",
- storageBucket:"sudip-industry.firebasestorage.app",
- messagingSenderId:"377224435101",
- appId:"1:377224435101:web:c5e152120dec1664070b74"
+apiKey:"AIzaSyANbPXxpxMNibsWpJ6fqb71fGOADbdMVzk",
+authDomain:"sudip-industry.firebaseapp.com",
+projectId:"sudip-industry",
+storageBucket:"sudip-industry.firebasestorage.app",
+messagingSenderId:"377224435101",
+appId:"1:377224435101:web:c5e152120dec1664070b74"
 };
+
 const ADMIN_EMAIL="sudippramanick66@gmail.com";
-const fb=initializeApp(firebaseConfig);
-const auth=getAuth(fb);
-const db=getFirestore(fb);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 const provider=new GoogleAuthProvider();
-provider.setCustomParameters({prompt:"select_account"});
 
-let user=null,products=[],orders=[],wishlist=[],paymentSettings={},cart=[];
-let term="",category="All",selectedProduct="",busy=false;
-try{cart=JSON.parse(localStorage.getItem("sudip_cart_v1")||"[]");if(!Array.isArray(cart))cart=[]}catch(e){cart=[]}
+let currentUser=null;
+let products=[];
+let orders=[];
+let wishlist=[];
+let paymentSettings={};
+let cart=JSON.parse(localStorage.getItem("si_cart")||"[]");
+let activeCategory="All";
+let selectedProduct=null;
+let currentLanguage=localStorage.getItem("si_language")||"bn";
 
-const $=s=>document.querySelector(s);
+const $=id=>document.getElementById(id);
 const money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
-const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const isAdmin=()=>!!user&&!user.isAnonymous&&user.email===ADMIN_EMAIL;
-function toast(s){const e=$("#toast");e.textContent=s;e.classList.remove("hidden");setTimeout(()=>e.classList.add("hidden"),3000)}
-function go(p){location.hash=p}
-window.go=go;
-function counts(){
- $("#cc").textContent=cart.reduce((s,x)=>s+(Number(x.qty)||0),0);
- $("#wc").textContent=wishlist.length;
+const isAdmin=()=>!!currentUser&&currentUser.email===ADMIN_EMAIL;
+
+function safeText(value){
+return String(value??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
 }
-function saveCart(){localStorage.setItem("sudip_cart_v1",JSON.stringify(cart));counts()}
-function updateAccount(){$("#accountBtn").textContent=user&&!user.isAnonymous?(user.displayName||"Account"):"Login"}
+
+function productImages(p){
+let imgs=Array.isArray(p.images)?p.images:[];
+if(p.image&&!imgs.includes(p.image))imgs.unshift(p.image);
+return imgs.filter(x=>typeof x==="string"&&/^https?:\/\//i.test(x)).slice(0,5);
+}
+function productImage(p){
+return productImages(p)[0]||"https://placehold.co/500x400?text=SUDIP+INDUSTRY";
+}
+function saveCart(){
+localStorage.setItem("si_cart",JSON.stringify(cart));
+$("cartCount").textContent=cart.reduce((n,x)=>n+x.qty,0);
+}
+function toast(message){alert(message)}
 
 async function loadData(){
- const r=await getDocs(collection(db,"products"));
- products=r.docs.map(d=>({id:d.id,...d.data()}));
- const p=await getDoc(doc(db,"paymentSettings","main"));
- paymentSettings=p.exists()?p.data():{};
- wishlist=[];orders=[];
- if(user&&!user.isAnonymous){
-  try{const w=await getDocs(collection(db,"users",user.uid,"wishlist"));wishlist=w.docs.map(d=>d.id)}catch(e){}
-  try{
-   const q=isAdmin()?collection(db,"orders"):query(collection(db,"orders"),where("ownerUid","==",user.uid));
-   const o=await getDocs(q);
-   orders=o.docs.map(d=>({id:d.id,...d.data()}));
-  }catch(e){}
- }
- counts();updateAccount();render();
+try{
+const ps=await getDocs(collection(db,"products"));
+products=ps.docs.map(d=>({id:d.id,...d.data()}));
+const settingsSnap=await getDoc(doc(db,"paymentSettings","main"));
+paymentSettings=settingsSnap.exists()?settingsSnap.data():{};
+
+if(currentUser&&!currentUser.isAnonymous){
+const ws=await getDocs(collection(db,"users",currentUser.uid,"wishlist"));
+wishlist=ws.docs.map(d=>d.id);
+const oq=isAdmin()?collection(db,"orders"):
+query(collection(db,"orders"),where("ownerUid","==",currentUser.uid));
+const os=await getDocs(oq);
+orders=os.docs.map(d=>({id:d.id,...d.data()}));
+orders.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+}else{wishlist=[];orders=[]}
+
+renderHome();
+renderShop();
+saveCart();
+}catch(error){
+console.error(error);
+toast("Data loading failed: "+error.message);
+}
 }
 
-onAuthStateChanged(auth,async u=>{
- user=u;updateAccount();
- if(!u){try{await signInAnonymously(auth)}catch(e){$("#app").textContent="Authentication Error: "+e.message}}
- else{try{await loadData()}catch(e){$("#app").innerHTML="<div class='panel'>Firebase Error: "+safe(e.message)+"</div>"}}
+onAuthStateChanged(auth,async user=>{
+currentUser=user;
+if(!user){
+try{await signInAnonymously(auth)}
+catch(e){console.error(e)}
+return;
+}
+await loadData();
 });
 
-async function googleLogin(){
- try{
-  if(user?.isAnonymous){
-   try{await linkWithPopup(user,provider)}
-   catch(e){
-    if(["auth/credential-already-in-use","auth/email-already-in-use"].includes(e.code)){
-     await signOut(auth);await signInWithPopup(auth,provider)
-    }else throw e
-   }
-  }else await signInWithPopup(auth,provider);
- }catch(e){toast("Login হয়নি: "+e.message)}
+window.loginGoogle=async function(){
+try{
+if(currentUser?.isAnonymous)await linkWithPopup(currentUser,provider);
+else await signInWithPopup(auth,provider);
+toast("Login successful");
+await loadData();
+}catch(e){
+if(e.code==="auth/credential-already-in-use"){
+try{await signInWithPopup(auth,provider)}
+catch(err){toast(err.message)}
+}else toast("Login failed: "+e.message);
 }
-async function logout(){try{await signOut(auth);toast("Logout হয়েছে")}catch(e){toast(e.message)}}
-async function switchAccount(){try{await signOut(auth);await signInWithPopup(auth,provider)}catch(e){toast(e.message)}}
-window.googleLogin=googleLogin;window.logout=logout;window.switchAccount=switchAccount;
-
-/* Product image helper: supports up to 5 images */
-function productImages(p){
- let a=Array.isArray(p.images)?p.images:[];
- if(!a.length&&p.image)a=[p.image];
- return a.filter(x=>typeof x==="string"&&x.trim()).slice(0,5);
-}
-function card(p){
- const imgs=productImages(p);
- return `<div class="card">
-  <div class="product-img">
-   ${imgs[0]?`<img src="${safe(imgs[0])}" alt="${safe(p.name)}" onerror="this.style.display='none'">`:"🛍️"}
-   <button class="heart" onclick="toggleWish('${safe(p.id)}')">${wishlist.includes(p.id)?"♥":"♡"}</button>
-  </div>
-  <div class="info">
-   <h3>${safe(p.name)}</h3>
-   <span class="price">${money(p.price)}</span>
-   <p>${safe(p.category||"Other")}</p>
-   <div class="actions">
-    <button class="soft" onclick="showProduct('${safe(p.id)}')">Details</button>
-    <button class="primary" onclick="addCart('${safe(p.id)}')">Add to Cart</button>
-   </div>
-  </div>
- </div>`;
-}
-function empty(s){return `<div class="empty">${safe(s)}</div>`}
-function home(){
- return `<section class="hero"><h1>Welcome to SUDIP INDUSTRY</h1><p>Shop smart. Shop with confidence.</p><button class="gold" onclick="go('shop')">Explore Products →</button></section>
- <div class="section"><h2>Shop by Category</h2></div>
- <div class="row">${["All","Fashion","Electronics","Home","Beauty","Other"].map(c=>`<button class="soft" onclick="filterCategory('${c}')">${c}</button>`).join("")}</div>
- <div class="section"><h2>Featured Products</h2><button class="soft" onclick="go('shop')">View All</button></div>
- <div class="products">${products.slice(0,8).map(card).join("")||empty("এখনও Product যোগ করা হয়নি।")}</div>`;
-}
-function shop(){
- const list=products.filter(p=>(!term||(p.name||"").toLowerCase().includes(term)||(p.category||"").toLowerCase().includes(term))&&(category==="All"||p.category===category));
- return `<div class="section"><h2>All Products</h2><span>${list.length} Products</span></div><div class="products">${list.map(card).join("")||empty("কোনো Product পাওয়া যায়নি।")}</div>`;
-}
-window.filterCategory=c=>{category=c;go("shop")};
-window.searchProducts=v=>{term=String(v||"").trim().toLowerCase();if(location.hash!=="#shop")go("shop");else render()};
-window.showProduct=id=>{selectedProduct=id;go("product")};
-window.addCart=id=>{const x=cart.find(a=>a.id===id);if(x)x.qty++;else cart.push({id,qty:1});saveCart();toast("Cart-এ যোগ হয়েছে")};
-window.toggleWish=async id=>{
- if(!user||user.isAnonymous){toast("Wishlist-এর জন্য Google Login করো");go("profile");return}
- try{
-  const ref=doc(db,"users",user.uid,"wishlist",id);
-  if(wishlist.includes(id)){await deleteDoc(ref);wishlist=wishlist.filter(x=>x!==id)}
-  else{await setDoc(ref,{createdAt:serverTimestamp()});wishlist.push(id)}
-  counts();render();
- }catch(e){toast(e.message)}
 };
 
-/* Product details with clickable image gallery */
-function productView(){
- const p=products.find(x=>x.id===selectedProduct);
- if(!p)return empty("Product পাওয়া যায়নি");
- const imgs=productImages(p);
- return `<div class="panel">
-  <button class="soft" onclick="go('shop')">← Back</button>
-  <div class="row" style="margin-top:15px;align-items:flex-start">
-   <div style="flex:1;min-width:220px">
-    ${imgs.length?`<img id="mainProductPhoto" class="main-photo" src="${safe(imgs[0])}">`:"<div class='main-photo'>🛍️</div>"}
-    <div class="gallery">${imgs.map((src,i)=>`<img src="${safe(src)}" alt="Photo ${i+1}" onclick="changeProductPhoto('${safe(src)}')">`).join("")}</div>
-   </div>
-   <div style="flex:1;min-width:220px">
-    <h2>${safe(p.name)}</h2><h2 class="price">${money(p.price)}</h2>
-    <p>${safe(p.description||"")}</p><p>${safe(p.category||"")}</p>
-    <button class="primary" onclick="addCart('${safe(p.id)}')">Add to Cart</button>
-    <button class="soft" onclick="toggleWish('${safe(p.id)}')">♡ Wishlist</button>
-   </div>
-  </div>
- </div>`;
-}
-window.changeProductPhoto=src=>{const e=$("#mainProductPhoto");if(e)e.src=src};
-
-function cartView(){
- const items=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
- const total=items.reduce((s,x)=>s+Number(x.p.price)*x.qty,0);
- return `<div class="section"><h2>Shopping Cart</h2></div>
- <div class="panel">
- ${items.map(x=>`<div class="item">
-  <img src="${safe(productImages(x.p)[0]||"")}" alt="">
-  <div class="grow"><h3>${safe(x.p.name)}</h3><b>${money(x.p.price)}</b>
-   <div class="qty">
-    <button onclick="changeQty('${safe(x.id)}',-1)">−</button>
-    ${x.qty}
-    <button onclick="changeQty('${safe(x.id)}',1)">+</button>
-    <button class="danger" onclick="removeCart('${safe(x.id)}')">Remove</button>
-   </div>
-  </div>
- </div>`).join("")||empty("তোমার Cart খালি।")}
- ${items.length?`<div class="row"><b>Total: ${money(total)}</b><button class="primary" onclick="go('checkout')">Checkout</button></div>`:""}
- </div>`;
-}
-window.changeQty=(id,n)=>{
- const x=cart.find(a=>a.id===id);
- if(x){x.qty+=n;if(x.qty<1)cart=cart.filter(a=>a.id!==id);saveCart();render()}
-};
-window.removeCart=id=>{cart=cart.filter(x=>x.id!==id);saveCart();render()};
-
-function paymentInstructions(){
- const method=$("#paymentMethod")?.value||"COD";
- const p=paymentSettings;
- if(method==="COD")return `<div class="paybox">Cash on Delivery। পণ্য হাতে পেয়ে টাকা দেবে।</div>`;
- if(method==="UPI")return `<div class="paybox"><b>UPI Payment</b><p>UPI ID: ${safe(p.upiId||"Not configured")}</p></div><div class="field"><label>UTR / Transaction ID</label><input name="utr" maxlength="40"></div>`;
- return `<div class="paybox"><b>Bank Transfer</b><p>Account Name: ${safe(p.accountName||"")}</p><p>Bank: ${safe(p.bankName||"")}</p><p>Account Number: ${safe(p.accountNumber||"")}</p><p>IFSC: ${safe(p.ifsc||"")}</p></div><div class="field"><label>UTR / Transaction ID</label><input name="utr" maxlength="40"></div>`;
-}
-window.updatePaymentInstructions=()=>{
- const e=$("#paymentInstructions");
- if(e)e.innerHTML=paymentInstructions();
+window.logout=async function(){
+try{await signOut(auth);toast("Logged out")}
+catch(e){toast(e.message)}
 };
 
-function checkout(){
- const items=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
- const total=items.reduce((s,x)=>s+Number(x.p.price)*x.qty,0);
- if(!items.length)return empty("আগে Cart-এ Product যোগ করো।");
- if(!user||user.isAnonymous)return `<div class="panel"><h2>Google Login প্রয়োজন</h2><button class="primary" onclick="googleLogin()">Google Login</button></div>`;
- return `<div class="section"><h2>Checkout</h2></div>
- <div class="panel">
- <form class="form" onsubmit="placeOrder(event)">
-  <div class="field"><label>Full Name *</label><input name="name" required maxlength="80"></div>
-  <div class="field"><label>Mobile Number *</label><input name="phone" required pattern="[6-9][0-9]{9}" maxlength="10"></div>
-  <div class="field full"><label>Delivery Address *</label><textarea name="address" required minlength="10"></textarea></div>
-  <div class="field"><label>City / Town *</label><input name="city" required></div>
-  <div class="field"><label>PIN Code *</label><input name="pin" required pattern="[0-9]{6}" maxlength="6"></div>
-  <div class="field full"><label>Payment Method</label>
-   <select name="paymentMethod" id="paymentMethod" onchange="updatePaymentInstructions()">
-    <option value="COD">Cash on Delivery</option>
-    ${paymentSettings.upiId?'<option value="UPI">UPI Payment</option>':""}
-    ${paymentSettings.accountNumber?'<option value="BANK">Bank Transfer</option>':""}
-   </select>
-  </div>
-  <div class="field full" id="paymentInstructions">${paymentInstructions()}</div>
-  <div class="field full"><h3>Order Total: ${money(total)}</h3></div>
-  <div class="field full"><button class="primary" type="submit">Place Order</button></div>
- </form></div>`;
+window.showPage=function(page){
+const pages=["home","shop","detail","cart","checkout","orders","wishlist","profile","admin"];
+pages.forEach(p=>{
+const el=$(p+"Page");
+if(el)el.classList.toggle("hidden",p!==page);
+});
+if(page==="home")renderHome();
+if(page==="shop")renderShop();
+if(page==="cart")renderCart();
+if(page==="checkout")renderCheckout();
+if(page==="orders")renderMyOrders();
+if(page==="wishlist")renderWishlist();
+if(page==="profile")renderProfile();
+if(page==="admin"){
+if(!isAdmin()){toast("Admin access only");showPage("home");return}
+renderAdmin();
 }
+window.scrollTo({top:0,behavior:"smooth"});
+};
 
-async function placeOrder(event){
- event.preventDefault();
- if(busy)return;
- const form=event.currentTarget;
- if(!form.reportValidity())return;
- const data=new FormData(form);
- const items=cart.map(x=>({...x,p:products.find(p=>p.id===x.id)})).filter(x=>x.p);
- if(!items.length)return;
- const method=String(data.get("paymentMethod")||"COD");
- if(method==="UPI"&&!paymentSettings.upiId)return toast("UPI Details নেই");
- if(method==="BANK"&&!paymentSettings.accountNumber)return toast("Bank Details নেই");
- const total=items.reduce((s,x)=>s+Number(x.p.price)*x.qty,0);
- const order={
-  ownerUid:user.uid,customerEmail:user.email||"",
-  customerName:String(data.get("name")||"").trim(),
-  phone:String(data.get("phone")||"").trim(),
-  address:String(data.get("address")||"").trim(),
-  city:String(data.get("city")||"").trim(),
-  pin:String(data.get("pin")||"").trim(),
-  paymentMethod:method,utr:String(data.get("utr")||"").trim(),
-  items:items.map(x=>({productId:x.id,name:x.p.name,price:Number(x.p.price),qty:x.qty,image:productImages(x.p)[0]||""})),
-  total,status:"Pending",
-  paymentStatus:method==="COD"?"Pay on Delivery":"Payment Verification Pending",
-  createdAt:serverTimestamp()
- };
- busy=true;
- const btn=form.querySelector('button[type="submit"]');
- btn.disabled=true;btn.textContent="Please wait...";
- try{
-  await addDoc(collection(db,"orders"),order);
-  cart=[];saveCart();await loadData();go("orders");toast("Order জমা হয়েছে");
- }catch(e){toast("Order হয়নি: "+e.message);btn.disabled=false;btn.textContent="Place Order"}
- finally{busy=false}
-}
-window.placeOrder=placeOrder;
+ 
+/* ================================
+   1. LANGUAGE SYSTEM
+================================ */
 
-function wishlistView(){
- const items=products.filter(p=>wishlist.includes(p.id));
- return `<div class="section"><h2>My Wishlist</h2></div><div class="products">${items.map(card).join("")||empty("Wishlist খালি।")}</div>`;
-}
-function profileView(){
- if(!user||user.isAnonymous)return `<div class="panel"><h2>My Account</h2><button class="primary" onclick="googleLogin()">Google Login</button></div>`;
- return `<div class="panel"><h2>My Account</h2><p>${safe(user.displayName||"Customer")}</p><p>${safe(user.email||"")}</p><button class="soft" onclick="switchAccount()">Switch Account</button> <button class="danger" onclick="logout()">Logout</button></div>`;
-}
-function ordersView(){
- if(!user||user.isAnonymous)return `<div class="panel"><p>Order দেখতে Google Login করো।</p><button class="primary" onclick="googleLogin()">Login</button></div>`;
- return `<div class="section"><h2>My Orders</h2></div>
- ${orders.map(o=>`<div class="panel"><h3>Order #${safe(o.id)}</h3><p>Total: ${money(o.total)}</p><p>Status: ${safe(o.status)}</p><p>Payment: ${safe(o.paymentStatus)}</p></div>`).join("")||empty("এখনও কোনো Order নেই।")}`;
-}
-function contactView(){
- return `<div class="panel"><h2>Contact SUDIP INDUSTRY</h2><p>Email: sudippramanick66@gmail.com</p><p>WhatsApp: +91 89819 88831</p><a href="https://wa.me/918981988831">Chat on WhatsApp</a></div>`;
-}
-
-/* Admin Dashboard: five image URL fields */
-function adminView(){
- if(!isAdmin())return `<div class="panel"><h2>Admin Login Required</h2><button class="primary" onclick="googleLogin()">Google Login</button></div>`;
- return `<div class="section"><h2>Admin Dashboard</h2></div>
- <div class="panel">
-  <h3>Add New Product</h3>
-  <form class="form" onsubmit="submitProduct(event)">
-   <div class="field full"><label>Product Name *</label><input name="name" required></div>
-   <div class="field"><label>Price *</label><input name="price" type="number" min="1" required></div>
-   <div class="field"><label>Category</label><input name="category"></div>
-   <div class="field full"><label>Description</label><textarea name="description"></textarea></div>
-   <div class="field full"><label>Image URL 1 *</label><input name="image1" type="url" required placeholder="First image URL"></div>
-   <div class="field full"><label>Image URL 2</label><input name="image2" type="url" placeholder="Second image URL"></div>
-   <div class="field full"><label>Image URL 3</label><input name="image3" type="url" placeholder="Third image URL"></div>
-   <div class="field full"><label>Image URL 4</label><input name="image4" type="url" placeholder="Fourth image URL"></div>
-   <div class="field full"><label>Image URL 5</label><input name="image5" type="url" placeholder="Fifth image URL"></div>
-   <div class="field full"><button class="primary" type="submit">Add Product</button></div>
-  </form>
- </div>
- <div class="panel">
-  <h3>Payment Settings</h3>
-  <form class="form" onsubmit="submitPaymentSettings(event)">
-   <div class="field full"><label>UPI ID</label><input name="upiId" value="${safe(paymentSettings.upiId||"")}"></div>
-   <div class="field"><label>Account Name</label><input name="accountName" value="${safe(paymentSettings.accountName||"")}"></div>
-   <div class="field"><label>Bank Name</label><input name="bankName" value="${safe(paymentSettings.bankName||"")}"></div>
-   <div class="field"><label>Account Number</label><input name="accountNumber" value="${safe(paymentSettings.accountNumber||"")}"></div>
-   <div class="field"><label>IFSC</label><input name="ifsc" value="${safe(paymentSettings.ifsc||"")}"></div>
-   <div class="field full"><button class="primary">Save Payment Settings</button></div>
-  </form>
- </div>
- <div class="panel"><h3>Manage Products</h3>
- ${products.map(p=>`<div class="item"><div class="grow"><b>${safe(p.name)}</b><br>${money(p.price)}<br><small>${productImages(p).length} images</small></div><button class="danger" onclick="deleteProduct('${safe(p.id)}')">Delete</button></div>`).join("")||empty("No products")}
- </div>
- <div class="panel"><h3>Manage Orders</h3>
- ${orders.map(o=>`<div class="item"><div class="grow"><b>${safe(o.customerName||"Customer")}</b><br>${safe(o.phone||"")}<br>${money(o.total)}<br>${safe(o.status||"Pending")}</div><select onchange="updateOrderStatus('${safe(o.id)}',this.value)"><option>${safe(o.status||"Pending")}</option><option>Processing</option><option>Shipped</option><option>Delivered</option><option>Cancelled</option></select></div>`).join("")||empty("No orders")}
- </div>`;
-}
-
-async function submitProduct(event){
- event.preventDefault();
- if(!isAdmin())return;
- const data=new FormData(event.currentTarget);
- const images=[1,2,3,4,5].map(i=>String(data.get("image"+i)||"").trim()).filter(Boolean);
- const product={
-  name:String(data.get("name")||"").trim(),
-  price:Number(data.get("price")),
-  category:String(data.get("category")||"").trim(),
-  description:String(data.get("description")||"").trim(),
-  images,
-  image:images[0]||"",
-  createdAt:serverTimestamp()
- };
- if(!product.name||!Number.isFinite(product.price)||product.price<=0)return toast("Product Details ঠিক করো");
- try{
-  await addDoc(collection(db,"products"),product);
-  event.currentTarget.reset();await loadData();go("admin");toast("Product Added");
- }catch(e){toast("Error: "+e.message)}
-}
-window.submitProduct=submitProduct;
-
-async function submitPaymentSettings(event){
- event.preventDefault();
- if(!isAdmin())return;
- const d=new FormData(event.currentTarget);
- const settings={
-  upiId:String(d.get("upiId")||"").trim(),
-  accountName:String(d.get("accountName")||"").trim(),
-  bankName:String(d.get("bankName")||"").trim(),
-  accountNumber:String(d.get("accountNumber")||"").trim(),
-  ifsc:String(d.get("ifsc")||"").trim()
- };
- try{await setDoc(doc(db,"paymentSettings","main"),settings);paymentSettings=settings;toast("Payment Settings Saved");render()}
- catch(e){toast(e.message)}
-}
-window.submitPaymentSettings=submitPaymentSettings;
-
-async function deleteProduct(id){
- if(!isAdmin()||!confirm("Product Delete করবে?"))return;
- try{await deleteDoc(doc(db,"products",id));await loadData();toast("Product Deleted")}
- catch(e){toast(e.message)}
-}
-window.deleteProduct=deleteProduct;
-
-async function updateOrderStatus(id,status){
- if(!isAdmin())return;
- try{await updateDoc(doc(db,"orders",id),{status});await loadData();toast("Order Updated")}
- catch(e){toast(e.message)}
-}
-window.updateOrderStatus=updateOrderStatus;
-
-function render(){
- const page=(location.hash||"#home").slice(1);
- let html="";
- if(page==="home")html=home();
- else if(page==="shop")html=shop();
- else if(page==="product")html=productView();
- else if(page==="cart")html=cartView();
- else if(page==="checkout")html=checkout();
- else if(page==="wishlist")html=wishlistView();
- else if(page==="profile")html=profileView();
- else if(page==="orders")html=ordersView();
- else if(page==="contact")html=contactView();
- else if(page==="admin")html=adminView();
- else html=home();
- $("#app").innerHTML=html;
-}
-window.render=render;
-window.addEventListener("hashchange",render);
-counts();
-render();
-</script>
-</body>
-</html>
-
+const translations={
+bn:{
+search:"খুঁজুন",orders:"অর্ডার",cart:"কার্ট",login:"লগইন",
+welcome:"SUDIP INDUSTRY-তে স্বাগতম",
+heroText:"আপনার পছন্দের পণ্য সহজেই অর্ডার করুন।",
+shopNow:"এখনই কেনাকাটা করুন",categories:"ক্যাটাগরি",
+featured:"বিশেষ পণ্য",viewAll:"সব দেখুন",
+allProducts:"সব পণ্য",latest:"সর্বশেষ",
+priceLow:"কম দাম থেকে বেশি",priceHigh:"বেশি দাম থেকে কম",
+shoppingCart:"শপিং কার্ট",checkout:"চেকআউট",
+yourName:"আপনার নাম",mobile:"মোবাইল নম্বর",
+address:"সম্পূর্ণ ঠিকানা",city:"শহর / জেলা",
+paymentMethod:"পেমেন্ট পদ্ধতি",placeOrder:"অর্ডার করুন",
+myOrders:"আমার অর্ডার",wishlist:"উইশলিস্ট",
+account:"আমার অ্যাকাউন্ট",adminDashboard:"অ্যাডমিন ড্যাশবোর্ড",
+home:"হোম",shop:"শপ",addCart:"কার্টে যোগ করুন",
+buyNow:"এখনই কিনুন",empty:"কোনো পণ্য পাওয়া যায়নি",
+emptyCart:"আপনার কার্ট খালি",total:"মোট",
+remove:"মুছুন",quantity:"পরিমাণ",loginRequired:"প্রথমে লগইন করুন",
+noOrders:"এখনও কোনো অর্ডার নেই",logout:"লগআউট",
+adminOnly:"শুধুমাত্র অ্যাডমিনের জন্য",addProduct:"পণ্য যোগ করুন",
+productName:"পণ্যের নাম",productPrice:"পণ্যের দাম",
+productCategory:"ক্যাটাগরি",productDescription:"পণ্যের বিবরণ",
+imageUrls:"ছবির URL (প্রতি লাইনে একটি, সর্বোচ্চ ৫টি)",
+saveProduct:"পণ্য সংরক্ষণ করুন",manageOrders:"অর্ডার পরিচালনা",
+customer:"গ্রাহক",phone:"ফোন",date:"তারিখ",
+status:"স্ট্যাটাস",action:"কাজ",pending:"অপেক্ষমাণ",
+confirmed:"নিশ্চিত",shipped:"পাঠানো হয়েছে",
+delivered:"ডেলিভারি হয়েছে",cancelled:"বাতিল",
+paymentSettings:"পেমেন্ট সেটিংস",upiId:"UPI ID",
+bankDetails:"ব্যাংক বিবরণ",saveSettings:"সেটিংস সংরক্ষণ",
+delete:"ডিলিট",productAdded:"পণ্য যোগ হয়েছে",
+orderSuccess:"আপনার অর্ডার সফলভাবে জমা হয়েছে"
+},
+en:{
+search:"Search",orders:"Orders",cart:"Cart",login:"Login",
+welcome:"Welcome to SUDIP INDUSTRY",
+heroText:"Order your favourite products easily.",
+shopNow:"Shop Now",categories:"Categories",
+featured:"Featured Products",viewAll:"View All",
+allProducts:"All Products",latest:"Latest",
+priceLow:"Price: Low to High",priceHigh:"Price: High to Low",
+shoppingCart:"Shopping Cart",checkout:"Checkout",
+yourName:"Your Name",mobile:"Mobile Number",
+address:"Full Address",city:"City / District",
+paymentMethod:"Payment Method",placeOrder:"Place Order",
+myOrders:"My Orders",wishlist:"Wishlist",
+account:"My Account",adminDashboard:"Admin Dashboard",
+home:"Home",shop:"Shop",addCart:"Add to Cart",
+buyNow:"Buy Now",empty:"No products found",
+emptyCart:"Your cart is empty",total:"Total",
+remove:"Remove",quantity:"Quantity",loginRequired:"Please login first",
+noOrders:"No orders yet",logout:"Logout",
+adminOnly:"Admin only",addProduct:"Add Product",
+productName:"Product Name",productPrice:"Product Price",
+productCategory:"Category",productDescription:"Description",
+imageUrls:"Image URLs (one per line, maximum 5)",
+saveProduct:"Save Product",manageOrders:"Manage Orders",
+customer:"Customer",phone:"Phone",date:"Date",
+status:"Status",action:"Action",pending:"Pending",
+confirmed:"Confirmed",shipped:"Shipped",
+delivered:"Delivered",cancelled:"Cancelled",
+paymentSettings:"Payment Settings",upiId:"UPI ID",
+bankDetails:"Bank Details",saveSettings:"Save Settings",
+delete:"Delete",productAdded:"Product added",
+orderSuccess:"Your order was placed successfully"
+},
+hi:{
+search:"खोजें",orders:"ऑर्डर",cart:"कार्ट",login:"लॉगिन",
+welcome:"SUDIP INDUSTRY में आपका स्वागत है",
+heroText:"अपने पसंदीदा उत्पाद आसानी से ऑर्डर करें।",
+shopNow:"अभी खरीदें",categories:"श्रेणियाँ",
+featured:"विशेष उत्पाद",viewAll:"सभी देखें",
+allProducts:"सभी उत्पाद",latest:"नवीनतम",
+priceLow:"कम से अधिक कीमत",priceHigh:"अधिक से कम कीमत",
+shoppingCart:"शॉपिंग कार्ट",checkout:"चेकआउट",
+yourName:"आपका नाम",mobile:"मोबाइल नंबर",
+address:"पूरा पता",city:"शहर / जिला",
+paymentMethod:"भुगतान का तरीका",placeOrder:"ऑर्डर करें",
+myOrders:"मेरे ऑर्डर",wishlist:"विशलिस्ट",
+account:"मेरा अकाउंट",adminDashboard:"एडमिन डैशबोर्ड",
+home:"होम",shop:"शॉप",addCart:"कार्ट में डालें",
+buyNow:"अभी खरीदें",empty:"कोई उत्पाद नहीं मिला",
+emptyCart:"आपकी कार्ट खाली है",total:"कुल",
+remove:"हटाएँ",quantity:"मात्रा",loginRequired:"पहले लॉगिन करें",
+noOrders:"अभी कोई ऑर्डर नहीं",logout:"लॉगआउट",
+adminOnly:"केवल एडमिन",addProduct:"उत्पाद जोड़ें",
+productName:"उत्पाद का नाम",productPrice:"उत्पाद की कीमत",
+productCategory:"श्रेणी",productDescription:"विवरण",
+imageUrls:"इमेज URL (प्रति लाइन एक, अधिकतम 5)",
+saveProduct:"उत्पाद सेव करें",manageOrders:"ऑर्डर प्रबंधन",
+customer:"ग्राहक",phone:"फोन",date:"तारीख",
+status:"स्थिति",action:"कार्य",pending:"लंबित",
+confirmed:"पुष्टि",shipped:"भेज दिया गया",
+delivered:"डिलीवर",cancelled:"रद्द",
+paymentSettings:"भुगतान सेटिंग",upiId:"UPI ID",
+bankDetails:"बैंक विवरण",saveSettings:"सेव करें",
+delete:"हटाएँ",productAdded:"उत्पाद जोड़ा गया",
+orderSuccess:"आपका ऑर्डर सफलतापूर्वक दर्ज हुआ"
+},
+ur:{search:"تلاش",orders:"آرڈرز",cart:"کارٹ",login:"لاگ ان",welcome:"SUDIP INDUSTRY میں خوش آمدید",heroText:"اپنی پسند کی مصنوعات آسانی سے آرڈر کریں۔",shopNow:"ابھی خریدیں",categories:"اقسام",featured:"نمایاں مصنوعات",viewAll:"سب دیکھیں",allProducts:"تمام مصنوعات",latest:"تازہ ترین",shoppingCart:"شاپنگ کارٹ",checkout:"چیک آؤٹ",yourName:"آپ کا نام",mobile:"موبائل نمبر",address:"مکمل پتہ",city:"شہر / ضلع",paymentMethod:"ادائیگی کا طریقہ",placeOrder:"آرڈر کریں",myOrders:"میرے آرڈرز",wishlist:"پسندیدہ",account:"میرا اکاؤنٹ",adminDashboard:"ایڈمن ڈیش بورڈ",home:"ہوم",shop:"دکان",addCart:"کارٹ میں شامل کریں",buyNow:"ابھی خریدیں",empty:"کوئی مصنوعات نہیں",emptyCart:"آپ کی کارٹ خالی ہے",total:"کل",remove:"ہٹائیں",quantity:"مقدار",loginRequired:"پہلے لاگ ان کریں",noOrders:"ابھی کوئی آرڈر نہیں",logout:"لاگ آؤٹ",adminOnly:"صرف ایڈمن",addProduct:"مصنوعات شامل کریں",productName:"مصنوعات کا نام",productPrice:"قیمت",productCategory:"قسم",productDescription:"تفصیل",imageUrls:"تصویر کے URLs",saveProduct:"محفوظ کریں",manageOrders:"آرڈرز کا انتظام",customer:"گاہک",phone:"فون",date:"تاریخ",status:"حالت",action:"عمل",pending:"زیر التوا",confirmed:"تصدیق شدہ",shipped:"بھیج دیا گیا",delivered:"پہنچایا گیا",cancelled:"منسوخ",paymentSettings:"ادائیگی کی ترتیبات",upiId:"UPI ID",bankDetails:"بینک تفصیلات",saveSettings:"محفوظ کریں",delete:"حذف کریں",productAdded:"مصنوعات شامل ہوگئی",orderSuccess:"آپ کا آرڈر جمع ہوگیا"},
+as:{search:"সন্ধান",orders:"অৰ্ডাৰ",cart:"কাৰ্ট",login:"লগইন",welcome:"SUDIP INDUSTRY লৈ স্বাগতম",heroText:"আপোনাৰ পছন্দৰ সামগ্ৰী সহজে অৰ্ডাৰ কৰক।",shopNow:"এতিয়াই কিনক",categories:"শ্ৰেণী",featured:"বিশেষ সামগ্ৰী",viewAll:"সকলো চাওক",allProducts:"সকলো সামগ্ৰী",latest:"শেহতীয়া",shoppingCart:"শ্বপিং কাৰ্ট",checkout:"চেকআউট",yourName:"আপোনাৰ নাম",mobile:"মোবাইল নম্বৰ",address:"সম্পূৰ্ণ ঠিকনা",city:"চহৰ / জিলা",paymentMethod:"পেমেণ্ট পদ্ধতি",placeOrder:"অৰ্ডাৰ কৰক",myOrders:"মোৰ অৰ্ডাৰ",wishlist:"ইচ্ছা তালিকা",account:"মোৰ একাউণ্ট",adminDashboard:"এডমিন ডেশ্ববৰ্ড",home:"ঘৰ",shop:"দোকান",addCart:"কাৰ্টত যোগ কৰক",buyNow:"এতিয়াই কিনক",empty:"সামগ্ৰী পোৱা নগ'ল",emptyCart:"কাৰ্ট খালী",total:"মুঠ",remove:"আঁতৰাওক",quantity:"পৰিমাণ",loginRequired:"প্ৰথমে লগইন কৰক",noOrders:"এতিয়াও অৰ্ডাৰ নাই",logout:"লগআউট",adminOnly:"কেৱল এডমিন",addProduct:"সামগ্ৰী যোগ কৰক",productName:"সামগ্ৰীৰ নাম",productPrice:"দাম",productCategory:"শ্ৰেণী",productDescription:"বিৱৰণ",imageUrls:"ছবিৰ URL",saveProduct:"সংৰক্ষণ কৰক",manageOrders:"অৰ্ডাৰ পৰিচালনা",customer:"গ্ৰাহক",phone:"ফোন",date:"তাৰিখ",status:"স্থিতি",action:"কাৰ্য",pending:"অপেক্ষাৰত",confirmed:"নিশ্চিত",shipped:"পঠোৱা হৈছে",delivered:"ডেলিভাৰী হৈছে",cancelled:"বাতিল",paymentSettings:"পেমেণ্ট ছেটিংছ",upiId:"UPI ID",bankDetails:"বেংকৰ বিৱৰণ",saveSettings:"সংৰক্ষণ কৰক",delete:"মচক",productAdded:"সামগ্ৰী যোগ কৰা হ'ল",orderSuccess:"অৰ্ডাৰ সফল হৈছে"},
+or:{search:"ଖୋଜନ୍ତୁ",orders:"ଅର୍ଡର",cart:"କାର୍ଟ",login:"ଲଗଇନ",welcome:"SUDIP INDUSTRY କୁ ସ୍ୱାଗତ",heroText:"ଆପଣଙ୍କ ପସନ୍ଦର ଉତ୍ପାଦ ସହଜରେ ଅର୍ଡର କରନ୍ତୁ।",shopNow:"ବର୍ତ୍ତମାନ କିଣନ୍ତୁ",categories:"ବର୍ଗ",featured:"ବିଶେଷ ଉତ୍ପାଦ",viewAll:"ସମସ୍ତ ଦେଖନ୍ତୁ",allProducts:"ସମସ୍ତ ଉତ୍ପାଦ",latest:"ନୂତନ",shoppingCart:"ଶପିଂ କାର୍ଟ",checkout:"ଚେକଆଉଟ",yourName:"ଆପଣଙ୍କ ନାମ",mobile:"ମୋବାଇଲ ନମ୍ବର",address:"ସମ୍ପୂର୍ଣ୍ଣ ଠିକଣା",city:"ସହର / ଜିଲ୍ଲା",paymentMethod:"ପେମେଣ୍ଟ ପଦ୍ଧତି",placeOrder:"ଅର୍ଡର କରନ୍ତୁ",myOrders:"ମୋ ଅର୍ଡର",wishlist:"ଇଚ୍ଛା ତାଲିକା",account:"ମୋ ଆକାଉଣ୍ଟ",adminDashboard:"ଆଡମିନ ଡ୍ୟାସବୋର୍ଡ",home:"ହୋମ",shop:"ଦୋକାନ",addCart:"କାର୍ଟରେ ଯୋଡନ୍ତୁ",buyNow:"ଏବେ କିଣନ୍ତୁ",empty:"କୌଣସି ଉତ୍ପାଦ ମିଳିଲା ନାହିଁ",emptyCart:"କାର୍ଟ ଖାଲି",total:"ମୋଟ",remove:"ହଟାନ୍ତୁ",quantity:"ପରିମାଣ",loginRequired:"ପ୍ରଥମେ ଲଗଇନ କରନ୍ତୁ",noOrders:"କୌଣସି ଅର୍ଡର ନାହିଁ",logout:"ଲଗଆଉଟ",adminOnly:"କେବଳ ଆଡମିନ",addProduct:"ଉତ୍ପାଦ ଯୋଡନ୍ତୁ",productName:"ଉତ୍ପାଦ ନାମ",productPrice:"ମୂଲ୍ୟ",productCategory:"ବର୍ଗ",productDescription:"ବିବରଣୀ",imageUrls:"ଛବି URL",saveProduct:"ସଂରକ୍ଷଣ କରନ୍ତୁ",manageOrders:"ଅର୍ଡର ପରିଚାଳନା",customer:"ଗ୍ରାହକ",phone:"ଫୋନ",date:"ତାରିଖ",status:"ସ୍ଥିତି",action:"କାର୍ଯ୍ୟ",pending:"ଅପେକ୍ଷାରତ",confirmed:"ନିଶ୍ଚିତ",shipped:"ପଠାଯାଇଛି",delivered:"ଡେଲିଭରି ହୋଇଛି",cancelled:"ବାତିଲ",paymentSettings:"ପେମେଣ୍ଟ ସେଟିଂ",upiId:"UPI ID",bankDetails:"ବ୍ୟାଙ୍କ ବିବରଣୀ",saveSettings:"ସଂରକ୍ଷଣ",delete:"ଡିଲିଟ",productAdded:"ଉତ୍ପାଦ ଯୋଡାଗଲା",orderSuccess:"ଅର୍ଡର ସଫଳ ହେଲା"},
+pa:{search:"ਖੋਜੋ",orders:"ਆਰਡਰ",cart:"ਕਾਰਟ",login:"ਲੌਗਇਨ",welcome:"SUDIP INDUSTRY ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ",heroText:"ਆਪਣੇ ਮਨਪਸੰਦ ਉਤਪਾਦ ਆਸਾਨੀ ਨਾਲ ਆਰਡਰ ਕਰੋ।",shopNow:"ਹੁਣੇ ਖਰੀਦੋ",categories:"ਸ਼੍ਰੇਣੀਆਂ",featured:"ਖਾਸ ਉਤਪਾਦ",viewAll:"ਸਭ ਦੇਖੋ",allProducts:"ਸਾਰੇ ਉਤਪਾਦ",latest:"ਨਵੀਨਤਮ",shoppingCart:"ਸ਼ਾਪਿੰਗ ਕਾਰਟ",checkout:"ਚੈੱਕਆਉਟ",yourName:"ਤੁਹਾਡਾ ਨਾਮ",mobile:"ਮੋਬਾਈਲ ਨੰਬਰ",address:"ਪੂਰਾ ਪਤਾ",city:"ਸ਼ਹਿਰ / ਜ਼ਿਲ੍ਹਾ",paymentMethod:"ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ",placeOrder:"ਆਰਡਰ ਕਰੋ",myOrders:"ਮੇਰੇ ਆਰਡਰ",wishlist:"ਇੱਛਾ ਸੂਚੀ",account:"ਮੇਰਾ ਖਾਤਾ",adminDashboard:"ਐਡਮਿਨ ਡੈਸ਼ਬੋਰਡ",home:"ਘਰ",shop:"ਦੁਕਾਨ",addCart:"ਕਾਰਟ ਵਿੱਚ ਪਾਓ",buyNow:"ਹੁਣੇ ਖਰੀਦੋ",empty:"ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ ਮਿਲਿਆ",emptyCart:"ਕਾਰਟ ਖਾਲੀ ਹੈ",total:"ਕੁੱਲ",remove:"ਹਟਾਓ",quantity:"ਮਾਤਰਾ",loginRequired:"ਪਹਿਲਾਂ ਲੌਗਇਨ ਕਰੋ",noOrders:"ਹਾਲੇ ਕੋਈ ਆਰਡਰ ਨਹੀਂ",logout:"ਲੌਗਆਉਟ",adminOnly:"ਸਿਰਫ਼ ਐਡਮਿਨ",addProduct:"ਉਤਪਾਦ ਸ਼ਾਮਲ ਕਰੋ",productName:"ਉਤਪਾਦ ਦਾ ਨਾਮ",productPrice:"ਕੀਮਤ",productCategory:"ਸ਼੍ਰੇਣੀ",productDescription:"ਵੇਰਵਾ",imageUrls:"ਤਸਵੀਰ URL",saveProduct:"ਸੇਵ ਕਰੋ",manageOrders:"ਆਰਡਰ ਪ੍ਰਬੰਧਨ",customer:"ਗਾਹਕ",phone:"ਫੋਨ",date:"ਤਾਰੀਖ",status:"ਸਥਿਤੀ",action:"ਕਾਰਵਾਈ",pending:"ਬਕਾਇਆ",confirmed:"ਪੁਸ਼ਟੀ",shipped:"ਭੇਜਿਆ ਗਿਆ",delivered:"ਡਿਲੀਵਰ",cancelled:"ਰੱਦ",paymentSettings:"ਭੁਗਤਾਨ ਸੈਟਿੰਗਾਂ",upiId:"UPI ID",bankDetails:"ਬੈਂਕ ਵੇਰਵੇ",saveSettings:"ਸੇਵ ਕਰੋ",delete:"ਮਿਟਾਓ",productAdded:"ਉਤਪਾਦ ਸ਼ਾਮਲ ਹੋ ਗਿਆ",orderSuccess:"ਆਰਡਰ ਸਫਲ ਹੋ ਗਿਆ"},
+gu:{search:"શોધો",orders:"ઓર્ડર",cart:"કાર્ટ",login:"લોગિન",welcome:"SUDIP INDUSTRY માં આપનું સ્વાગત છે",heroText:"તમારા મનપસંદ ઉત્પાદનો સરળતાથી ઓર્ડર કરો.",shopNow:"હમણાં ખરીદો",categories:"શ્રેણીઓ",featured:"ખાસ ઉત્પાદનો",viewAll:"બધા જુઓ",allProducts:"બધા ઉત્પાદનો",latest:"નવીનતમ",shoppingCart:"શોપિંગ કાર્ટ",checkout:"ચેકઆઉટ",yourName:"તમારું નામ",mobile:"મોબાઇલ નંબર",address:"સંપૂર્ણ સરનામું",city:"શહેર / જિલ્લો",paymentMethod:"ચુકવણી પદ્ધતિ",placeOrder:"ઓર્ડર કરો",myOrders:"મારા ઓર્ડર",wishlist:"વિશલિસ્ટ",account:"મારું એકાઉન્ટ",adminDashboard:"એડમિન ડેશબોર્ડ",home:"હોમ",shop:"દુકાન",addCart:"કાર્ટમાં ઉમેરો",buyNow:"હમણાં ખરીદો",empty:"કોઈ ઉત્પાદન મળ્યું નથી",emptyCart:"કાર્ટ ખાલી છે",total:"કુલ",remove:"દૂર કરો",quantity:"જથ્થો",loginRequired:"પહેલા લોગિન કરો",noOrders:"હજુ કોઈ ઓર્ડર નથી",logout:"લોગઆઉટ",adminOnly:"ફક્ત એડમિન",addProduct:"ઉત્પાદન ઉમેરો",productName:"ઉત્પાદનનું નામ",productPrice:"કિંમત",productCategory:"શ્રેણી",productDescription:"વર્ણન",imageUrls:"છબી URL",saveProduct:"સાચવો",manageOrders:"ઓર્ડર મેનેજ કરો",customer:"ગ્રાહક",phone:"ફોન",date:"તારીખ",status:"સ્થિતિ",action:"કાર્ય",pending:"બાકી",confirmed:"પુષ્ટિ",shipped:"મોકલ્યું",delivered:"પહોંચાડ્યું",cancelled:"રદ",paymentSettings:"ચુકવણી સેટિંગ્સ",upiId:"UPI ID",bankDetails:"બેંક વિગતો",saveSettings:"સાચવો",delete:"કાઢી નાખો",productAdded:"ઉત્પાદન ઉમેરાયું",orderSuccess:"ઓર્ડર સફળ થયો"},
+mr:{search:"शोधा",orders:"ऑर्डर",cart:"कार्ट",login:"लॉगिन",welcome:"SUDIP INDUSTRY मध्ये आपले स्वागत आहे",heroText:"तुमची आवडती उत्पादने सहज ऑर्डर करा.",shopNow:"आता खरेदी करा",categories:"श्रेणी",featured:"वैशिष्ट्यीकृत उत्पादने",viewAll:"सर्व पहा",allProducts:"सर्व उत्पादने",latest:"नवीनतम",shoppingCart:"शॉपिंग कार्ट",checkout:"चेकआउट",yourName:"तुमचे नाव",mobile:"मोबाईल नंबर",address:"पूर्ण पत्ता",city:"शहर / जिल्हा",paymentMethod:"पेमेंट पद्धत",placeOrder:"ऑर्डर करा",myOrders:"माझे ऑर्डर",wishlist:"विशलिस्ट",account:"माझे खाते",adminDashboard:"अॅडमिन डॅशबोर्ड",home:"होम",shop:"दुकान",addCart:"कार्टमध्ये जोडा",buyNow:"आता खरेदी करा",empty:"उत्पादने सापडली नाहीत",emptyCart:"कार्ट रिकामी आहे",total:"एकूण",remove:"काढा",quantity:"प्रमाण",loginRequired:"आधी लॉगिन करा",noOrders:"अद्याप ऑर्डर नाहीत",logout:"लॉगआउट",adminOnly:"फक्त अॅडमिन",addProduct:"उत्पादन जोडा",productName:"उत्पादनाचे नाव",productPrice:"किंमत",productCategory:"श्रेणी",productDescription:"वर्णन",imageUrls:"प्रतिमा URL",saveProduct:"जतन करा",manageOrders:"ऑर्डर व्यवस्थापन",customer:"ग्राहक",phone:"फोन",date:"तारीख",status:"स्थिती",action:"कृती",pending:"प्रलंबित",confirmed:"निश्चित",shipped:"पाठवले",delivered:"वितरित",cancelled:"रद्द",paymentSettings:"पेमेंट सेटिंग्ज",upiId:"UPI ID",bankDetails:"बँक तपशील",saveSettings:"जतन करा",delete:"हटवा",productAdded:"उत्पादन जोडले",orderSuccess:"ऑर्डर यशस्वी झाला"},
+ta:{search:"தேடல்",orders:"ஆர்டர்கள்",cart:"கூடை",login:"உள்நுழை",welcome:"SUDIP INDUSTRY வரவேற்கிறது",heroText:"உங்களுக்கு பிடித்த பொருட்களை எளிதாக ஆர்டர் செய்யுங்கள்.",shopNow:"இப்போது வாங்குங்கள்",categories:"வகைகள்",featured:"சிறப்பு பொருட்கள்",viewAll:"அனைத்தையும் காண்க",allProducts:"அனைத்து பொருட்கள்",latest:"சமீபத்திய",shoppingCart:"ஷாப்பிங் கூடை",checkout:"செக்அவுட்",yourName:"உங்கள் பெயர்",mobile:"மொபைல் எண்",address:"முழு முகவரி",city:"நகரம் / மாவட்டம்",paymentMethod:"கட்டண முறை",placeOrder:"ஆர்டர் செய்யுங்கள்",myOrders:"எனது ஆர்டர்கள்",wishlist:"விருப்பப்பட்டியல்",account:"எனது கணக்கு",adminDashboard:"நிர்வாக பலகை",home:"முகப்பு",shop:"கடை",addCart:"கூடையில் சேர்",buyNow:"இப்போது வாங்கு",empty:"பொருட்கள் இல்லை",emptyCart:"கூடை காலியாக உள்ளது",total:"மொத்தம்",remove:"நீக்கு",quantity:"அளவு",loginRequired:"முதலில் உள்நுழையவும்",noOrders:"ஆர்டர்கள் இல்லை",logout:"வெளியேறு",adminOnly:"நிர்வாகிக்கு மட்டும்",addProduct:"பொருள் சேர்",productName:"பொருளின் பெயர்",productPrice:"விலை",productCategory:"வகை",productDescription:"விளக்கம்",imageUrls:"பட URL",saveProduct:"சேமி",manageOrders:"ஆர்டர் நிர்வாகம்",customer:"வாடிக்கையாளர்",phone:"தொலைபேசி",date:"தேதி",status:"நிலை",action:"செயல்",pending:"நிலுவையில்",confirmed:"உறுதி",shipped:"அனுப்பப்பட்டது",delivered:"வழங்கப்பட்டது",cancelled:"ரத்து",paymentSettings:"கட்டண அமைப்புகள்",upiId:"UPI ID",bankDetails:"வங்கி விவரங்கள்",saveSettings:"சேமி",delete:"நீக்கு",productAdded:"பொருள் சேர்க்கப்பட்டது",orderSuccess:"ஆர்டர் வெற்றிகரமாக பதிவு செய்யப்பட்டது"},
+te:{search:"వెతకండి",orders:"ఆర్డర్లు",cart:"కార్ట్",login:"లాగిన్",welcome:"SUDIP INDUSTRY కి స్వాగతం",heroText:"మీకు ఇష్టమైన ఉత్పత్తులను సులభంగా ఆర్డర్ చేయండి.",shopNow:"ఇప్పుడే కొనండి",categories:"వర్గాలు",featured:"ప్రత్యేక ఉత్పత్తులు",viewAll:"అన్నీ చూడండి",allProducts:"అన్ని ఉత్పత్తులు",latest:"తాజా",shoppingCart:"షాపింగ్ కార్ట్",checkout:"చెకౌట్",yourName:"మీ పేరు",mobile:"మొబైల్ నంబర్",address:"పూర్తి చిరునామా",city:"నగరం / జిల్లా",paymentMethod:"చెల్లింపు విధానం",placeOrder:"ఆర్డర్ చేయండి",myOrders:"నా ఆర్డర్లు",wishlist:"విష్‌లిస్ట్",account:"నా ఖాతా",adminDashboard:"అడ్మిన్ డాష్‌బోర్డ్",home:"హోమ్",shop:"షాప్",addCart:"కార్ట్‌లో చేర్చండి",buyNow:"ఇప్పుడే కొనండి",empty:"ఉత్పత్తులు లేవు",emptyCart:"కార్ట్ ఖాళీగా ఉంది",total:"మొత్తం",remove:"తొలగించండి",quantity:"పరిమాణం",loginRequired:"ముందుగా లాగిన్ చేయండి",noOrders:"ఆర్డర్లు లేవు",logout:"లాగౌట్",adminOnly:"అడ్మిన్ మాత్రమే",addProduct:"ఉత్పత్తి జోడించండి",productName:"ఉత్పత్తి పేరు",productPrice:"ధర",productCategory:"వర్గం",productDescription:"వివరణ",imageUrls:"చిత్ర URL",saveProduct:"సేవ్ చేయండి",manageOrders:"ఆర్డర్ నిర్వహణ",customer:"కస్టమర్",phone:"ఫోన్",date:"తేదీ",status:"స్థితి",action:"చర్య",pending:"పెండింగ్",confirmed:"నిర్ధారించబడింది",shipped:"పంపబడింది",delivered:"డెలివరీ అయింది",cancelled:"రద్దు",paymentSettings:"చెల్లింపు సెట్టింగ్‌లు",upiId:"UPI ID",bankDetails:"బ్యాంక్ వివరాలు",saveSettings:"సేవ్ చేయండి",delete:"తొలగించండి",productAdded:"ఉత్పత్తి జోడించబడింది",orderSuccess:"ఆర్డర్ విజయవంతంగా నమోదైంది"},
+kn:{search:"ಹುಡುಕಿ",orders:"ಆರ್ಡರ್‌ಗಳು",cart:"ಕಾರ್ಟ್",login:"ಲಾಗಿನ್",welcome:"SUDIP INDUSTRY ಗೆ ಸ್ವಾಗತ",heroText:"ನಿಮ್ಮ ಮೆಚ್ಚಿನ ಉತ್ಪನ್ನಗಳನ್ನು ಸುಲಭವಾಗಿ ಆರ್ಡರ್ ಮಾಡಿ.",shopNow:"ಈಗ ಖರೀದಿಸಿ",categories:"ವರ್ಗಗಳು",featured:"ವಿಶೇಷ ಉತ್ಪನ್ನಗಳು",viewAll:"ಎಲ್ಲವನ್ನೂ ನೋಡಿ",allProducts:"ಎಲ್ಲಾ ಉತ್ಪನ್ನಗಳು",latest:"ಇತ್ತೀಚಿನ",shoppingCart:"ಶಾಪಿಂಗ್ ಕಾರ್ಟ್",checkout:"ಚೆಕ್‌ಔಟ್",yourName:"ನಿಮ್ಮ ಹೆಸರು",mobile:"ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",address:"ಪೂರ್ಣ ವಿಳಾಸ",city:"ನಗರ / ಜಿಲ್ಲೆ",paymentMethod:"ಪಾವತಿ ವಿಧಾನ",placeOrder:"ಆರ್ಡರ್ ಮಾಡಿ",myOrders:"ನನ್ನ ಆರ್ಡರ್‌ಗಳು",wishlist:"ಇಷ್ಟಪಟ್ಟವು",account:"ನನ್ನ ಖಾತೆ",adminDashboard:"ನಿರ್ವಾಹಕ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",home:"ಮುಖಪುಟ",shop:"ಅಂಗಡಿ",addCart:"ಕಾರ್ಟ್‌ಗೆ ಸೇರಿಸಿ",buyNow:"ಈಗ ಖರೀದಿಸಿ",empty:"ಉತ್ಪನ್ನಗಳು ಕಂಡುಬಂದಿಲ್ಲ",emptyCart:"ಕಾರ್ಟ್ ಖಾಲಿಯಾಗಿದೆ",total:"ಒಟ್ಟು",remove:"ತೆಗೆದುಹಾಕಿ",quantity:"ಪ್ರಮಾಣ",loginRequired:"ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ",noOrders:"ಇನ್ನೂ ಆರ್ಡರ್‌ಗಳಿಲ್ಲ",logout:"ಲಾಗ್‌ಔಟ್",adminOnly:"ನಿರ್ವಾಹಕರಿಗೆ ಮಾತ್ರ",addProduct:"ಉತ್ಪನ್ನ ಸೇರಿಸಿ",productName:"ಉತ್ಪನ್ನದ ಹೆಸರು",productPrice:"ಬೆಲೆ",productCategory:"ವರ್ಗ",productDescription:"ವಿವರಣೆ",imageUrls:"ಚಿತ್ರ URL",saveProduct:"ಉಳಿಸಿ",manageOrders:"ಆರ್ಡರ್ ನಿರ್ವಹಣೆ",customer:"ಗ್ರಾಹಕ",phone:"ಫೋನ್",date:"ದಿನಾಂಕ",status:"ಸ್ಥಿತಿ",action:"ಕ್ರಿಯೆ",pending:"ಬಾಕಿ",confirmed:"ದೃಢೀಕರಿಸಲಾಗಿದೆ",shipped:"ಕಳುಹಿಸಲಾಗಿದೆ",delivered:"ತಲುಪಿಸಲಾಗಿದೆ",cancelled:"ರದ್ದು",paymentSettings:"ಪಾವತಿ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",upiId:"UPI ID",bankDetails:"ಬ್ಯಾಂಕ್ ವಿವರಗಳು",saveSettings:"ಉಳಿಸಿ",delete:"ಅಳಿಸಿ",productAdded:"ಉತ್ಪನ್ನ ಸೇರಿಸಲಾಗಿದೆ",orderSuccess:"ಆರ್ಡರ್ ಯಶಸ್ವಿಯಾಗಿದೆ"},
+ml:{search:"തിരയുക",orders:"ഓർഡറുകൾ",cart:"കാർട്ട്",login:"ലോഗിൻ",welcome:"SUDIP INDUSTRY-ലേക്ക് സ്വാഗതം",heroText:"നിങ്ങളുടെ ഇഷ്ട ഉൽപ്പന്നങ്ങൾ എളുപ്പത്തിൽ ഓർഡർ ചെയ്യൂ.",shopNow:"ഇപ്പോൾ വാങ്ങുക",categories:"വിഭാഗങ്ങൾ",featured:"തിരഞ്ഞെടുത്ത ഉൽപ്പന്നങ്ങൾ",viewAll:"എല്ലാം കാണുക",allProducts:"എല്ലാ ഉൽപ്പന്നങ്ങളും",latest:"പുതിയത്",shoppingCart:"ഷോപ്പിംഗ് കാർട്ട്",checkout:"ചെക്ക്ഔട്ട്",yourName:"നിങ്ങളുടെ പേര്",mobile:"മൊബൈൽ നമ്പർ",address:"പൂർണ്ണ വിലാസം",city:"നഗരം / ജില്ല",paymentMethod:"പേയ്മെന്റ് രീതി",placeOrder:"ഓർഡർ ചെയ്യുക",myOrders:"എന്റെ ഓർഡറുകൾ",wishlist:"വിഷ്‌ലിസ്റ്റ്",account:"എന്റെ അക്കൗണ്ട്",adminDashboard:"അഡ്മിൻ ഡാഷ്ബോർഡ്",home:"ഹോം",shop:"ഷോപ്പ്",addCart:"കാർട്ടിൽ ചേർക്കുക",buyNow:"ഇപ്പോൾ വാങ്ങുക",empty:"ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല",emptyCart:"കാർട്ട് ശൂന്യമാണ്",total:"ആകെ",remove:"നീക്കം ചെയ്യുക",quantity:"അളവ്",loginRequired:"ആദ്യം ലോഗിൻ ചെയ്യുക",noOrders:"ഓർഡറുകളില്ല",logout:"ലോഗൗട്ട്",adminOnly:"അഡ്മിന് മാത്രം",addProduct:"ഉൽപ്പന്നം ചേർക്കുക",productName:"ഉൽപ്പന്നത്തിന്റെ പേര്",productPrice:"വില",productCategory:"വിഭാഗം",productDescription:"വിവരണം",imageUrls:"ചിത്ര URL",saveProduct:"സേവ് ചെയ്യുക",manageOrders:"ഓർഡർ നിയന്ത്രണം",customer:"ഉപഭോക്താവ്",phone:"ഫോൺ",date:"തീയതി",status:"നില",action:"പ്രവർത്തനം",pending:"കാത്തിരിക്കുന്നു",confirmed:"സ്ഥിരീകരിച്ചു",shipped:"അയച്ചു",delivered:"വിതരണം ചെയ്തു",cancelled:"റദ്ദാക്കി",paymentSettings:"പേയ്മെന്റ് ക്രമീകരണങ്ങൾ",upiId:"UPI ID",bankDetails:"ബാങ്ക് വിവരങ്ങൾ",saveSettings:"സേവ് ചെയ്യുക",delete:"ഇല്ലാതാക്കുക",productAdded:"ഉൽപ്പന്നം ചേർത്തു",orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി"},
+ne:{search:"खोज्नुहोस्",orders:"अर्डरहरू",cart:"कार्ट",login:"लगइन",welcome:"SUDIP INDUSTRY मा स्वागत छ",heroText:"आफ्ना मनपर्ने सामान सजिलै अर्डर गर्नुहोस्।",shopNow:"अहिले किन्नुहोस्",categories:"श्रेणीहरू",featured:"विशेष सामान",viewAll:"सबै हेर्नुहोस्",allProducts:"सबै सामान",latest:"नयाँ",shoppingCart:"किनमेल कार्ट",checkout:"चेकआउट",yourName:"तपाईंको नाम",mobile:"मोबाइल नम्बर",address:"पूरा ठेगाना",city:"शहर / जिल्ला",paymentMethod:"भुक्तानी विधि",placeOrder:"अर्डर गर्नुहोस्",myOrders:"मेरा अर्डर",wishlist:"इच्छा सूची",account:"मेरो खाता",adminDashboard:"एडमिन ड्यासबोर्ड",home:"होम",shop:"पसल",addCart:"कार्टमा थप्नुहोस्",buyNow:"अहिले किन्नुहोस्",empty:"कुनै सामान भेटिएन",emptyCart:"कार्ट खाली छ",total:"जम्मा",remove:"हट
+ remove:"हटाउनुहोस्",
+quantity:"मात्रा",
+price:"मूल्य",
+productDetails:"सामानको विवरण",
+description:"विवरण",
+selectLanguage:"भाषा छान्नुहोस्",
+sortBy:"क्रमबद्ध गर्नुहोस्",
+lowToHigh:"कमदेखि बढी",
+highToLow:"बढीदेखि कम",
+newest:"नयाँ पहिले",
+popular:"लोकप्रिय",
+customerDetails:"ग्राहक विवरण",
+orderDate:"अर्डर मिति",
+orderStatus:"अर्डर स्थिति",
+paymentStatus:"भुक्तानी स्थिति",
+pending:"प्रक्रियामा",
+confirmed:"पुष्टि भयो",
+shipped:"पठाइयो",
+delivered:"डेलिभर भयो",
+cancelled:"रद्द भयो",
+upi:"UPI भुक्तानी",
+bankTransfer:"बैंक ट्रान्सफर",
+cashOnDelivery:"क्यास अन डेलिभरी",
+transactionId:"लेनदेन ID",
+submit:"पेश गर्नुहोस्",
+save:"सेभ गर्नुहोस्",
+cancel:"रद्द गर्नुहोस्",
+delete:"मेटाउनुहोस्",
+edit:"सम्पादन गर्नुहोस्",
+addProduct:"सामान थप्नुहोस्",
+productName:"सामानको नाम",
+productPrice:"सामानको मूल्य",
+productImage:"सामानको फोटो",
+productAdded:"सामान थपियो",
+orderSuccess:"अर्डर सफलतापूर्वक गरियो"
+},
