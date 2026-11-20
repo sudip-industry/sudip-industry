@@ -1,605 +1,199 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#173b75">
-<meta name="description" content="SUDIP INDUSTRY - DREAM WORK SUCCESS">
-<title>SUDIP INDUSTRY</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>SUDIP INDUSTRY – Dream • Work • Success</title>
 <style>
-:root{--blue:#173b75;--gold:#f4b942;--bg:#f3f6fb;--white:#fff;--text:#172033;--line:#e5eaf2}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-body{touch-action:pan-y}
-button,input,select,textarea{font:inherit;touch-action:manipulation;pointer-events:auto}
-button{border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:white;cursor:pointer;margin:3px;min-height:42px}
-button:disabled{opacity:.5;cursor:not-allowed}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;margin:6px 0 12px;background:white;color:var(--text)}
-header{background:var(--blue);color:white;padding:14px;position:sticky;top:0;z-index:100}
-.header{max-width:1100px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:21px;font-weight:bold}
-.search{flex:1;min-width:150px}
-.search input{margin:0}
-nav{display:flex;gap:7px;flex-wrap:wrap;max-width:1100px;margin:12px auto 0}
-nav button{background:#ffffff20}
-main{max-width:1100px;margin:18px auto;padding:0 12px 110px}
-.hero{background:linear-gradient(120deg,#173b75,#2865b5);color:white;padding:35px 20px;border-radius:15px;margin-bottom:20px}
-.hero h1{font-size:27px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px}
-.card{background:white;border:1px solid var(--line);border-radius:12px;padding:12px;overflow:hidden}
-.card img{width:100%;height:145px;object-fit:contain;border-radius:8px;background:#f7f8fa}
-.card h3{font-size:15px}
-.price{font-weight:bold;color:var(--blue)}
-.page{display:none;pointer-events:auto}
-.page.active{display:block}
-.panel{background:white;padding:16px;border-radius:12px;margin-bottom:15px}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.row>*{flex:1}
-.small{font-size:12px;color:#64748b}
-.hidden{display:none!important}
-footer{text-align:center;padding:22px;background:white}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom));z-index:1000}
-.bottom-nav button{background:white;color:var(--blue);padding:7px 5px;font-size:12px;flex:1;min-height:44px}
-#toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#172033;color:white;padding:12px 18px;border-radius:9px;z-index:2000;display:none;max-width:90%;text-align:center;pointer-events:none}
-.product-gallery{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.product-gallery img{width:65px;height:65px;object-fit:contain;border:1px solid var(--line);border-radius:7px;cursor:pointer}
-.admin-card{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid var(--line);overflow-wrap:anywhere}
-.order-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
-.order-filters button{flex:1;min-width:105px}
-.delete-btn{background:#dc2626}
-.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:12px;margin:12px 0 22px}
-.category-card{background:white;border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center;cursor:pointer;min-width:0}
-.category-card img{width:100%;height:105px;object-fit:cover;border-radius:8px;background:#f1f5f9;pointer-events:none}
-.category-card b{display:block;margin-top:8px;font-size:14px;overflow-wrap:anywhere}
-.category-card.selected{border:2px solid var(--blue)}
-.category-admin-img{width:90px;height:75px;object-fit:cover;border-radius:8px}
-.preview-img{width:100px;height:100px;object-fit:cover;border-radius:9px;display:none;margin:5px 0}
-.remark-box{background:#fff7e6;border-left:4px solid var(--gold);padding:10px;border-radius:6px;margin:10px 0}
-.import-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(75px,1fr));gap:8px;margin:10px 0}
-.import-images img{width:100%;height:85px;object-fit:contain;background:#f3f6fb;border:1px solid var(--line);border-radius:7px}
-@media(min-width:700px){.bottom-nav{display:none}}
-</style>
-</head>
-<body>
-<header>
-<div class="header">
-<div class="logo">SUDIP INDUSTRY</div>
-<div class="search"><input id="searchInput" placeholder="Search products..." oninput="renderShop()"></div>
-<select id="languageSelect" onchange="changeLanguage(this.value)" style="width:auto;margin:0">
-<option value="en">English</option><option value="bn">বাংলা</option><option value="hi">हिन्दी</option><option value="ne">नेपाली</option><option value="ml">മലയാളം</option>
-</select>
-</div>
-<nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('shop')">Shop</button>
-<button onclick="showPage('wishlist')">Wishlist</button>
-<button onclick="showPage('cart')">Cart (<span id="cartCount">0</span>)</button>
-<button onclick="showPage('orders')">My Orders</button>
-<button onclick="showPage('profile')">Account</button>
-<button id="adminNavButton" class="hidden" onclick="showPage('admin')">Admin</button>
-</nav>
-</header>
-
-<main>
-<section id="home" class="page active">
-<div class="hero">
-<h1 id="heroTitle">Welcome to SUDIP INDUSTRY</h1>
-<p>DREAM • WORK • SUCCESS</p>
-<p id="heroText">Shop your favourite products easily.</p>
-<button onclick="showPage('shop')" id="shopNowButton" style="background:#f4b942;color:#172033">Shop Now</button>
-</div>
-<h2>Shop by Category</h2><div id="homeCategories" class="category-grid"></div>
-<h2>Featured Products</h2><div id="homeProducts" class="grid"></div>
-</section>
-
-<section id="shop" class="page">
-<h2>All Products</h2><h3>Categories</h3>
-<div id="shopCategories" class="category-grid"></div>
-<button onclick="clearCategoryFilter()">All Products</button>
-<p id="activeCategoryLabel"></p>
-<select id="sortProducts" onchange="renderShop()">
-<option value="latest">Latest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option>
-</select>
-<div id="shopProducts" class="grid"></div>
-</section>
-<section id="detailPage" class="page"><div id="productDetail" class="panel"></div></section>
-<section id="wishlist" class="page"><h2>Wishlist</h2><div id="wishlistContent" class="grid"></div></section>
-<section id="cart" class="page"><h2>Shopping Cart</h2><div id="cartContent"></div></section>
-
-<section id="checkout" class="page">
-<h2>Checkout</h2><div class="panel">
-<form id="checkoutForm" onsubmit="placeOrder(event)">
-<label>Your Name</label><input id="customerName" required maxlength="100">
-<label>Mobile Number</label><input id="customerPhone" type="tel" required maxlength="15">
-<label>Full Address</label><textarea id="customerAddress" required maxlength="500"></textarea>
-<label>City / District</label><input id="customerCity" required>
-<label>PIN Code</label><input id="customerPin" required maxlength="10">
-<label>Payment Method</label>
-<select id="paymentMethod" onchange="updatePaymentInstructions()">
-<option value="COD">Cash on Delivery</option><option value="UPI">UPI Payment</option><option value="BANK">Bank Transfer</option>
-</select>
-<div id="paymentInstructions"></div>
-<label>Transaction ID (for prepaid payments)</label><input id="utrInput" maxlength="100">
-<div id="checkoutSummary"></div>
-<button type="submit" id="placeOrderButton">Place Order</button>
-</form></div>
-</section>
-
-<section id="orders" class="page"><h2>My Orders</h2><div id="myOrders"></div></section>
-<section id="profile" class="page"><h2>My Account</h2><div id="profileContent" class="panel"></div></section>
-<section id="admin" class="page"><h2>Admin Dashboard</h2><div id="adminContent"></div></section>
-</main>
-
-<footer>
-<b>SUDIP INDUSTRY</b><p>DREAM • WORK • SUCCESS</p>
-<p>Email: sudippramanick66@gmail.com</p>
-<p>WhatsApp: +91 89819 88831</p>
-<a href="https://wa.me/918981988831">Contact on WhatsApp</a>
-</footer>
-<div class="bottom-nav">
-<button onclick="showPage('home')">⌂<br>Home</button>
-<button onclick="showPage('shop')">▦<br>Shop</button>
-<button onclick="showPage('wishlist')">♡<br>Wishlist</button>
-<button onclick="showPage('cart')">🛒<br>Cart</button>
-<button onclick="showPage('profile')">♙<br>Account</button>
-</div>
-<div id="toast"></div>
-
+:root{--bg:#fff;--bg2:#f1f5fb;--tx:#0b0f19;--mut:#5b6475;--bl:#1d4ed8;--bd:#dfe5ee;--card:#fff;--ok:#047857;--er:#b91c1c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f19;--bg2:#131a2a;--tx:#f1f5f9;--mut:#9aa6bb;--bl:#5b8cff;--bd:#27314a;--card:#101726;--ok:#34d399;--er:#f87171;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0f19;--bg2:#131a2a;--tx:#f1f5f9;--mut:#9aa6bb;--bl:#5b8cff;--bd:#27314a;--card:#101726;--ok:#34d399;--er:#f87171;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#0b0f19;z-index:30}
+a{color:var(--bl)}h1,h2,h3{line-height:1.2;margin:0 0 .5em}
+.w{max-width:1140px;margin:0 auto;padding:0 16px}
+header{background:#0b0f19;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.hd{display:flex;align-items:center;gap:12px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.06em}
+.logo i{width:34px;height:34px;border-radius:8px;background:#2563eb;display:grid;place-items:center;font-style:normal}
+.logo small{display:block;font-size:9px;letter-spacing:.2em;color:#93b4ff;font-weight:600}
+nav{margin-left:auto;display:flex;gap:4px;align-items:center}
+nav a{color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:15px}nav a:hover{background:#1e293b}
+.nl{display:flex}.cartb{position:relative}.cartb b{position:absolute;top:0;right:0;background:#2563eb;border-radius:9px;font-size:11px;padding:0 5px}
+#mb{display:none;background:none;border:0;color:#fff;font-size:24px}
+@media(max-width:760px){#mb{display:block}.nl{display:none;position:absolute;top:60px;left:0;right:0;background:#0b0f19;flex-direction:column;padding:8px 16px 14px}.nl.o{display:flex}nav{margin-left:auto}}
+.btn{display:inline-block;background:var(--bl);color:#fff;border:0;border-radius:10px;padding:11px 20px;font:600 15px inherit;cursor:pointer;text-decoration:none}
+.btn.k{background:#0b0f19}.btn.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn.s{padding:6px 12px;font-size:13px}.btn.r{background:var(--er)}.btn:disabled{opacity:.5}
+:root[data-theme="dark"] .btn.k,:root:not([data-theme="light"]) .btn.k{outline:1px solid var(--bd)}
+.hero{background:linear-gradient(135deg,#0b0f19 0%,#10224d 55%,#1d4ed8 100%);color:#fff;padding:64px 0}
+.hero h1{font-size:clamp(30px,6vw,52px);max-width:640px}.hero p{max-width:520px;color:#cbd5f5;font-size:18px}
+.tag{letter-spacing:.3em;font-size:12px;color:#93b4ff;font-weight:700}
+.sec{padding:36px 0}.sec h2{font-size:24px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+.cat{background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:20px 10px;text-align:center;text-decoration:none;color:var(--tx);font-weight:600}.cat span{display:block;font-size:34px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.pi{aspect-ratio:1;display:grid;place-items:center;font-size:64px;position:relative;text-decoration:none}
+.off{position:absolute;top:8px;left:8px;background:#0b0f19;color:#fff;font:700 12px sans-serif;padding:3px 8px;border-radius:6px}
+.smp{position:absolute;top:8px;right:8px;background:#fff;color:#444;font:600 10px sans-serif;padding:2px 6px;border-radius:6px}
+.pb{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}.pb a{color:var(--tx);text-decoration:none;font-weight:600}
+.pr b{font-size:18px}.pr s{color:var(--mut);font-size:13px;margin-left:6px}.mut{color:var(--mut);font-size:14px}.ok{color:var(--ok)}.er{color:var(--er)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;width:100%}
+.bar input{flex:2 1 200px}.bar select{flex:1 1 140px;width:auto}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.two{display:grid;gap:28px;grid-template-columns:1fr 1fr}@media(max-width:760px){.two{grid-template-columns:1fr}}
+.big{aspect-ratio:1;border-radius:16px;display:grid;place-items:center;font-size:120px}
+.row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}.row .t{flex:1;min-width:0}
+.q{display:inline-flex;align-items:center;border:1px solid var(--bd);border-radius:8px}.q button{background:none;border:0;color:var(--tx);width:32px;height:32px;font-size:18px;cursor:pointer}.q span{min-width:24px;text-align:center}
+.box{background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding-top:10px}
+footer{background:#0b0f19;color:#cbd5e1;margin-top:40px;padding:32px 0 20px;font-size:14px}footer a{color:#cbd5e1;display:block;padding:3px 0}
+.fg{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tabs .btn{background:var(--bg2);color:var(--tx)}.tabs .on{background:var(--bl);color:#fff}
+.wa{background:#16a34a}.note{border-left:4px solid var(--bl);background:var(--bg2);padding:10px 14px;border-radius:8px;font-size:14px;margin:12px 0}
+table{width:100%;border-collapse:collapse}
+.btn,a,button,select,label{touch-action:manipulation}.sc{overflow-x:auto}
+</style></head><body>
+<header><div class="w hd"><a class="logo" href="#home"><i>S</i><span>SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></span></a>
+<nav><div class="nl" id="nl"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></div><button class="btn s" id="lg">Sign in</button><a class="cartb" href="#cart">🛒<b id="cc">0</b></a><button id="mb" aria-label="Menu">☰</button></nav></div></header>
+<main id="app"></main>
+<footer><div class="w"><div class="fg"><div><b style="color:#fff;letter-spacing:.06em">SUDIP INDUSTRY</b><br>DREAM • WORK • SUCCESS<br><br>Email: <a style="display:inline" href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></div>
+<div><a href="#about">About</a><a href="#contact">Contact</a><a href="#shop">Shop</a><a href="#orders">My Orders</a></div>
+<div><a href="#policy-privacy">Privacy Policy</a><a href="#policy-terms">Terms &amp; Conditions</a><a href="#policy-shipping">Shipping Policy</a><a href="#policy-returns">Return &amp; Refund Policy</a></div></div>
+<p style="margin-top:20px">© <span id="yr"></span> SUDIP INDUSTRY. All rights reserved. · <a style="display:inline" href="#admin">Admin</a></p></div></footer>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+const CATS=[['electronics','Electronics','🎧'],['fashion','Fashion','👕'],['home','Home & Kitchen','🍳'],['beauty','Beauty & Personal Care','🧴'],['accessories','Accessories','⌚']];
+const cn=k=>(CATS.find(c=>c[0]==k)||[0,k])[1];
+const SEED=[
+['p1','Sample Wireless Earbuds','electronics',1299,1999,25,90,'🎧',220],['p2','Sample Smart Watch','electronics',2499,3999,12,80,'⌚',250],
+['p3','Sample Cotton T-Shirt','fashion',499,799,40,70,'👕',200],['p4','Sample Denim Jacket','fashion',1799,2599,8,50,'🧥',210],
+['p5','Sample Non-Stick Pan','home',899,1299,30,60,'🍳',30],['p6','Sample Water Bottle','home',349,499,60,85,'🍶',190],
+['p7','Sample Face Wash','beauty',249,349,50,75,'🧴',160],['p8','Sample Beard Trimmer','beauty',999,1499,18,65,'💈',270],
+['p9','Sample Laptop Backpack','accessories',1199,1799,22,88,'🎒',230],['p10','Sample Sunglasses','accessories',599,999,0,40,'🕶️',240]
+].map(a=>({id:a[0],name:a[1],cat:a[2],price:a[3],mrp:a[4],stock:a[5],pop:a[6],icon:a[7],hue:a[8],sample:1,desc:'Placeholder product for layout only. Replace this item from the Admin dashboard with your real product details.'}));
+let products=SEED.slice(),db=null,dbOn=false,isAdmin=false,uid=null,curUser=null,lastOrder=null,signing=false,orders=[],msgs=[],settings={whatsapp:''},aTab='products',F={q:'',c:'',p:'',s:''},editId=null;
+const normCart=raw=>{const c={};if(raw&&typeof raw==='object'&&!Array.isArray(raw))for(const k of Object.keys(raw)){const n=Math.floor(Number(raw[k]));if(k&&Number.isFinite(n)&&n>0)c[k]=Math.min(n,100)}return c};
+let cart={};try{cart=normCart(JSON.parse(localStorage.getItem('si_cart')||'{}'))}catch(e){cart={}}
+const saveCart=()=>{cart=normCart(cart);try{localStorage.setItem('si_cart',JSON.stringify(cart))}catch(e){}$('#cc').textContent=Object.values(cart).reduce((a,b)=>a+b,0)};
+const P=id=>products.find(p=>p.id==id);
+const bg=p=>`background:linear-gradient(135deg,hsl(${p.hue||220} 70% 92%),hsl(${p.hue||220} 60% 80%))`;
+const disc=p=>p.mrp>p.price?Math.round((1-p.price/p.mrp)*100):0;
+const items=()=>Object.keys(cart).map(id=>({p:P(id),q:cart[id]})).filter(x=>x.p);
+const total=()=>items().reduce((a,x)=>a+x.p.price*x.q,0);
+function card(p){return `<div class="pc"><a class="pi" href="#product-${esc(p.id)}" style="${bg(p)}">${disc(p)?`<span class="off">${disc(p)}% OFF</span>`:''}${p.sample?'<span class="smp">SAMPLE</span>':''}${esc(p.icon||'📦')}</a><div class="pb"><a href="#product-${esc(p.id)}">${esc(p.name)}</a><div class="mut">${esc(cn(p.cat))}</div><div class="pr"><b>${inr(p.price)}</b>${disc(p)?`<s>${inr(p.mrp)}</s>`:''}</div><button class="btn s" ${p.stock>0?'':'disabled'} onclick="add('${esc(p.id)}')">${p.stock>0?'Add to Cart':'Out of Stock'}</button></div></div>`}
+function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#0b0f19;color:#fff;padding:10px 18px;border-radius:10px;z-index:50';document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function add(id,go){const p=P(id);if(!p||p.stock<1)return;cart[id]=Math.min((cart[id]||0)+1,p.stock);saveCart();go?location.hash='checkout':toast('Added to cart')}
+function qty(id,d){const p=P(id);cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];else if(p&&cart[id]>p.stock)cart[id]=p.stock;saveCart();route()}
+function rm(id){delete cart[id];saveCart();route()}
+const POL={privacy:['Privacy Policy','We collect only the details you give us (name, mobile number, delivery address, email) to process and deliver your order and to reply to your queries. We do not sell your personal information. You may contact us at sudippramanick66@gmail.com to request correction or deletion of your data.'],
+terms:['Terms & Conditions','By placing an order you confirm that the details you provide are correct. Prices and availability may change without notice. An order is accepted only after SUDIP INDUSTRY confirms it with you. We may cancel an order if a product is unavailable or details are incorrect.'],
+shipping:['Shipping Policy','We deliver across India. Delivery charges and estimated delivery times will be confirmed when your order is accepted. Please keep your mobile reachable for delivery coordination. Cash on Delivery and manual UPI QR payment are available. UPI QR orders are confirmed only after the store verifies the payment.'],
+returns:['Return & Refund Policy','If you receive a damaged, defective or wrong item, contact us at sudippramanick66@gmail.com soon after delivery with your order reference. Eligible returns and refunds will be handled after we review the request. Final return window and conditions will be published here by the business owner.']};
+function route(keep){
+ const h=location.hash.slice(1)||'home',[k,...r]=h.split('-'),a=r.join('-');if(!keep)scrollTo(0,0);$('#nl').classList.remove('o');
+ let v;
+ if(k=='home')v=home();else if(k=='shop')v=shop(a);else if(k=='product')v=prod(a);else if(k=='cart')v=cartV();else if(k=='checkout')v=checkout();else if(k=='orders')v=myOrders();else if(k=='done')v=done(a);
+ else if(k=='contact')v=contact();else if(k=='about')v=about();else if(k=='policy'&&POL[a])v=`<div class="w sec"><h1>${POL[a][0]}</h1><p>${POL[a][1]}</p><div class="note">Draft policy text. Please review and complete it (business address, timelines, legal details) before accepting live orders.</div></div>`;
+ else if(k=='admin')v=admin();else v=home();
+ app.innerHTML=v;if(k=='shop')shopInit();if(k=='checkout')payInit();if(k=='contact')$('#mf').onsubmit=sendMsg}
+function home(){return `<section class="hero"><div class="w"><div class="tag">DREAM • WORK • SUCCESS</div><h1>Welcome to SUDIP INDUSTRY</h1><p>Quality products for everyday life, delivered across India.</p><a class="btn" href="#shop">Shop Now</a></div></section>
+<div class="w sec"><h2>Popular Categories</h2><div class="grid">${CATS.map(c=>`<a class="cat" href="#shop-${c[0]}"><span>${c[2]}</span>${c[1]}</a>`).join('')}</div></div>
+<div class="w sec"><h2>Featured Products</h2><div class="grid">${products.filter(p=>p.active!==false).sort((a,b)=>b.pop-a.pop).slice(0,8).map(card).join('')}</div></div>
+<div class="w sec"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"><div class="box"><b>🚚 Delivery across India</b><div class="mut">Details confirmed at order time.</div></div><div class="box"><b>💵 Cash on Delivery</b><div class="mut">Pay when your order arrives.</div></div><div class="box"><b>💬 Customer support</b><div class="mut">Email or WhatsApp us.</div></div></div></div>`}
+function shop(c){if(c&&CATS.some(x=>x[0]==c))F.c=c;return `<div class="w sec"><h1>Shop</h1><div class="bar"><input id="fq" placeholder="Search products…" value="${esc(F.q)}"><select id="fc"><option value="">All categories</option>${CATS.map(c=>`<option value="${c[0]}" ${F.c==c[0]?'selected':''}>${c[1]}</option>`).join('')}</select><select id="fp"><option value="">Any price</option>${[500,1000,2500,5000].map(n=>`<option value="${n}" ${F.p==n?'selected':''}>Under ${inr(n)}</option>`).join('')}</select><select id="fs"><option value="">Sort: Popularity</option><option value="a" ${F.s=='a'?'selected':''}>Price: Low to High</option><option value="d" ${F.s=='d'?'selected':''}>Price: High to Low</option></select></div><div class="grid" id="pg"></div></div>`}
+function shopInit(){const u=()=>{F={q:$('#fq').value,c:$('#fc').value,p:$('#fp').value,s:$('#fs').value};let l=products.filter(p=>p.active!==false&&(!F.c||p.cat==F.c)&&(!F.p||p.price<=+F.p)&&(!F.q||((p.name||'')+' '+(p.desc||'')).toLowerCase().includes(F.q.toLowerCase())));l.sort((a,b)=>F.s=='a'?a.price-b.price:F.s=='d'?b.price-a.price:b.pop-a.pop);$('#pg').innerHTML=l.length?l.map(card).join(''):'<p class="mut">No products found.</p>'};['fq','fc','fp','fs'].forEach(i=>$('#'+i).oninput=u);u()}
+function prod(id){const p=P(id);if(!p)return '<div class="w sec"><p>Product not found. <a href="#shop">Back to shop</a></p></div>';return `<div class="w sec"><a href="#shop">← Back to shop</a><div class="two" style="margin-top:14px"><div class="big" style="${bg(p)}">${esc(p.icon||'📦')}</div><div><h1>${esc(p.name)}</h1><div class="mut">${esc(cn(p.cat))}</div><div class="pr" style="margin:10px 0"><b style="font-size:28px">${inr(p.price)}</b>${disc(p)?`<s>${inr(p.mrp)}</s> <b class="ok">${disc(p)}% off</b>`:''}</div><p>${esc(p.desc)}</p><p>${p.stock>0?`<b class="ok">In stock</b> <span class="mut">(${p.stock>10?'available':'only '+p.stock+' left'})</span>`:'<b class="er">Out of stock</b>'}</p>${p.sample?'<div class="note">This is a placeholder product.</div>':''}<div class="bar"><button class="btn" ${p.stock>0?'':'disabled'} onclick="add('${esc(p.id)}')">Add to Cart</button><button class="btn k" ${p.stock>0?'':'disabled'} onclick="add('${esc(p.id)}',1)">Buy Now</button></div></div></div></div>`}
+function cartV(){const it=items();if(!it.length)return '<div class="w sec"><h1>Your Cart</h1><p>Your cart is empty.</p><a class="btn" href="#shop">Continue shopping</a></div>';return `<div class="w sec"><h1>Your Cart</h1>${it.map(x=>`<div class="row"><div style="font-size:36px">${esc(x.p.icon)}</div><div class="t"><b>${esc(x.p.name)}</b><div class="mut">${inr(x.p.price)} each</div></div><div class="q"><button onclick="qty('${esc(x.p.id)}',-1)">−</button><span>${x.q}</span><button onclick="qty('${esc(x.p.id)}',1)">+</button></div><b style="min-width:70px;text-align:right">${inr(x.p.price*x.q)}</b><button class="btn s g" onclick="rm('${esc(x.p.id)}')">✕</button></div>`).join('')}<div class="tot"><span>Total</span><span>${inr(total())}</span></div><p class="mut">Delivery charges, if any, are confirmed when your order is accepted.</p><a class="btn" href="#checkout">Proceed to Checkout</a></div>`}
+const QR='https://sudip-industry.github.io/sudip-industry/AccountQRCodeAirtel%20Payments%20Bank%20Limited%20-%208831_LIGHT_THEME.png';
+function payInit(){const f=$('#cf');if(!f)return;f.onsubmit=placeOrder;const t=()=>{const qr=f.pay.value==='qr';$('#qrbox').style.display=qr?'block':'none';$('#utr').required=qr;$('#pb').textContent=qr?'Place Order (payment pending verification)':'Place Order (Cash on Delivery)'};f.querySelectorAll('input[name=pay]').forEach(x=>x.onchange=t);t()}
+function checkout(){const it=items();if(!it.length)return cartV();return `<div class="w sec"><h1>Checkout</h1><div class="two"><form id="cf"><label>Full name</label><input name="name" required maxlength="80"><label>Mobile number</label><input name="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit Indian mobile number"><label>Delivery address</label><textarea name="addr" rows="3" required maxlength="300"></textarea><label>PIN code</label><input name="pin" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6"><label>Payment method</label><div class="box"><label style="margin:0"><input type="radio" name="pay" value="cod" checked style="width:auto"> Cash on Delivery</label><label style="margin:8px 0 0"><input type="radio" name="pay" value="qr" style="width:auto"> Online Payment (UPI QR)</label><div id="qrbox" style="display:none;margin-top:12px"><p class="mut">Scan this QR code with any UPI app and pay <b>${inr(total())}</b>. Then enter the UTR / Transaction ID below. Your order stays <b>payment pending</b> until the store checks its bank account.</p><img src="${QR}" alt="UPI QR code" style="max-width:260px;width:100%;background:#fff;padding:8px;border-radius:10px" onerror="this.insertAdjacentHTML('afterend','<p class=er>The QR image could not be loaded. Please choose Cash on Delivery or contact us.</p>');this.remove()"><label>UTR / Transaction ID</label><input name="utr" id="utr" maxlength="25" autocomplete="off" placeholder="From your UPI app after paying"></div></div>${uid?'':'<div class="note">Please sign in (top right) before placing your order.</div>'}<p id="em" class="er"></p><button class="btn" style="width:100%" id="pb">Place Order</button></form><div class="box"><h3>Order Summary</h3>${it.map(x=>`<div style="display:flex;justify-content:space-between;gap:8px"><span>${esc(x.p.name)} × ${x.q}</span><span>${inr(x.p.price*x.q)}</span></div>`).join('')}<div class="tot"><span>Total</span><span>${inr(total())}</span></div></div></div></div>`}
+async function placeOrder(e){e.preventDefault();const f=new FormData(e.target),it=items(),em=$('#em');
+ if(!db){em.textContent='Order storage is not connected. Please order via WhatsApp or email from the Contact page.';return}
+ if(!uid){em.textContent='Please sign in (top right) before placing your order.';return}
+ const qr=f.get('pay')==='qr',utr=String(f.get('utr')||'').trim().replace(/\s+/g,'');
+ if(qr&&!/^[A-Za-z0-9]{12,25}$/.test(utr)){em.textContent='Please enter the UTR / Transaction ID from your UPI app (12–25 letters or digits).';return}
+ $('#pb').disabled=true;const id='SI'+crypto.randomUUID().replace(/-/g,'').toUpperCase();
+ const od={ownerId:uid,name:f.get('name').trim(),phone:f.get('phone'),address:f.get('addr').trim(),pin:f.get('pin'),items:it.map(x=>({id:x.p.id,name:x.p.name,price:x.p.price,qty:x.q})),total:0,payment:qr?'Online QR':'Cash on Delivery',paymentStatus:qr?'Pending':'Pay on delivery',status:'New',createdAt:'__ts__'};
+ if(qr)od.utr=utr;
+ od.total=od.items.reduce((a,i)=>a+i.price*i.qty,0);
+ try{if(!vOrder({...od,id,created:new Date().toISOString()},uid))throw 0;await db.doc('orders/'+id).set(od);lastOrder={...od,id};cart={};saveCart();location.hash='done-'+id}
+ catch(x){em.textContent='Could not save your order. Please try again or contact us.';$('#pb').disabled=false}}
+function done(id){setTimeout(()=>loadDone(id),0);return `<div class="w sec"><h1>Order request received ✔</h1><p>Your order reference is <b>${esc(id)}</b>.</p><div id="dn" class="mut">Loading payment details…</div><a class="btn" href="#shop">Continue shopping</a></div>`}
+async function loadDone(id){const el=$('#dn');if(!el)return;let o=lastOrder&&lastOrder.id==id?lastOrder:null;
+ if(!o){if(!db||!uid){el.textContent='Sign in to see your payment details.';return}try{const sn=await db.doc('orders/'+id).get();if(sn.exists)o={id,...sn.data()}}catch(e){}}
+ if(!o){el.textContent='We could not load the payment details.';return}
+ el.innerHTML=o.payment==='Online QR'?`<p><b>Payment method:</b> Online QR (UPI)<br><b>UTR / Transaction ID:</b> ${esc(o.utr)}<br><b>Payment status:</b> ${o.paymentStatus==='Verified'?'Verified':'Pending verification'}</p><p>Your order will be confirmed only after the store verifies the payment in its bank account. Please do not pay again. We will contact you on your mobile number.</p>`:`<p><b>Payment method:</b> Cash on Delivery</p><p>Pay when your order arrives. We will contact you on your mobile number to confirm.</p>`}
+const ST=['New','Confirmed','Shipped','Delivered','Cancelled'];
+const PAYOK=o=>(o.payment==='Cash on Delivery'&&o.utr===undefined&&(o.paymentStatus===undefined||o.paymentStatus==='Pay on delivery'))||(o.payment==='Online QR'&&typeof o.utr=='string'&&/^[A-Za-z0-9]{12,25}$/.test(o.utr)&&['Pending','Verified'].includes(o.paymentStatus));
+function vOrder(o,owner){try{return !!o&&/^SI[0-9A-F]{32}$/.test(o.id)&&o.ownerId===owner&&typeof o.name=='string'&&/^[\p{L}\p{N} .,'-]{2,80}$/u.test(o.name.trim())&&/^[6-9]\d{9}$/.test(o.phone)&&typeof o.address=='string'&&o.address.trim().length>=5&&o.address.length<=300&&/^\d{6}$/.test(o.pin)&&Array.isArray(o.items)&&o.items.length>0&&o.items.length<=50&&o.items.every(i=>typeof i.id=='string'&&typeof i.name=='string'&&Number.isInteger(i.qty)&&i.qty>0&&i.qty<=100&&typeof i.price=='number'&&i.price>=0)&&o.total===o.items.reduce((a,i)=>a+i.price*i.qty,0)&&PAYOK(o)&&ST.includes(o.status)&&!isNaN(Date.parse(o.created))}catch(e){return false}}
+function myOrders(){setTimeout(loadMine,0);return '<div class="w sec"><h1>My Orders</h1><div id="mo" class="mut">Loading…</div></div>'}
+async function loadMine(){const el=$('#mo');if(!el)return;if(!db||!uid){el.textContent='Please sign in (top right) to see your orders.';return}try{const sn=await db.collection('orders').where('ownerId','==',uid).get(),l=sn.docs.map(d=>({id:d.id,...d.data()})).filter(o=>vOrder(o,uid)).sort((a,b)=>b.created.localeCompare(a.created));el.innerHTML=l.length?l.map(o=>`<div class="box" style="margin-bottom:10px"><b>${esc(o.id)}</b> · ${esc(new Date(o.created).toLocaleDateString('en-IN'))}<ul>${o.items.map(i=>`<li>${esc(i.name)} × ${esc(i.qty)}</li>`).join('')}</ul><b>${inr(o.total)}</b> · Order status: ${esc(o.status)}<br>Payment: ${o.payment==='Online QR'?'Online QR (UPI) · UTR '+esc(o.utr)+' · '+(o.paymentStatus==='Verified'?'Verified':'Pending verification'):'Cash on Delivery'}</div>`).join(''):'No orders yet.'}catch(e){el.textContent='Could not load your orders.'}}
+function waLink(t){const n=(settings.whatsapp||'').replace(/\D/g,'');return n?`https://wa.me/${n}?text=${encodeURIComponent(t||'Hello SUDIP INDUSTRY')}`:''}
+function contact(){const w=waLink();return `<div class="w sec"><h1>Contact Us</h1><div class="two"><div><p>Email: <a href="mailto:sudippramanick66@gmail.com">sudippramanick66@gmail.com</a></p>${w?`<a class="btn wa" href="${esc(w)}" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>`:'<p class="mut">WhatsApp number not set yet. The owner can add it in Admin → Settings.</p>'}</div><form id="mf"><label>Name</label><input name="name" required maxlength="80"><label>Email or mobile</label><input name="contact" required maxlength="100"><label>Message</label><textarea name="msg" rows="4" required maxlength="1000"></textarea><p id="mm" class="mut"></p><button class="btn">Send Message</button></form></div></div>`}
+async function sendMsg(e){e.preventDefault();const f=new FormData(e.target),m=$('#mm');const d={name:f.get('name').trim().slice(0,80),contact:f.get('contact').trim().slice(0,100),msg:f.get('msg').trim().slice(0,1000)};
+ if(db&&uid){try{await db.doc('messages/M'+crypto.randomUUID().replace(/-/g,'')).set({...d,createdAt:'__ts__'});e.target.reset();m.textContent='Thank you! Your message has been sent.';return}catch(x){}}
+ location.href='mailto:sudippramanick66@gmail.com?subject='+encodeURIComponent('Message from '+d.name)+'&body='+encodeURIComponent(d.msg+'\n\nContact: '+d.contact)}
+const about=()=>`<div class="w sec"><h1>About SUDIP INDUSTRY</h1><div class="tag" style="color:var(--bl)">DREAM • WORK • SUCCESS</div><p>SUDIP INDUSTRY is an online shopping store serving customers across India. We believe in honest pricing, careful product selection and responsive customer service.</p><p>Our commitment is simple: offer products we are proud to sell, keep you informed about your order, and treat every customer with respect. We are just getting started and plan to grow our range across Electronics, Fashion, Home &amp; Kitchen, Beauty &amp; Personal Care and Accessories.</p><a class="btn" href="#contact">Get in touch</a></div>`;
+/* ---------- ADMIN ---------- */
+function admin(){
+ if(!db)return '<div class="w sec"><h1>Admin</h1><div class="note">Database not connected.</div></div>';
+ if(!uid)return '<div class="w sec"><h1>Admin</h1><p>Please sign in first (top right).</p></div>';
+ if(!isAdmin)return '<div class="w sec"><h1>Admin</h1><p>This account is not an admin.</p></div>';
+ const tabs=['products','orders','messages','settings'];
+ return `<div class="w sec"><h1>Admin Dashboard</h1><div class="tabs">${tabs.map(t=>`<button class="btn s ${aTab==t?'on':''}" onclick="aTab='${t}';route()">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>${aTab=='products'?aProd():aTab=='orders'?aOrd():aTab=='messages'?aMsg():aSet()}</div>`}
+function aProd(){const e=P(editId)||{cat:'electronics',stock:10,pop:50,icon:'📦',hue:220};const L=(k,l,t)=>`<div><label>${l}</label><input id="e_${k}" type="${t||'text'}" value="${esc(e[k]!=null?e[k]:'')}"></div>`;
+ return `${dbOn?'':`<div class="note">The database has no products yet — the site is showing placeholder samples. <button class="btn s" onclick="seed()">Save placeholders to database</button> or add your own below.</div>`}
+<div class="box"><h3>${editId?'Edit product':'Add product'}</h3><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">${L('name','Name')}<div><label>Category</label><select id="e_cat">${CATS.map(c=>`<option value="${c[0]}" ${e.cat==c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></div>${L('price','Price ₹','number')}${L('mrp','MRP ₹ (for discount)','number')}${L('stock','Stock','number')}${L('pop','Popularity 0-100','number')}${L('icon','Emoji icon')}${L('hue','Colour hue 0-360','number')}</div><label>Description</label><textarea id="e_desc" rows="3">${esc(e.desc||'')}</textarea><label><input type="checkbox" id="e_act" style="width:auto" ${e.active===false?'':'checked'}> Visible in store</label><br><button class="btn" onclick="saveP()">Save</button> ${editId?'<button class="btn g" onclick="editId=null;route()">Cancel</button>':''}</div>
+<div class="sc"><table>${products.map(p=>`<tr class="row"><td>${esc(p.icon)} <b>${esc(p.name)}</b>${p.sample?' <span class="mut">(sample)</span>':''}<div class="mut">${inr(p.price)} · stock ${p.stock}${p.active===false?' · hidden':''}</div></td><td style="text-align:right;white-space:nowrap">${p.sample?'':`<button class="btn s g" onclick="editId='${esc(p.id)}';route()">Edit</button> <button class="btn s r" onclick="delP('${esc(p.id)}')">Delete</button>`}</td></tr>`).join('')}</table></div>`}
+const gv=k=>$('#e_'+k).value;
+async function saveP(){if(!gv('name').trim()){toast('Name required');return}const d={name:gv('name').trim(),cat:gv('cat'),price:+gv('price')||0,mrp:+gv('mrp')||0,stock:Math.max(0,+gv('stock')||0),pop:+gv('pop')||0,icon:gv('icon')||'📦',hue:+gv('hue')||220,desc:gv('desc'),active:$('#e_act').checked};
+ try{await db.doc('products/'+(editId||'P'+Date.now().toString(36))).set(d);editId=null;toast('Saved')}catch(e){toast('Save failed')}}
+async function delP(id){if(confirm('Delete this product?'))try{await db.doc('products/'+id).delete()}catch(e){toast('Failed')}}
+async function seed(){try{for(const p of SEED){const{id,sample,...d}=p;await db.doc('products/'+id).set(d)}toast('Saved')}catch(e){toast('Failed')}}
+const chk=o=>vOrder(o,o.ownerId)&&o.items.every(i=>{const p=P(i.id);return !p||p.price===i.price});
+const GATED=['Confirmed','Shipped','Delivered'],payBlock=o=>o.payment==='Online QR'&&o.paymentStatus!=='Verified';
+function aOrd(){if(!orders.length)return '<p>No orders yet.</p>';return orders.slice().sort((a,b)=>(b.created||'').localeCompare(a.created||'')).map(o=>{const ok=chk(o),qr=o.payment==='Online QR',dup=qr?orders.filter(x=>x.id!==o.id&&x.utr&&String(x.utr).toLowerCase()===String(o.utr).toLowerCase()).length:0;return `<div class="box" style="margin-bottom:12px"><b>${esc(o.id)}</b> · ${esc(new Date(o.created).toLocaleString('en-IN'))}${ok?'':' <b class="er">⚠ FAILED CHECK – do not fulfil</b>'}<br>${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a><br>${esc(o.address)}, ${esc(o.pin)}<ul>${(o.items||[]).map(i=>`<li>${esc(i.name)} × ${esc(i.qty)} @ ${inr(i.price)}</li>`).join('')}</ul><b>${inr(o.total)}</b> · ${esc(o.payment)}<br>Payment status: <b>${esc(o.paymentStatus||'Pay on delivery')}</b>${qr?`<br>UTR: <b>${esc(o.utr)}</b>${dup?` <b class="er">⚠ same UTR used in ${dup} other order(s)</b>`:''}`:''}${ok&&qr&&o.paymentStatus!=='Verified'?`<br><button class="btn s" style="margin-top:8px" onclick="verifyPay('${esc(o.id)}')">Mark payment Verified</button><div class="mut">Check your bank account first. Orders cannot be confirmed until payment is verified.</div>`:''}<br><label>Order status</label><select ${ok?'':'disabled'} onchange="setSt('${esc(o.id)}',this.value)">${ST.map(s=>`<option ${o.status==s?'selected':''} ${payBlock(o)&&GATED.includes(s)?'disabled':''}>${s}</option>`).join('')}</select></div>`}).join('')}
+async function verifyPay(id){const o=orders.find(x=>x.id==id);if(!o||!chk(o)||o.payment!=='Online QR')return;if(!confirm('Confirm that you checked your bank account and received '+inr(o.total)+' for UTR '+o.utr+'?'))return;try{await db.doc('orders/'+id).update({paymentStatus:'Verified'});toast('Payment marked Verified')}catch(e){toast('Failed')}}
+async function setSt(id,st){const o=orders.find(x=>x.id==id);if(!o||!chk(o))return;if(payBlock(o)&&GATED.includes(st)){toast('Verify the payment first');route();return}try{if(st=='Confirmed'&&!o.stockAdjusted){for(const i of o.items){const p=P(i.id);if(p&&!p.sample)await db.doc('products/'+i.id).update({stock:Math.max(0,p.stock-i.qty)})}await db.doc('orders/'+id).update({status:st,stockAdjusted:true})}else await db.doc('orders/'+id).update({status:st});toast('Updated')}catch(e){toast('Failed')}}
+const aMsg=()=>msgs.length?msgs.map(m=>`<div class="box" style="margin-bottom:10px"><b>${esc(m.name)}</b> · ${esc(m.contact)}<br>${esc(m.msg)}<div class="mut">${esc(m.created)}</div></div>`).join(''):'<p>No messages yet.</p>';
+const aSet=()=>`<div class="box"><label>WhatsApp number (with country code, e.g. 91XXXXXXXXXX)</label><input id="wa" value="${esc(settings.whatsapp)}"><br><br><button class="btn" onclick="saveSet()">Save</button></div>
+<div class="note"><b>Setup status</b><br>Database: ${db?'<span class="ok">connected</span>':'not connected'}<br>Payments: Cash on Delivery and manual UPI QR (you verify each payment). No payment gateway connected<br>Order tracking: not implemented<br>Still to do: real products, WhatsApp number, policy review, business address (add only if you have one).</div>`;
+async function saveSet(){try{await db.doc('settings/store').set({whatsapp:$('#wa').value.replace(/\D/g,'')});toast('Saved')}catch(e){toast('Failed')}}
+/* ---------- INIT ---------- */
+$('#mb').onclick=()=>$('#nl').classList.toggle('o');$('#yr').textContent=new Date().getFullYear();
+addEventListener('hashchange',()=>route());saveCart();route();authUI();
+let unsubs=[];
+function softRoute(){const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;const y=scrollY;route(true);scrollTo(0,y)}
+const q=()=>{if(location.hash.slice(1)=='admin')softRoute()};
+function subscribe(){unsubs.forEach(f=>f());unsubs=[];if(!db)return;const er=()=>{};
+ unsubs.push(db.collection('products').onSnapshot(s=>{const has=!s.empty,np=has?s.docs.map(d=>({id:d.id,...d.data()})):SEED.slice();dbOn=has;if(JSON.stringify(np)===JSON.stringify(products))return;products=np;softRoute()},er));
+ unsubs.push(db.doc('settings/store').onSnapshot(s=>{if(s.exists)settings={...settings,...s.data()}},er));
+ if(isAdmin){unsubs.push(db.collection('orders').onSnapshot(s=>{orders=s.docs.map(d=>({id:d.id,...d.data()}));q()},er));unsubs.push(db.collection('messages').onSnapshot(s=>{msgs=s.docs.map(d=>d.data());q()},er))}}
+const loginErr=e=>({'auth/popup-closed-by-user':'Sign-in was cancelled.','auth/cancelled-popup-request':'Sign-in was cancelled.','auth/unauthorized-domain':'This website address is not authorised in Firebase (Authentication > Settings > Authorized domains).','auth/network-request-failed':'Network problem. Check your internet and try again.','auth/popup-blocked':'Your browser blocked the sign-in window. Please allow pop-ups and try again.','auth/operation-not-allowed':'Google sign-in is not enabled in Firebase.'}[e&&e.code]||'Sign-in failed. Please try again.');
+function authUI(){const b=$('#lg');b.disabled=signing;b.textContent=signing?'Signing in…':curUser?'Sign out':'Sign in';b.onclick=async()=>{if(signing)return;
+ if(curUser){try{await FB.signOut();toast('Signed out')}catch(e){toast('Sign-out failed. Please try again.')}return}
+ if(!window.FB){toast('Sign-in is not available right now (Firebase not connected).');return}
+ signing=true;authUI();try{await FB.signIn();toast('Signed in')}catch(e){toast(loginErr(e))}signing=false;authUI()}}
+function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=false;if(u){try{isAdmin=(await db.doc('admins/'+u.uid).get()).exists}catch(e){}}authUI();subscribe();route(true)})}
+window.FB?boot():addEventListener('fbready',boot);
+</script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getFirestore,collection,doc,getDocs,addDoc,setDoc,updateDoc,deleteDoc,serverTimestamp,query,where}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import{getAuth,GoogleAuthProvider,signInWithRedirect,getRedirectResult,signInAnonymously,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyANbPXxpxMNibsWpJf6qb71fGOADbdMVzk",
-authDomain:"sudip-industry.firebaseapp.com",
-projectId:"sudip-industry",
-storageBucket:"sudip-industry.firebasestorage.app",
-messagingSenderId:"377224435101",
-appId:"1:377224435101:web:c5e152120dec1664070b74"
-};
-const app=initializeApp(firebaseConfig),db=getFirestore(app),auth=getAuth(app);
-const ADMIN_EMAIL="sudippramanick66@gmail.com";
-let currentUser=null,products=[],categories=[],orders=[],wishlist=[],cart=[],paymentSettings={};
-let selectedProduct=null,currentLanguage="en",activeOrderFilter="All",activeCategoryFilter="All",loginInProgress=false;
-const $=id=>document.getElementById(id);
-const ORDER_STATUSES=["Pending","Confirmed","Processing","Shipped","Delivered","Cancelled","Return Requested","Returned"];
-
-function isAdminUser(){
-return !!(currentUser&&!currentUser.isAnonymous&&currentUser.email&&currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()&&currentUser.emailVerified===true);
-}
-function updateAdminVisibility(){
-const button=$("adminNavButton"),allowed=isAdminUser();
-if(button)button.classList.toggle("hidden",!allowed);
-if(!allowed&&$("admin")?.classList.contains("active"))showPage("home");
-}
-const translations={
-en:{welcome:"Welcome to SUDIP INDUSTRY",hero:"Shop your favourite products easily.",shopNow:"Shop Now",empty:"No products found",emptyCart:"Your cart is empty",orderSuccess:"Order placed successfully",productAdded:"Product added",addCart:"Add to Cart",buyNow:"Buy Now",remove:"Remove",total:"Total"},
-bn:{welcome:"SUDIP INDUSTRY-তে স্বাগতম",hero:"সহজেই আপনার পছন্দের পণ্য অর্ডার করুন।",shopNow:"এখনই কিনুন",empty:"কোনো পণ্য পাওয়া যায়নি",emptyCart:"কার্ট খালি",orderSuccess:"অর্ডার সফলভাবে দেওয়া হয়েছে",productAdded:"পণ্য যোগ হয়েছে",addCart:"কার্টে যোগ করুন",buyNow:"এখনই কিনুন",remove:"সরান",total:"মোট"},
-hi:{welcome:"SUDIP INDUSTRY में आपका स्वागत है",hero:"अपने पसंदीदा उत्पाद आसानी से ऑर्डर करें।",shopNow:"अभी खरीदें",empty:"कोई उत्पाद नहीं मिला",emptyCart:"कार्ट खाली है",orderSuccess:"ऑर्डर सफलतापूर्वक दिया गया",productAdded:"उत्पाद जोड़ा गया",addCart:"कार्ट में जोड़ें",buyNow:"अभी खरीदें",remove:"हटाएं",total:"कुल"},
-ml:{welcome:"SUDIP INDUSTRY-ലേക്ക് സ്വാഗതം",hero:"നിങ്ങളുടെ പ്രിയപ്പെട്ട ഉൽപ്പന്നങ്ങൾ എളുപ്പത്തിൽ ഓർഡർ ചെയ്യൂ.",shopNow:"ഇപ്പോൾ വാങ്ങുക",empty:"ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല",emptyCart:"കാർട്ട് ശൂന്യമാണ്",orderSuccess:"ഓർഡർ വിജയകരമായി നൽകി",productAdded:"ഉൽപ്പന്നം ചേർത്തു",addCart:"കാർട്ടിൽ ചേർക്കുക",buyNow:"ഇപ്പോൾ വാങ്ങുക",remove:"നീക്കം ചെയ്യുക",total:"ആകെ"},
-ne:{welcome:"SUDIP INDUSTRY मा स्वागत छ",hero:"आफ्ना मनपर्ने सामान सजिलै अर्डर गर्नुहोस्।",shopNow:"अहिले किन्नुहोस्",empty:"कुनै सामान भेटिएन",emptyCart:"कार्ट खाली छ",orderSuccess:"अर्डर सफलतापूर्वक गरियो",productAdded:"सामान थपियो",addCart:"कार्टमा थप्नुहोस्",buyNow:"अहिले किन्नुहोस्",remove:"हटाउनुहोस्",total:"जम्मा"}
-};
-function tr(k){return translations[currentLanguage]?.[k]||translations.en[k]||k}
-function toast(message){
-const el=$("toast");el.textContent=message;el.style.display="block";
-clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.style.display="none",3500);
-}
-function money(v){return"₹"+Number(v||0).toLocaleString("en-IN")}
-function safeText(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function normalizeCart(value){
-if(!Array.isArray(value))return[];
-return value.filter(x=>x&&typeof x==="object"&&!Array.isArray(x)&&x.id!==undefined&&x.id!==null).map(x=>({id:String(x.id),name:String(x.name||"Product"),price:Number.isFinite(Number(x.price))?Math.max(0,Number(x.price)):0,image:String(x.image||"https://placehold.co/300x300?text=Product"),qty:Number.isFinite(Number(x.qty))?Math.max(1,Math.floor(Number(x.qty))):1}));
-}
-try{cart=normalizeCart(JSON.parse(localStorage.getItem("si_cart")||"[]"))}catch(e){cart=[]}
-function saveCart(){
-cart=normalizeCart(cart);try{localStorage.setItem("si_cart",JSON.stringify(cart))}catch(e){}
-$("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);
-}
-function showPage(page){
-if(page==="admin"&&!isAdminUser()){toast("Admin access denied");page="home"}
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-$(page)?.classList.add("active");
-if(page==="shop")renderShop();
-if(page==="wishlist")renderWishlist();
-if(page==="cart")renderCart();
-if(page==="orders")renderOrders();
-if(page==="profile")renderProfile();
-if(page==="admin")renderAdmin();
-if(page==="checkout")renderCheckoutSummary();
-window.scrollTo({top:0,behavior:"instant"});
-}
-function changeLanguage(l){
-currentLanguage=l;$("languageSelect").value=l;
-$("heroTitle").textContent=tr("welcome");$("heroText").textContent=tr("hero");$("shopNowButton").textContent=tr("shopNow");
-renderHome();renderShop();renderCart();
-}
-function productImage(p){return p.image||p.imageUrl||p.images?.[0]||"https://placehold.co/300x300?text=Product"}
-function productImages(p){return Array.isArray(p.images)&&p.images.length?p.images:[productImage(p)]}
-
-async function loadData(){
-try{
-const ps=await getDocs(collection(db,"products"));products=ps.docs.map(d=>({id:d.id,...d.data()}));
-const cs=await getDocs(collection(db,"categories"));categories=cs.docs.map(d=>({id:d.id,...d.data()}));
-paymentSettings={};const ss=await getDocs(collection(db,"paymentSettings"));ss.forEach(d=>paymentSettings[d.id]=d.data());
-wishlist=[];orders=[];
-if(currentUser&&!currentUser.isAnonymous){
-const ws=await getDocs(collection(db,"users",currentUser.uid,"wishlist"));wishlist=ws.docs.map(d=>d.id);
-const oq=isAdminUser()?collection(db,"orders"):query(collection(db,"orders"),where("ownerUid","==",currentUser.uid));
-const os=await getDocs(oq);orders=os.docs.map(d=>({id:d.id,...d.data()}));
-}
-renderHome();renderShop();renderWishlist();renderOrders();saveCart();updateAdminVisibility();
-}catch(e){console.error(e);toast("Database error: "+e.message)}
-}
-function renderCategoryCards(id){
-const box=$(id);if(!box)return;
-box.innerHTML=categories.map(c=>`<div class="category-card ${activeCategoryFilter===c.name?"selected":""}" onclick="selectCategory('${safeText(c.id)}')"><img src="${safeText(c.imageUrl||"https://placehold.co/300x200?text=Category")}" alt="${safeText(c.name)}"><b>${safeText(c.name)}</b></div>`).join("")||"<p>No categories added yet.</p>";
-}
-function renderHome(){
-renderCategoryCards("homeCategories");
-$("homeProducts").innerHTML=products.slice(0,8).map(p=>`<div class="card"><img src="${safeText(productImage(p))}" alt="${safeText(p.name)}"><h3>${safeText(p.name)}</h3><p class="small">${safeText(p.category||"")}</p><p class="price">${money(p.price)}</p><button onclick="openProduct('${safeText(p.id)}')">View Product</button></div>`).join("")||"<p>No products available.</p>";
-}
-function renderShop(){
-renderCategoryCards("shopCategories");
-let list=[...products],q=$("searchInput").value.toLowerCase().trim();
-if(q)list=list.filter(p=>String(p.name||"").toLowerCase().includes(q)||String(p.description||"").toLowerCase().includes(q));
-if(activeCategoryFilter!=="All")list=list.filter(p=>p.category===activeCategoryFilter);
-$("activeCategoryLabel").textContent=activeCategoryFilter==="All"?"Showing all products":"Category: "+activeCategoryFilter;
-const sort=$("sortProducts").value;
-if(sort==="low")list.sort((a,b)=>Number(a.price)-Number(b.price));
-if(sort==="high")list.sort((a,b)=>Number(b.price)-Number(a.price));
-if(sort==="latest")list.reverse();
-$("shopProducts").innerHTML=list.map(p=>`<div class="card"><img src="${safeText(productImage(p))}" alt="${safeText(p.name)}"><h3>${safeText(p.name)}</h3><p class="small">${safeText(p.category||"Uncategorized")}</p><p class="price">${money(p.price)}</p><button onclick="openProduct('${safeText(p.id)}')">View</button><button onclick="addToCart('${safeText(p.id)}')">Add</button><button onclick="toggleWishlist('${safeText(p.id)}')">♡</button></div>`).join("")||`<p>${tr("empty")}</p>`;
-}
-function selectCategory(id){const c=categories.find(x=>x.id===id);if(!c)return;activeCategoryFilter=c.name;showPage("shop")}
-function clearCategoryFilter(){activeCategoryFilter="All";renderShop()}
-function openProduct(id){
-selectedProduct=products.find(p=>p.id===id);if(!selectedProduct)return;
-const p=selectedProduct;
-$("productDetail").innerHTML=`<button onclick="showPage('shop')">← Back</button><h2>${safeText(p.name)}</h2><img id="mainProductImage" src="${safeText(productImage(p))}" style="width:100%;max-height:320px;object-fit:contain"><div class="product-gallery">${productImages(p).map(im=>`<img src="${safeText(im)}" onclick="changeMainImage(this.src)">`).join("")}</div><p>Category: ${safeText(p.category||"Uncategorized")}</p><h2 class="price">${money(p.price)}</h2><p>${safeText(p.description||"No description available.")}</p><button onclick="addToCart('${safeText(p.id)}')">${tr("addCart")}</button><button onclick="buyNow('${safeText(p.id)}')">${tr("buyNow")}</button><button onclick="toggleWishlist('${safeText(p.id)}')">♡ Wishlist</button>`;
-showPage("detailPage");
-}
-function changeMainImage(src){$("mainProductImage").src=src}
-function addToCart(id){
-const p=products.find(x=>x.id===id);if(!p)return;
-const item=cart.find(x=>x.id===id);if(item)item.qty++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:productImage(p),qty:1});
-saveCart();toast(tr("productAdded"));
-}
-function buyNow(id){addToCart(id);renderCheckoutSummary();showPage("checkout")}
-function renderCart(){
-cart=normalizeCart(cart);saveCart();
-if(!cart.length){$("cartContent").innerHTML=`<p>${tr("emptyCart")}</p>`;return}
-$("cartContent").innerHTML=`${cart.map(x=>`<div class="panel row"><img src="${safeText(x.image)}" style="width:75px;height:75px;object-fit:contain"><div><b>${safeText(x.name)}</b><p>${money(x.price)}</p><button onclick="changeQty('${safeText(x.id)}',-1)">−</button> ${x.qty}<button onclick="changeQty('${safeText(x.id)}',1)">+</button><button onclick="removeCart('${safeText(x.id)}')">Remove</button></div></div>`).join("")}<h3>Total: ${money(cart.reduce((s,x)=>s+x.price*x.qty,0))}</h3><button onclick="showPage('checkout')">Proceed to Checkout</button>`;
-}
-function changeQty(id,n){const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=n;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);saveCart();renderCart()}
-function removeCart(id){cart=cart.filter(x=>x.id!==id);saveCart();renderCart()}
-async function toggleWishlist(id){
-if(!currentUser||currentUser.isAnonymous){toast("Please login with Google first");return}
-try{
-if(wishlist.includes(id)){wishlist=wishlist.filter(x=>x!==id);await deleteDoc(doc(db,"users",currentUser.uid,"wishlist",id))}
-else{wishlist.push(id);await setDoc(doc(db,"users",currentUser.uid,"wishlist",id),{productId:id,createdAt:serverTimestamp()})}
-renderWishlist();toast("Wishlist updated");
-}catch(e){toast("Wishlist error: "+e.message)}
-}
-function renderWishlist(){
-$("wishlistContent").innerHTML=wishlist.map(id=>{const p=products.find(x=>x.id===id);if(!p)return"";return `<div class="card"><img src="${safeText(productImage(p))}"><h3>${safeText(p.name)}</h3><p>${money(p.price)}</p><button onclick="openProduct('${safeText(p.id)}')">View</button><button onclick="toggleWishlist('${safeText(p.id)}')">Remove</button></div>`}).join("")||"<p>Your wishlist is empty.</p>";
-}
-function renderCheckoutSummary(){
-cart=normalizeCart(cart);
-$("checkoutSummary").innerHTML=`<h3>Order Summary</h3>${cart.map(x=>`<p>${safeText(x.name)} × ${x.qty} — ${money(x.price*x.qty)}</p>`).join("")}<h3>Total: ${money(cart.reduce((s,x)=>s+x.price*x.qty,0))}</h3>`;
-updatePaymentInstructions();
-}
-function updatePaymentInstructions(){
-const m=$("paymentMethod").value,s=paymentSettings.main||{},b=$("paymentInstructions");
-if(m==="COD")b.innerHTML="<p>Pay cash when your order is delivered.</p>";
-else if(m==="UPI")b.innerHTML=s.upiId?`<p>UPI ID: <b>${safeText(s.upiId)}</b></p>`:"<p>UPI payment is not configured yet.</p>";
-else b.innerHTML=s.bankName?`<p>Bank: ${safeText(s.bankName)}<br>Account holder: ${safeText(s.accountName||"")}<br>Account number: ${safeText(s.accountNumber||"")}<br>IFSC: ${safeText(s.ifsc||"")}</p>`:"<p>Bank transfer is not configured yet.</p>";
-}
-async function placeOrder(e){
-e.preventDefault();cart=normalizeCart(cart);
-if(!currentUser||currentUser.isAnonymous){toast("Please login with Google before ordering");return}
-if(!cart.length){toast("Your cart is empty");return}
-const m=$("paymentMethod").value,s=paymentSettings.main||{};
-if(m==="UPI"&&!s.upiId){toast("UPI is not configured");return}
-if(m==="BANK"&&!s.bankName){toast("Bank details are not configured");return}
-const total=cart.reduce((a,x)=>a+x.price*x.qty,0);
-const order={ownerUid:currentUser.uid,customerEmail:currentUser.email||"",customerName:$("customerName").value.trim(),phone:$("customerPhone").value.trim(),address:$("customerAddress").value.trim(),city:$("customerCity").value.trim(),pin:$("customerPin").value.trim(),paymentMethod:m,utr:$("utrInput").value.trim(),items:cart.map(x=>({productId:x.id,name:x.name,price:x.price,qty:x.qty,image:x.image})),total,status:"Pending",paymentStatus:m==="COD"?"COD":"Pending Verification",remark:"",createdAt:serverTimestamp()};
-try{$("placeOrderButton").disabled=true;await addDoc(collection(db,"orders"),order);cart=[];saveCart();$("checkoutForm").reset();toast(tr("orderSuccess"));await loadData();showPage("orders")}
-catch(e){console.error(e);toast("Order failed: "+e.message)}
-finally{$("placeOrderButton").disabled=false}
-}
-async function loginGoogle(){
-if(loginInProgress){toast("Google Login is already starting");return}
-try{loginInProgress=true;toast("Redirecting to Google...");await setPersistence(auth,browserLocalPersistence);const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});await signInWithRedirect(auth,provider)}
-catch(e){loginInProgress=false;console.error("Google Login Error:",e);toast("Google Login Error: "+e.code+" - "+e.message)}
-}
-async function logout(){
-try{await signOut(auth);currentUser=null;wishlist=[];orders=[];updateAdminVisibility();renderProfile();toast("Logged out")}
-catch(e){toast("Logout failed: "+e.message)}
-}
-function renderProfile(){
-$("profileContent").innerHTML=currentUser&&!currentUser.isAnonymous?`<h3>${safeText(currentUser.displayName||"Customer")}</h3><p>${safeText(currentUser.email||"")}</p>${currentUser.photoURL?`<img src="${safeText(currentUser.photoURL)}" style="width:65px;border-radius:50%">`:""}<p><button onclick="logout()">Logout</button></p><button onclick="loginGoogle()">Switch / Login with Google</button>`:`<p>You are using a guest session.</p><button onclick="loginGoogle()">Login with Google</button>`;
-}
-function renderOrders(){
-if(!currentUser||currentUser.isAnonymous){$("myOrders").innerHTML="<p>Please login with Google to see your orders.</p>";return}
-$("myOrders").innerHTML=orders.map(o=>`<div class="panel"><h3>Order #${safeText(o.id)}</h3><p>Date: ${o.createdAt?.toDate?.().toLocaleString("en-IN")||"Processing"}</p><p>Status: <b>${safeText(o.status||"Pending")}</b></p>${o.status==="Cancelled"&&o.remark?`<div class="remark-box"><b>Cancellation Remark:</b><p>${safeText(o.remark)}</p></div>`:""}<p>Payment: ${safeText(o.paymentStatus||"Pending")}</p>${(o.items||[]).map(i=>`<p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i.qty)}</p>`).join("")}<h3>Total: ${money(o.total)}</h3><p>Delivery: ${safeText(o.address||"")}, ${safeText(o.city||"")} - ${safeText(o.pin||"")}</p></div>`).join("")||"<p>No orders yet.</p>";
-}
-
-/* ADMIN PANEL */
-function renderAdmin(){
-if(!isAdminUser()){$("adminContent").innerHTML=`<p>Administrator login required.</p><button onclick="loginGoogle()">Login with Google</button>`;updateAdminVisibility();return}
-$("adminContent").innerHTML=`
-<div class="panel"><h3>Dashboard Statistics</h3>
-<p>Total Products: ${products.length}</p><p>Total Categories: ${categories.length}</p>
-<p>Total Orders: ${orders.length}</p>
-<p>Delivered: ${orders.filter(o=>o.status==="Delivered").length}</p>
-<p>Cancelled: ${orders.filter(o=>o.status==="Cancelled").length}</p></div>
-
-<div class="panel">
-<h3>🛍️ Import Product from Meesho</h3>
-<p class="small">Meesho Link থেকে তথ্য আনার চেষ্টা করবে। Meesho-এর CORS বা নিরাপত্তা বাধায় ব্যর্থ হলে নিচে নিজে তথ্য বসাতে পারবে।</p>
-<label>Meesho Product Link</label>
-<input id="meeshoLink" type="url" placeholder="Paste Meesho product link">
-<label>Select Category</label>
-<select id="meeshoCategory"><option value="">Select Category</option>${categories.map(c=>`<option value="${safeText(c.name)}">${safeText(c.name)}</option>`).join("")}</select>
-<label>Your Selling Price (₹)</label>
-<input id="meeshoPrice" type="number" min="0" step="0.01" placeholder="Enter your selling price">
-<button type="button" id="meeshoImportButton" onclick="importMeeshoProduct()">Import Product Details</button>
-<div id="meeshoStatus" class="small"></div>
-<div id="meeshoManualFields" class="hidden">
-<hr>
-<h3>Product Details</h3>
-<label>Product Name</label><input id="meeshoProductName" maxlength="100" placeholder="Product name">
-<label>Description</label><textarea id="meeshoProductDescription" placeholder="Product description"></textarea>
-<label>Product Image URLs (comma separated, maximum 5)</label>
-<textarea id="meeshoProductImages" placeholder="https://image1.jpg, https://image2.jpg"></textarea>
-<div id="meeshoImagePreview" class="import-images"></div>
-<button type="button" onclick="previewMeeshoImages()">Preview Images</button>
-<button type="button" id="meeshoSaveButton" onclick="saveMeeshoProduct()">Add Product to SUDIP INDUSTRY</button>
-</div>
-</div>
-
-<div class="panel"><h3>📁 Add New Category</h3>
-<form id="addCategoryForm">
-<label>Category Name</label><input id="newCategoryName" placeholder="Example: Electronics" required maxlength="60">
-<label>Category Photo URL (Optional)</label><input id="newCategoryImageUrl" type="url" placeholder="Paste image URL">
-<label>Or Upload Photo from Gallery</label><input id="newCategoryImageFile" type="file" accept="image/*" onchange="previewCategoryImage(this,'categoryPreview')">
-<img id="categoryPreview" class="preview-img" alt="Category preview">
-<button type="submit" id="addCategoryButton">Add Category</button>
-</form></div>
-
-<div class="panel"><h3>Manage Categories</h3><div id="adminCategories"></div></div>
-<div class="panel"><h3>➕ Add Product</h3>
-<form id="addProductForm">
-<label>Product Name</label><input id="newProductName" required maxlength="100">
-<label>Price</label><input id="newProductPrice" type="number" min="0" required>
-<label>Select Category</label><select id="newProductCategory" required><option value="">Select Category</option></select>
-<label>Product Image URL</label><input id="newProductImage" type="url" required>
-<label>Additional Image URLs (comma separated)</label><input id="newProductImages">
-<label>Description</label><textarea id="newProductDescription"></textarea>
-<button type="submit">Add Product</button>
-</form></div>
-
-<div class="panel"><h3>Payment Settings</h3>
-<form id="paymentSettingsForm">
-<label>UPI ID</label><input id="adminUpiId">
-<label>Bank Name</label><input id="adminBankName">
-<label>Account Holder Name</label><input id="adminAccountName">
-<label>Account Number</label><input id="adminAccountNumber">
-<label>IFSC</label><input id="adminIfsc">
-<button type="submit">Save Payment Settings</button>
-</form></div>
-<div class="panel"><h3>Products</h3><div id="adminProducts"></div></div>
-<div class="panel"><h3>Order Management</h3>
-<div class="order-filters">${["All","Pending","Confirmed","Processing","Shipped","Delivered","Cancelled","Return Requested","Returned"].map(s=>`<button onclick="filterOrders('${s}')">${s==="All"?"All Orders":s}</button>`).join("")}</div>
-<div id="orderFilterResult"></div></div>`;
-
-$("adminUpiId").value=paymentSettings.main?.upiId||"";
-$("adminBankName").value=paymentSettings.main?.bankName||"";
-$("adminAccountName").value=paymentSettings.main?.accountName||"";
-$("adminAccountNumber").value=paymentSettings.main?.accountNumber||"";
-$("adminIfsc").value=paymentSettings.main?.ifsc||"";
-$("newProductCategory").innerHTML='<option value="">Select Category</option>'+categories.map(c=>`<option value="${safeText(c.name)}">${safeText(c.name)}</option>`).join("");
-$("addCategoryForm").onsubmit=addCategory;
-$("addProductForm").onsubmit=addProduct;
-$("paymentSettingsForm").onsubmit=savePaymentSettings;
-renderAdminCategories();
-$("adminProducts").innerHTML=products.map(p=>`<div class="admin-card"><b>${safeText(p.name)}</b><p>Category: ${safeText(p.category||"Uncategorized")}</p><p>${money(p.price)}</p><button onclick="deleteProduct('${safeText(p.id)}')">Delete Product</button></div>`).join("")||"<p>No products found.</p>";
-renderAdminOrdersList(activeOrderFilter);
-}
-
-/* MEESHO IMPORT - best effort, browser CORS may block it */
-function extractMeeshoData(html){
-const parsed=new DOMParser().parseFromString(html,"text/html");
-const meta=(key,attr="property")=>parsed.querySelector(`meta[${attr}="${key}"]`)?.content||"";
-let name=meta("og:title")||meta("twitter:title","name")||parsed.querySelector("title")?.textContent||"";
-let description=meta("og:description")||meta("description","name")||"";
-let images=[];
-const addImage=url=>{
-if(!url)return;
-try{const u=new URL(url,location.href).href;if(/^https?:/.test(u)&&!images.includes(u))images.push(u)}catch(e){}
-};
-addImage(meta("og:image"));
-parsed.querySelectorAll('meta[property="og:image"],meta[name="twitter:image"]').forEach(x=>addImage(x.content));
-parsed.querySelectorAll('script[type="application/ld+json"]').forEach(script=>{
-try{
-const data=JSON.parse(script.textContent);
-const inspect=x=>{
-if(!x||typeof x!=="object")return;
-if(x.name&&!name)name=x.name;
-if(x.description&&!description)description=x.description;
-if(x.image){if(Array.isArray(x.image))x.image.forEach(i=>addImage(typeof i==="string"?i:i?.url));else addImage(typeof x.image==="string"?x.image:x.image?.url)}
-if(x["@graph"])x["@graph"].forEach(inspect);
-};
-if(Array.isArray(data))data.forEach(inspect);else inspect(data);
-}catch(e){}
-});
-return{name:name.trim(),description:description.trim(),images:images.slice(0,5)};
-}
-async function importMeeshoProduct(){
-if(!isAdminUser()){toast("Admin login required");return}
-const link=$("meeshoLink").value.trim(),category=$("meeshoCategory").value,price=$("meeshoPrice").value;
-if(!link||!category||price===""||!Number.isFinite(Number(price))||Number(price)<0){toast("Enter Meesho Link, Category and Selling Price");return}
-let url;
-try{url=new URL(link);if(url.protocol!=="https:")throw Error("HTTPS link required")}
-catch(e){toast("Enter a valid HTTPS product link");return}
-$("meeshoImportButton").disabled=true;
-$("meeshoStatus").textContent="Trying to import product details...";
-$("meeshoManualFields").classList.remove("hidden");
-try{
-const response=await fetch(url.href,{method:"GET",mode:"cors",credentials:"omit"});
-if(!response.ok)throw Error("Meesho page could not be opened");
-const data=extractMeeshoData(await response.text());
-if(!data.name&&!data.images.length&&!data.description)throw Error("Product information was not found");
-$("meeshoProductName").value=data.name;
-$("meeshoProductDescription").value=data.description;
-$("meeshoProductImages").value=data.images.join(", ");
-$("meeshoStatus").textContent="Information found. Please check the details and images before uploading.";
-previewMeeshoImages();
-}catch(e){
-console.warn("Meesho import unavailable:",e);
-$("meeshoStatus").textContent="Automatic import was blocked or unavailable. Enter the product details and image URLs manually below. Open the Meesho page to copy the information.";
-toast("Automatic import failed. Manual entry is available.");
-}
-finally{$("meeshoImportButton").disabled=false}
-}
-function previewMeeshoImages(){
-const box=$("meeshoImagePreview");if(!box)return;
-const urls=$("meeshoProductImages").value.split(",").map(x=>x.trim()).filter(Boolean).slice(0,5);
-box.innerHTML=urls.map(url=>`<img src="${safeText(url)}" onerror="this.style.display='none'" alt="Product image">`).join("");
-}
-async function saveMeeshoProduct(){
-if(!isAdminUser()){toast("Admin login required");return}
-const name=$("meeshoProductName").value.trim();
-const category=$("meeshoCategory").value;
-const price=Number($("meeshoPrice").value);
-const description=$("meeshoProductDescription").value.trim();
-const images=$("meeshoProductImages").value.split(",").map(x=>x.trim()).filter(Boolean).slice(0,5);
-if(!name||!category||!Number.isFinite(price)||price<0||!images.length){toast("Product name, category, price and at least one image are required");return}
-for(const image of images){try{const u=new URL(image);if(!["http:","https:"].includes(u.protocol))throw Error()}catch(e){toast("Invalid image URL: "+image);return}}
-try{
-$("meeshoSaveButton").disabled=true;
-await addDoc(collection(db,"products"),{name,price,category,image:images[0],images,description,createdAt:serverTimestamp()});
-$("meeshoLink").value="";$("meeshoPrice").value="";$("meeshoCategory").value="";
-$("meeshoProductName").value="";$("meeshoProductDescription").value="";$("meeshoProductImages").value="";
-$("meeshoImagePreview").innerHTML="";$("meeshoManualFields").classList.add("hidden");
-$("meeshoStatus").textContent="";
-await loadData();renderAdmin();toast("Product added successfully");
-}catch(e){console.error(e);toast("Product upload failed: "+e.message)}
-finally{const b=$("meeshoSaveButton");if(b)b.disabled=false}
-}
-
-function previewCategoryImage(input,id){
-const f=input.files?.[0],p=$(id);
-if(!f){p.style.display="none";return}
-if(!f.type.startsWith("image/")){toast("Please select an image file");input.value="";p.style.display="none";return}
-if(f.size>5*1024*1024){toast("Image must be smaller than 5 MB");input.value="";p.style.display="none";return}
-const reader=new FileReader();reader.onload=()=>{p.src=reader.result;p.style.display="block"};reader.onerror=()=>toast("Could not read image");reader.readAsDataURL(f);
-}
-async function compressImage(file){
-if(!file.type.startsWith("image/"))throw Error("Select a valid image");
-if(file.size>5*1024*1024)throw Error("Image must be under 5 MB");
-const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error("Image read failed"));reader.readAsDataURL(file)});
-const img=await new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(Error("Invalid image"));image.src=data});
-const canvas=document.createElement("canvas"),max=600,scale=Math.min(1,max/Math.max(img.width,img.height));
-canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
-canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
-const result=canvas.toDataURL("image/jpeg",0.65);
-if(result.length>850000)throw Error("Image is too large after compression. Please use a smaller image or URL.");
-return result;
-}
-async function addCategory(e){
-e.preventDefault();if(!isAdminUser()){toast("Admin login required");return}
-const name=$("newCategoryName").value.trim(),url=$("newCategoryImageUrl").value.trim(),file=$("newCategoryImageFile").files[0];
-if(!name){toast("Enter category name");return}
-if(categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){toast("This category already exists");return}
-if(!url&&!file){toast("Add a photo URL or upload a photo");return}
-try{$("addCategoryButton").disabled=true;const imageUrl=file?await compressImage(file):url;await addDoc(collection(db,"categories"),{name,imageUrl,createdAt:serverTimestamp()});$("addCategoryForm").reset();$("categoryPreview").style.display="none";await loadData();renderAdmin();toast("Category added successfully")}
-catch(e){console.error(e);toast("Category error: "+e.message)}
-finally{$("addCategoryButton").disabled=false}
-}
-function renderAdminCategories(){
-const b=$("adminCategories");if(!b)return;
-b.innerHTML=categories.map(c=>`<div class="admin-card"><div class="row"><img class="category-admin-img" src="${safeText(c.imageUrl||"https://placehold.co/150x100")}" alt="${safeText(c.name)}"><div><b>${safeText(c.name)}</b><p class="small">Category ID: ${safeText(c.id)}</p></div></div><button onclick="editCategory('${safeText(c.id)}')">Edit</button><button class="delete-btn" onclick="deleteCategory('${safeText(c.id)}')">Delete</button></div>`).join("")||"<p>No categories added yet.</p>";
-}
-async function editCategory(id){
-if(!isAdminUser()){toast("Admin login required");return}
-const c=categories.find(x=>x.id===id);if(!c)return;
-const n=prompt("Enter new category name:",c.name);if(n===null)return;
-const name=n.trim();if(!name){toast("Category name cannot be empty");return}
-const url=prompt("Enter new photo URL. Leave blank to keep existing photo:",c.imageUrl||"");if(url===null)return;
-if(categories.some(x=>x.id!==id&&x.name.toLowerCase()===name.toLowerCase())){toast("This category name already exists");return}
-try{const data={name};if(url.trim())data.imageUrl=url.trim();await updateDoc(doc(db,"categories",id),data);await loadData();renderAdmin();toast("Category updated")}
-catch(e){toast("Update failed: "+e.message)}
-}
-async function deleteCategory(id){
-if(!isAdminUser()){toast("Admin login required");return}
-const c=categories.find(x=>x.id===id);if(!c)return;
-const used=products.some(p=>p.category===c.name);
-if(!confirm(used?"Products use this category. They will become uncategorized. Continue?":"Permanently delete category "+c.name+"?"))return;
-try{await deleteDoc(doc(db,"categories",id));await loadData();renderAdmin();toast("Category deleted")}
-catch(e){toast("Delete failed: "+e.message)}
-}
-async function addProduct(e){
-e.preventDefault();if(!isAdminUser()){toast("Admin login required");return}
-try{
-const name=$("newProductName").value.trim(),price=Number($("newProductPrice").value),category=$("newProductCategory").value,image=$("newProductImage").value.trim();
-const images=$("newProductImages").value.split(",").map(x=>x.trim()).filter(Boolean),description=$("newProductDescription").value.trim();
-if(!name||!Number.isFinite(price)||price<0||!image||!category){toast("Enter valid product details and select a category");return}
-await addDoc(collection(db,"products"),{name,price,category,image,images:[image,...images].slice(0,5),description,createdAt:serverTimestamp()});
-$("addProductForm").reset();await loadData();renderAdmin();toast("Product added successfully");
-}catch(e){toast("Add product failed: "+e.message)}
-}
-async function deleteProduct(id){
-if(!isAdminUser())return;if(!confirm("Delete this product?"))return;
-try{await deleteDoc(doc(db,"products",id));await loadData();renderAdmin();toast("Product deleted")}
-catch(e){toast(e.message)}
-}
-async function savePaymentSettings(e){
-e.preventDefault();if(!isAdminUser()){toast("Admin login required");return}
-try{
-const data={upiId:$("adminUpiId").value.trim(),bankName:$("adminBankName").value.trim(),accountName:$("adminAccountName").value.trim(),accountNumber:$("adminAccountNumber").value.trim(),ifsc:$("adminIfsc").value.trim()};
-await setDoc(doc(db,"paymentSettings","main"),data);paymentSettings.main=data;toast("Payment settings saved");
-}catch(e){console.error(e);toast("Payment settings error: "+e.message)}
-}
-function filterOrders(s){if(!isAdminUser()){toast("Admin login required");return}activeOrderFilter=s;renderAdminOrdersList(s)}
-function renderAdminOrdersList(status="All"){
-if(!isAdminUser())return;const b=$("orderFilterResult");if(!b)return;
-const a=status==="All"?orders:orders.filter(o=>(o.status||"Pending")===status);
-b.innerHTML=`<h3>${safeText(status)} Orders (${a.length})</h3>${a.map(o=>`<div class="admin-card"><h3>Order #${safeText(o.id)}</h3><p><b>Customer:</b> ${safeText(o.customerName)}</p><p><b>Email:</b> ${safeText(o.customerEmail)}</p><p><b>Phone:</b> ${safeText(o.phone)}</p><p><b>Address:</b> ${safeText(o.address)}, ${safeText(o.city)} - ${safeText(o.pin)}</p><p><b>Payment:</b> ${safeText(o.paymentMethod)}</p><p><b>Payment Status:</b> ${safeText(o.paymentStatus)}</p><p><b>UTR:</b> ${safeText(o.utr||"Not provided")}</p><p><b>Total:</b> ${money(o.total)}</p><p><b>Order Status:</b> ${safeText(o.status||"Pending")}</p>${o.status==="Cancelled"&&o.remark?`<div class="remark-box"><b>Cancellation Remark:</b><p>${safeText(o.remark)}</p></div>`:""}<h4>Products</h4>${(o.items||[]).map(i=>`<p>${safeText(i.name)} × ${Number(i.qty||0)} — ${money(Number(i.price||0)*Number(i.qty||0))}</p>`).join("")}<label>Update Order Status</label><select id="status-${safeText(o.id)}">${ORDER_STATUSES.map(s=>`<option value="${s}" ${(o.status||"Pending")===s?"selected":""}>${s}</option>`).join("")}</select><button onclick="updateOrderStatus('${safeText(o.id)}')">Update Status</button>${["Delivered","Cancelled"].includes(o.status)?`<button class="delete-btn" onclick="deleteOrder('${safeText(o.id)}')">Delete ${safeText(o.status)} Order</button>`:""}</div>`).join("")||"<p>No orders found in this category.</p>"}`;
-}
-async function updateOrderStatus(id){
-if(!isAdminUser())return;
-try{const status=$("status-"+id).value,o=orders.find(x=>x.id===id);if(!o)return;let remark=o.remark||"";if(status==="Cancelled"){remark=prompt("Cancellation Remark (Optional):",o.remark||"");if(remark===null)return;remark=remark.trim()}await updateDoc(doc(db,"orders",id),{status,remark:status==="Cancelled"?remark:""});await loadData();renderAdmin();toast("Order status updated")}
-catch(e){console.error(e);toast("Update failed: "+e.message)}
-}
-async function deleteOrder(id){
-if(!isAdminUser())return;const o=orders.find(x=>x.id===id);if(!o)return;
-if(!["Delivered","Cancelled"].includes(o.status)){toast("Only Delivered and Cancelled orders can be deleted");return}
-if(!confirm("Permanently delete this "+o.status+" order?"))return;
-try{await deleteDoc(doc(db,"orders",id));orders=orders.filter(x=>x.id!==id);renderAdmin();toast("Order deleted successfully")}
-catch(e){toast("Delete failed: "+e.message)}
-}
-Object.assign(window,{
-showPage,changeLanguage,renderShop,openProduct,changeMainImage,addToCart,buyNow,toggleWishlist,changeQty,removeCart,updatePaymentInstructions,placeOrder,loginGoogle,logout,deleteProduct,updateOrderStatus,filterOrders,deleteOrder,selectCategory,clearCategoryFilter,previewCategoryImage,editCategory,deleteCategory,importMeeshoProduct,saveMeeshoProduct,previewMeeshoImages
-});
-
-async function initializeAuthentication(){
-try{
-await setPersistence(auth,browserLocalPersistence);
-const result=await getRedirectResult(auth);if(result?.user){currentUser=result.user;toast("Google Login Successful")}
-}catch(e){console.error("Google redirect result error:",e);toast("Google Login Error: "+(e.code||"unknown")+" - "+e.message)}
-onAuthStateChanged(auth,async user=>{
-currentUser=user;loginInProgress=false;updateAdminVisibility();
-if(!user){try{await signInAnonymously(auth)}catch(e){console.error("Anonymous auth error:",e);toast("Guest login failed: "+e.message)}return}
-try{await loadData();renderProfile();renderAdmin();updateAdminVisibility()}
-catch(e){console.error(e);toast("Account loading error: "+e.message)}
-});
-}
-saveCart();
-$("heroTitle").textContent=tr("welcome");$("heroText").textContent=tr("hero");$("shopNowButton").textContent=tr("shopNow");
-initializeAuthentication();
-</script>
-</body>
-</html>
+import{getAuth,onAuthStateChanged,signInWithPopup,signInWithRedirect,getRedirectResult,GoogleAuthProvider,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,collection,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,onSnapshot,query,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyC63VbzFeqTPgyMDweU5qsOxhLRN5xop6w",authDomain:"sudip-industry.firebaseapp.com",projectId:"sudip-industry",storageBucket:"sudip-industry.firebasestorage.app",messagingSenderId:"377224435101",appId:"1:377224435101:web:c5e152120dec1664070b74"};
+if(cfg.apiKey==="Padteyournewkey"){console.warn("Firebase API key placeholder not replaced: running without Firebase.")}else{
+const app=initializeApp(cfg);
+const auth=getAuth(app),fdb=getFirestore(app);
+const conv=d=>{if(!d)return d;const o={...d};if(o.createdAt&&o.createdAt.toDate)o.created=o.createdAt.toDate().toISOString();return o};
+const wrap=s=>({id:s.id,exists:s.exists(),data:()=>conv(s.data())});
+const wrapQ=s=>({docs:s.docs.map(wrap),empty:s.empty,size:s.size});
+const prep=d=>{const o={...d};if(o.createdAt==='__ts__')o.createdAt=serverTimestamp();return o};
+const dr=p=>doc(fdb,p);
+window.FB={db:{
+ doc:p=>({get:async()=>wrap(await getDoc(dr(p))),set:d=>setDoc(dr(p),prep(d)),update:d=>updateDoc(dr(p),d),delete:()=>deleteDoc(dr(p)),onSnapshot:(n,e)=>onSnapshot(dr(p),x=>n(wrap(x)),e)}),
+ collection:c=>({onSnapshot:(n,e)=>onSnapshot(collection(fdb,c),x=>n(wrapQ(x)),e),where:(f,op,v)=>({get:async()=>wrapQ(await getDocs(query(collection(fdb,c),where(f,op,v))))})})},
+ onAuth:cb=>onAuthStateChanged(auth,cb),signIn:async()=>{const pr=new GoogleAuthProvider();pr.setCustomParameters({prompt:'select_account'});try{return await signInWithPopup(auth,pr)}catch(e){if(e&&e.code==='auth/popup-blocked'){await signInWithRedirect(auth,pr);return}throw e}},signOut:()=>signOut(auth)};
+getRedirectResult(auth).catch(()=>{});
+dispatchEvent(new Event('fbready'));}
+</script></body></html>
