@@ -150,3 +150,70 @@ footer{text-align:center;padding:22px;background:white}
       <input id="customerName" required maxlength="100">
 
       <label>Mobile Number</label>
+      <input id="customerPhone" type="tel" required maxlength="15">
+
+      <label>Full Address</label>
+      <textarea id="customerAddress" required maxlength="500"></textarea>
+
+      <label>City / District</label>
+      <input id="customerCity" required>
+
+      <label>PIN Code</label>
+      <input id="customerPin" required maxlength="10">
+
+      <label>Payment Method</label>
+      <select id="paymentMethod" onchange="updatePaymentInstructions()">
+        <option value="COD">Cash on Delivery</option>
+        <option value="UPI">UPI Payment</option>
+        <option value="BANK">Bank Transfer</option>
+      </select>
+
+      <div id="paymentInstructions"></div>
+
+      <label>Transaction ID (for prepaid payments)</label>
+      <input id="utrInput" maxlength="100">
+
+      <div id="checkoutSummary"></div>
+      <button type="submit" id="placeOrderButton">Place Order</button>
+    </form>
+  </div>
+</section>
+
+<section id="orders" class="page">
+  <h2>My Orders</h2>
+  <div id="myOrders"></div>
+</section>
+
+<section id="profile" class="page">
+  <h2>My Account</h2>
+  <div id="profileContent" class="panel"></div>
+</section>
+
+<section id="admin" class="page">
+  <h2>Admin Dashboard</h2>
+  <div id="adminContent"></div>
+</section>
+
+</main>
+
+<footer>
+  <b>SUDIP INDUSTRY</b>
+  <p>DREAM • WORK • SUCCESS</p>
+  <p>Email: sudippramanick66@gmail.com</p>
+  <p>WhatsApp: +91 89819 88831</p>
+  <a href="https://wa.me/918981988831">Contact on WhatsApp</a>
+</footer>
+
+<div class="bottom-nav">
+  <button onclick="showPage('home')">⌂<br>Home</button>
+  <button onclick="showPage('shop')">▦<br>Shop</button>
+  <button onclick="showPage('wishlist')">♡<br>Wishlist</button>
+  <button onclick="showPage('cart')">🛒<br>Cart</button>
+  <button onclick="showPage('profile')">♙<br>Account</button>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+
+import {initializeApp} from "
