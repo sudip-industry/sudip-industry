@@ -224,12 +224,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
-  getAuth,GoogleAuthProvider,signInWithRedirect,getRedirectResult,
+  getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,
   signInAnonymously,onAuthStateChanged,signOut,setPersistence,
   browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// গ্লোবাল ফাংশনগুলো একদম শুরুতেই window-তে যুক্ত করা হলো যাতে কোনো বাটন ফেইল না করে
 Object.assign(window, {
   showPage,
   changeLanguage,
@@ -383,7 +382,7 @@ function toast(message){
   clearTimeout(toast.timer);
   toast.timer = setTimeout(() => {
     el.style.display = "none";
-  },3500);
+  },4000);
 }
 
 function money(value){
@@ -955,29 +954,45 @@ async function loginGoogle(){
     return;
   }
   if(loginInProgress){
-    toast("Google Login is already starting");
+    toast("Google Login is already in progress...");
     return;
   }
 
   try{
     loginInProgress = true;
-    toast("Redirecting to Google...");
-
     await setPersistence(auth,browserLocalPersistence);
 
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({prompt:"select_account"});
 
-    await signInWithRedirect(auth,provider);
+    // প্রথমে Popup দিয়ে চেষ্টা করবে (আধুনিক ব্রাউজারে সবচেয়ে নিরাপদ)
+    const result = await signInWithPopup(auth,provider);
+    if(result?.user){
+      currentUser = result.user;
+      toast("Google Login Successful!");
+    }
 
   }catch(error){
-    loginInProgress = false;
     console.error("Google Login Error:",error);
 
-    toast(
-      "Google Login Error: " +
-      error.code + " - " + error.message
-    );
+    // পপআপ ব্লক হলে Redirect-এ যাবে
+    if(error.code === "auth/popup-blocked"){
+      try{
+        toast("Popup blocked, redirecting to Google...");
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({prompt:"select_account"});
+        await signInWithRedirect(auth,provider);
+        return;
+      }catch(redirErr){
+        toast("Redirect Error: " + redirErr.message);
+      }
+    } else if(error.code === "auth/unauthorized-domain"){
+      toast("Domain not authorized! Add this domain in Firebase Console -> Authentication -> Settings -> Authorized domains.");
+    } else {
+      toast("Google Login Error: " + error.code + " - " + error.message);
+    }
+  } finally {
+    loginInProgress = false;
   }
 }
 
@@ -1717,11 +1732,6 @@ async function initializeAuthentication(){
 
   }catch(error){
     console.error("Google redirect result error:",error);
-
-    toast(
-      "Google Login Error: " +
-      (error.code || "unknown") + " - " + error.message
-    );
   }
 
   onAuthStateChanged(auth,async user => {
@@ -1733,7 +1743,6 @@ async function initializeAuthentication(){
         await signInAnonymously(auth);
       }catch(error){
         console.error("Anonymous auth error:",error);
-        toast("Guest login failed: " + error.message);
       }
       return;
     }
