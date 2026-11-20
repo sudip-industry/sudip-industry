@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +77,7 @@ footer{text-align:center;padding:22px;background:white}
 <button onclick="showPage('cart')">Cart (<span id="cartCount">0</span>)</button>
 <button onclick="showPage('orders')">My Orders</button>
 <button onclick="showPage('profile')">Account</button>
-<button onclick="showPage('admin')">Admin</button>
+<button id="adminNavButton" class="hidden" onclick="showPage('admin')">Admin</button>
 </nav>
 </header>
 
@@ -174,6 +175,30 @@ let selectedProduct=null,currentLanguage="en",activeOrderFilter="All",activeCate
 const $=id=>document.getElementById(id);
 const ORDER_STATUSES=["Pending","Confirmed","Processing","Shipped","Delivered","Cancelled","Return Requested","Returned"];
 
+/* Admin verification */
+function isAdminUser(){
+return !!(
+currentUser &&
+!currentUser.isAnonymous &&
+currentUser.email &&
+currentUser.email.toLowerCase()===ADMIN_EMAIL.toLowerCase() &&
+currentUser.emailVerified===true
+);
+}
+
+function updateAdminVisibility(){
+const button=$("adminNavButton");
+const allowed=isAdminUser();
+
+if(button){
+button.classList.toggle("hidden",!allowed);
+}
+
+if(!allowed && $("admin")?.classList.contains("active")){
+showPage("home");
+}
+}
+
 const translations={
 en:{welcome:"Welcome to SUDIP INDUSTRY",hero:"Shop your favourite products easily.",shopNow:"Shop Now",empty:"No products found",emptyCart:"Your cart is empty",orderSuccess:"Order placed successfully",productAdded:"Product added",addCart:"Add to Cart",buyNow:"Buy Now",remove:"Remove",total:"Total"},
 bn:{welcome:"SUDIP INDUSTRY-তে স্বাগতম",hero:"সহজেই আপনার পছন্দের পণ্য অর্ডার করুন।",shopNow:"এখনই কিনুন",empty:"কোনো পণ্য পাওয়া যায়নি",emptyCart:"কার্ট খালি",orderSuccess:"অর্ডার সফলভাবে দেওয়া হয়েছে",productAdded:"পণ্য যোগ হয়েছে",addCart:"কার্টে যোগ করুন",buyNow:"এখনই কিনুন",remove:"সরান",total:"মোট"},
@@ -210,6 +235,10 @@ $("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);
 }
 
 function showPage(page){
+if(page==="admin"&&!isAdminUser()){
+toast("Admin access denied");
+page="home";
+}
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 $(page)?.classList.add("active");
 if(page==="shop")renderShop();
@@ -246,11 +275,16 @@ wishlist=[];orders=[];
 if(currentUser&&!currentUser.isAnonymous){
 const ws=await getDocs(collection(db,"users",currentUser.uid,"wishlist"));
 wishlist=ws.docs.map(d=>d.id);
-const oq=currentUser.email===ADMIN_EMAIL?collection(db,"orders"):query(collection(db,"orders"),where("ownerUid","==",currentUser.uid));
+
+const oq=isAdminUser()
+?collection(db,"orders")
+:query(collection(db,"orders"),where("ownerUid","==",currentUser.uid));
+
 const os=await getDocs(oq);
 orders=os.docs.map(d=>({id:d.id,...d.data()}));
 }
 renderHome();renderShop();renderWishlist();renderOrders();saveCart();
+updateAdminVisibility();
 }catch(e){console.error(e);toast("Database error: "+e.message)}
 }
 
@@ -417,8 +451,11 @@ toast("Google Login Error: "+e.code+" - "+e.message);
 }
 
 async function logout(){
-try{await signOut(auth);currentUser=null;wishlist=[];orders=[];renderProfile();toast("Logged out")}
-catch(e){toast("Logout failed: "+e.message)}
+try{
+await signOut(auth);
+currentUser=null;wishlist=[];orders=[];
+updateAdminVisibility();renderProfile();toast("Logged out");
+}catch(e){toast("Logout failed: "+e.message)}
 }
 
 function renderProfile(){
@@ -446,8 +483,9 @@ ${(o.items||[]).map(i=>`<p>${safeText(i.name)} × ${i.qty} — ${money(i.price*i
 }
 
 function renderAdmin(){
-if(currentUser?.email!==ADMIN_EMAIL){
+if(!isAdminUser()){
 $("adminContent").innerHTML=`<p>Administrator login required.</p><button onclick="loginGoogle()">Login with Google</button>`;
+updateAdminVisibility();
 return;
 }
 $("adminContent").innerHTML=`
@@ -547,7 +585,7 @@ return result;
 
 async function addCategory(e){
 e.preventDefault();
-if(currentUser?.email!==ADMIN_EMAIL){toast("Admin login required");return}
+if(!isAdminUser()){toast("Admin login required");return}
 const name=$("newCategoryName").value.trim();
 const url=$("newCategoryImageUrl").value.trim();
 const file=$("newCategoryImageFile").files[0];
@@ -577,6 +615,7 @@ b.innerHTML=categories.map(c=>`
 }
 
 async function editCategory(id){
+if(!isAdminUser()){toast("Admin login required");return}
 const c=categories.find(x=>x.id===id);if(!c)return;
 const n=prompt("Enter new category name:",c.name);if(n===null)return;
 const name=n.trim();if(!name){toast("Category name cannot be empty");return}
@@ -591,6 +630,7 @@ await loadData();renderAdmin();toast("Category updated");
 }
 
 async function deleteCategory(id){
+if(!isAdminUser()){toast("Admin login required");return}
 const c=categories.find(x=>x.id===id);if(!c)return;
 const used=products.some(p=>p.category===c.name);
 if(!confirm(used?"Products use this category. They will become uncategorized. Continue?":"Permanently delete category "+c.name+"?"))return;
@@ -602,7 +642,7 @@ await loadData();renderAdmin();toast("Category deleted");
 
 async function addProduct(e){
 e.preventDefault();
-if(currentUser?.email!==ADMIN_EMAIL){toast("Admin login required");return}
+if(!isAdminUser()){toast("Admin login required");return}
 try{
 const name=$("newProductName").value.trim(),price=Number($("newProductPrice").value);
 const category=$("newProductCategory").value,image=$("newProductImage").value.trim();
@@ -615,14 +655,14 @@ $("addProductForm").reset();await loadData();renderAdmin();toast("Product added 
 }
 
 async function deleteProduct(id){
-if(currentUser?.email!==ADMIN_EMAIL)return;
+if(!isAdminUser())return;
 if(!confirm("Delete this product?"))return;
 try{await deleteDoc(doc(db,"products",id));await loadData();renderAdmin();toast("Product deleted")}
 catch(e){toast(e.message)}
 }
 
 async function savePaymentSettings(e){
-e.preventDefault();if(currentUser?.email!==ADMIN_EMAIL)return;
+e.preventDefault();if(!isAdminUser()){toast("Admin login required");return}
 try{
 const data={
 upiId:$("adminUpiId").value.trim(),
@@ -636,9 +676,13 @@ paymentSettings.main=data;toast("Payment settings saved");
 }catch(e){console.error(e);toast("Payment settings error: "+e.message)}
 }
 
-function filterOrders(s){activeOrderFilter=s;renderAdminOrdersList(s)}
+function filterOrders(s){
+if(!isAdminUser()){toast("Admin login required");return}
+activeOrderFilter=s;renderAdminOrdersList(s);
+}
 
 function renderAdminOrdersList(status="All"){
+if(!isAdminUser())return;
 const b=$("orderFilterResult");if(!b)return;
 const a=status==="All"?orders:orders.filter(o=>(o.status||"Pending")===status);
 b.innerHTML=`<h3>${safeText(status)} Orders (${a.length})</h3>
@@ -665,7 +709,7 @@ ${["Delivered","Cancelled"].includes(o.status)?`<button class="delete-btn" oncli
 }
 
 async function updateOrderStatus(id){
-if(currentUser?.email!==ADMIN_EMAIL)return;
+if(!isAdminUser())return;
 try{
 const status=$("status-"+id).value,o=orders.find(x=>x.id===id);if(!o)return;
 let remark=o.remark||"";
@@ -679,7 +723,7 @@ await loadData();renderAdmin();toast("Order status updated");
 }
 
 async function deleteOrder(id){
-if(currentUser?.email!==ADMIN_EMAIL)return;
+if(!isAdminUser())return;
 const o=orders.find(x=>x.id===id);if(!o)return;
 if(!["Delivered","Cancelled"].includes(o.status)){toast("Only Delivered and Cancelled orders can be deleted");return}
 if(!confirm("Permanently delete this "+o.status+" order?"))return;
@@ -705,15 +749,27 @@ if(result?.user){currentUser=result.user;toast("Google Login Successful")}
 console.error("Google redirect result error:",e);
 toast("Google Login Error: "+(e.code||"unknown")+" - "+e.message);
 }
+
 onAuthStateChanged(auth,async user=>{
-currentUser=user;loginInProgress=false;
+currentUser=user;
+loginInProgress=false;
+updateAdminVisibility();
+
 if(!user){
 try{await signInAnonymously(auth)}
 catch(e){console.error("Anonymous auth error:",e);toast("Guest login failed: "+e.message)}
 return;
 }
-try{await loadData();renderProfile();renderAdmin()}
-catch(e){console.error(e);toast("Account loading error: "+e.message)}
+
+try{
+await loadData();
+renderProfile();
+renderAdmin();
+updateAdminVisibility();
+}catch(e){
+console.error(e);
+toast("Account loading error: "+e.message);
+}
 });
 }
 
