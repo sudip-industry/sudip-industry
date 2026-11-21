@@ -97,7 +97,7 @@ const items=()=>{const r=[];for(const k of Object.keys(cart)){const[id,...s]=k.s
 const total=()=>items().reduce((a,x)=>a+x.p.price*x.q,0);
 const szTxt=x=>x.sz?` <span class="mut">(${esc(x.sz)})</span>`:'';
 function card(p){return `<div class="pc"><button class="hb" data-id="${esc(p.id)}" aria-label="Wishlist" onclick="toggleWL('${esc(p.id)}')">♡</button><a class="pi" href="#product-${esc(p.id)}" style="${bg(p)}">${disc(p)?`<span class="off">${disc(p)}% OFF</span>`:''}${p.sample?'<span class="smp">SAMPLE</span>':''}${safeImg(p.thumb)?`<img src="${safeImg(p.thumb)}" alt="${esc(p.name)}" loading="lazy">`:esc(p.icon||'📦')}</a><div class="pb"><a href="#product-${esc(p.id)}">${esc(p.name)}</a><div class="mut">${esc(cn(p.cat))}</div><div class="pr"><b>${inr(p.price)}</b>${disc(p)?`<s>${inr(p.mrp)}</s>`:''}</div><button class="btn s" ${p.stock>0?'':'disabled'} onclick="add('${esc(p.id)}')">${p.stock>0?'Add to Cart':'Out of Stock'}</button></div></div>`}
-function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#0b0f19;color:#fff;padding:10px 18px;border-radius:10px;z-index:50';document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#0b0f19;color:#fff;padding:10px 18px;border-radius:10px;z-index:50;max-width:92vw;text-align:center';document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 function add(id,go,sz){const p=P(id);if(!p||p.stock<1)return;sz=cl(sz);if(sz&&!(p.opts||[]).includes(sz))sz='';const k=sz?id+'~'+sz:id;cart[k]=Math.min((cart[k]||0)+1,p.stock);saveCart();go?location.hash='checkout':toast('Added to cart')}
 function qty(k,d){const p=P(k.split('~')[0]);cart[k]=(cart[k]||0)+d;if(cart[k]<=0)delete cart[k];else if(p&&cart[k]>p.stock)cart[k]=p.stock;saveCart();route()}
 function rm(k){delete cart[k];saveCart();route()}
@@ -292,7 +292,44 @@ function loginInit(){const f=$('#lf');if(!f)return;const em=$('#le'),signupField
 function profileView(){if(!curUser)return `<div class="w sec"><h1>My Profile</h1><p>Please sign in first.</p><a class="btn" href="#login">Sign in</a></div>`;return `<div class="w sec" style="max-width:560px"><h1>My Profile</h1><div class="box"><p><b>Login email</b><br>${esc(curUser.email||'Not available')}</p><p><b>Mobile number</b><br><span id="profilePhone">Loading…</span></p><p class="mut">Account UID: ${esc(curUser.uid)}</p></div><div class="bar" style="margin-top:16px"><button class="btn" id="profileLogout">Log out</button><button class="btn r" id="profileDelete">Delete account</button></div><p id="profileMsg" class="er"></p><p class="mut">Deleting your account removes your sign-in account. Existing order records may be retained for order, payment and legal records.</p></div>`}
 async function profileInit(){if(!curUser)return;const phone=$('#profilePhone'),msg=$('#profileMsg');try{const d=await db.doc('users/'+curUser.uid).get();phone.textContent=d.exists&&d.data().mobile?d.data().mobile:'Not saved'}catch(e){phone.textContent='Could not load mobile number'}$('#profileLogout').onclick=async()=>{try{await FB.signOut();location.hash='home';toast('Logged out')}catch(e){msg.textContent='Could not log out: '+(e.message||e)}};$('#profileDelete').onclick=async()=>{if(!confirm('Are you sure you want to permanently delete your sign-in account? This cannot be undone.'))return;let password='';if(curUser.providerData&&curUser.providerData.some(p=>p.providerId==='password')){password=prompt('For security, enter your account password to confirm deletion:');if(password===null)return}try{await FB.deleteAccount(password);location.hash='home';toast('Account deleted')}catch(e){msg.textContent='Account deletion failed: '+(e.code||e.message||'Please sign in again and retry.')}}}
 
-function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=false;let adminError='';if(u){if(String(u.email||'').trim().toLowerCase()!==ADMIN_EMAIL){adminError='Wrong administrator email: '+(u.email||'no email')}else{try{const a=await db.doc('admins/'+u.uid).get();if(!a.exists)adminError='Missing Firestore document: admins/'+u.uid;else if(!a.data()||a.data().active!==true)adminError='admins/'+u.uid+' must contain active: true (Boolean)';else isAdmin=true}catch(e){adminError='Cannot read admins/'+u.uid+': '+(e&&e.code?e.code:(e&&e.message?e.message:'unknown Firestore error'));console.error('SUDIP INDUSTRY admin check failed:',e)}}}authUI();subscribe();syncWL();if(u&&adminError){console.error('SUDIP INDUSTRY admin access:',adminError);toast('Admin check failed — '+adminError)}if(u&&location.hash==='#login')location.hash='#'+backTo;else softRoute()})}
+function boot(){
+ db=FB.db;
+ FB.onAuth(async u=>{
+  curUser=u;
+  uid=u?u.uid:null;
+  isAdmin=false;
+  let adminError='';
+  if(u){
+   if(String(u.email||'').trim().toLowerCase()!==ADMIN_EMAIL){
+    adminError='Wrong administrator email: '+(u.email||'no email');
+   }else{
+    try{
+     const a=await db.doc('admins/'+u.uid).get();
+     const d=a.exists?a.data():null;
+     if(!a.exists){
+      adminError='Missing Firestore document: admins/'+u.uid;
+     }else if(!d||(d.active!==true&&d.active!=='true')){
+      adminError='Data found: '+JSON.stringify(d)+' | Expected active: true';
+     }else{
+      isAdmin=true;
+     }
+    }catch(e){
+     adminError='Cannot read admins/'+u.uid+': '+(e&&e.code?e.code:(e&&e.message?e.message:'unknown Firestore error'));
+     console.error('SUDIP INDUSTRY admin check failed:',e);
+    }
+   }
+  }
+  authUI();
+  subscribe();
+  syncWL();
+  if(u&&adminError){
+   console.error('SUDIP INDUSTRY admin access:',adminError);
+   toast('Admin check failed — '+adminError);
+  }
+  if(u&&location.hash==='#login')location.hash='#'+backTo;
+  else softRoute();
+ });
+}
 window.FB?boot():addEventListener('fbready',boot);
 </script>
 <script type="module">
