@@ -55,7 +55,7 @@ table{width:100%;border-collapse:collapse}
 .gal{display:grid;gap:8px}.gal .mainimg{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}.thumbs{display:flex;gap:8px;overflow-x:auto}.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;flex:none}.thumbs img.on{border-color:var(--bl)}
 .pv{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pv div{position:relative}.pv img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--bd)}.pv button{position:absolute;top:-6px;right:-6px;border:0;border-radius:50%;width:24px;height:24px;background:var(--er);color:#fff;font-size:12px;cursor:pointer}.rth{width:44px;height:44px;object-fit:cover;border-radius:8px}
 .ob{margin-top:10px;padding-top:10px;border-top:1px dashed var(--bd)}.ob>div{margin:2px 0}.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--bl);color:#fff}.pill.c{background:var(--er)}
-</style><link rel="stylesheet" href="premium-theme.css"></head><body>
+</style></head><body>
 <header><div class="w hd"><a class="logo" href="#home"><i>S</i><span>SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></span></a>
 <nav><div class="nl" id="nl"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a><a class="admlink" style="display:none" href="#admin">Admin</a></div><button class="btn s" id="lg">Sign in</button><a class="cartb" href="#wishlist" aria-label="Wishlist">♡<b id="wc">0</b></a><a class="cartb" href="#cart" aria-label="Cart">🛒<b id="cc">0</b></a><button id="mb" aria-label="Menu">☰</button></nav></div></header>
 <main id="app"></main>
@@ -198,7 +198,17 @@ async function seedCats(){try{for(let i=0;i<CAT_DEFAULT.length;i++){const c=CAT_
 async function delP(id){if(confirm('Delete this product?'))try{await db.doc('products/'+id).delete();try{await db.doc('productImages/'+id).delete()}catch(x){}}catch(e){toast('Failed')}}
 async function seed(){try{for(const p of SEED){const{id,sample,...d}=p;await db.doc('products/'+id).set(d)}toast('Saved')}catch(e){toast('Failed')}}
 /* ---- admin orders ---- */
-const chk=o=>vOrder(o,o.ownerId)&&o.items.every(i=>{const p=P(i.id);return !p||p.price===i.price});
+/* chk(): admin-side order safety check.
+   Every item must (1) be structurally valid (vOrder), (2) refer to a product that EXISTS in the store,
+   (3) not be a SAMPLE placeholder, (4) have a sane integer quantity, and (5) match the product's CURRENT price.
+   Orders failing this show "FAILED CHECK" and cannot be confirmed / verified / fulfilled.
+   NOTE: this runs in the admin's browser only. It does NOT stop a customer from sending a fake price to Firestore.
+   Real server-side price + stock validation needs Cloud Functions (see FUTURE hook below). */
+const itemOK=i=>{const p=P(i.id);return !!p&&!p.sample&&Number.isInteger(i.qty)&&i.qty>0&&i.qty<=100&&typeof i.price=='number'&&p.price===i.price};
+const chk=o=>vOrder(o,o.ownerId)&&o.items.every(itemOK);
+/* FUTURE hook (Cloud Functions): an onCreate trigger on orders/{id} can re-read products/{pid}, recompute
+   total from real prices, check stock, then write e.g. {serverChecked:true} or set status 'Rejected'.
+   When that exists, chk() can additionally require o.serverChecked===true. */
 const GATED=['Confirmed','Shipped','Delivered'],payBlock=o=>o.payment==='Online QR'&&o.paymentStatus!=='Verified';
 const cntSt=s=>s=='All'?orders.length:orders.filter(o=>o.status==s).length;
 function aOrd(){return `<div class="bar"><input id="oq" placeholder="Search order ID, name, phone…" value="${esc(aOQ)}"></div><div class="tabs">${['All',...ST].map(s=>`<button class="btn s ${aOF==s?'on':''}" onclick="aOF='${s}';route(true)">${s} (${cntSt(s)})</button>`).join('')}</div><div id="ol">${ordList()}</div>`}
