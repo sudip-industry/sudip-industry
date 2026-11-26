@@ -70,7 +70,7 @@ const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
 const CAT_DEFAULT=[['electronics','Electronics','🎧'],['fashion','Fashion','👕'],['home','Home & Kitchen','🍳'],['beauty','Beauty & Personal Care','🧴'],['accessories','Accessories','⌚']];
 let CATS=CAT_DEFAULT.map((c,i)=>c.concat(['',i+1]));
 const PAYMENT_API='https://sudi-industry-payment.sudippramanick699.workers.dev';
-const CASHFREE_MODE='sandbox'; // Change to 'production' only after switching the Worker to Cashfree production API.
+const CASHFREE_MODE='production';
 const safeImg=u=>typeof u==='string'&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(u)?u:'';
 const cn=k=>(CATS.find(c=>c[0]==k)||[0,k])[1];
 const cl=s=>String(s||'').replace(/[^\p{L}\p{N} .+\/()-]/gu,'').trim().slice(0,30);
@@ -329,7 +329,7 @@ async function saveSt(id){const o=orders.find(x=>x.id==id);if(!o||!chk(o))return
 async function delO(id){if(!confirm('Delete this order permanently? This cannot be undone.'))return;try{await db.doc('orders/'+id).delete();toast('Order deleted')}catch(e){toast('Delete failed')}}
 const aMsg=()=>msgs.length?msgs.map(m=>`<div class="box" style="margin-bottom:10px"><b>${esc(m.name)}</b> · ${esc(m.contact)}<br>${esc(m.msg)}<div class="mut">${esc(dtKey(m)?new Date(dtKey(m)).toLocaleString('en-IN'):'')}</div></div>`).join(''):'<p>No messages yet.</p>';
 const aSet=()=>`<div class="box"><label>WhatsApp number (with country code, e.g. 91XXXXXXXXXX)</label><input id="wa" value="${esc(settings.whatsapp)}"><br><br><button class="btn" onclick="saveSet()">Save</button></div>
-<div class="note"><b>Setup status</b><br>Database: ${db?'<span class="ok">connected</span>':'not connected'}<br>Payments: Cash on Delivery and Cashfree online payment (Sandbox mode). Verify Cashfree payments before confirming orders<br>Still to do: real products, WhatsApp number, policy review, business address (add only if you have one).</div>`;
+<div class="note"><b>Setup status</b><br>Database: ${db?'<span class="ok">connected</span>':'not connected'}<br>Payments: Cash on Delivery and Cashfree online payment (Production mode). Verify Cashfree payments before confirming orders<br>Still to do: real products, WhatsApp number, policy review, business address (add only if you have one).</div>`;
 async function saveSet(){try{await db.doc('settings/store').set({whatsapp:$('#wa').value.replace(/\D/g,'')});toast('Saved')}catch(e){toast('Failed')}}
 /* ---------- EMPLOYEE, SIS & SALARY ---------- */
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
