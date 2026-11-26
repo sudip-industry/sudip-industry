@@ -225,7 +225,6 @@ async function sisRegistrationInit(){
  if(!db){status.textContent='Firebase is not connected. Refresh the website and try again.';return}
  status.textContent='Checking your account…';
  try{
-  // Use the role already resolved by the Firebase auth listener; verify the matching profile only.
   let isEmp=!!isEmployee,isMgr=!!isManager;
   if(!isEmp&&!isMgr){
    const email=String(curUser.email||'').trim().toLowerCase();
@@ -323,7 +322,7 @@ function oCard(o){const ok=chk(o),qr=o.payment==='Online QR',dup=qr?orders.filte
 <div class="ob"><label style="margin-top:0">Order status</label><select id="s_${id}" ${ok?'':'disabled'} onchange="stUI('${id}')">${ST.map(s=>`<option ${o.status==s?'selected':''} ${payBlock(o)&&GATED.includes(s)?'disabled':''}>${s}</option>`).join('')}</select>
 <div id="c_${id}" style="display:${['Shipped','In Transit','Out for Delivery','Delivered'].includes(o.status)?'block':'none'}"><label>Courier name</label><input id="cr_${id}" maxlength="60" value="${esc(o.courier||'')}"><label>Tracking number</label><input id="tr_${id}" maxlength="60" value="${esc(o.tracking||'')}"><label>Tracking URL</label><input id="tu_${id}" type="url" maxlength="500" value="${esc(o.trackingUrl||'')}"></div><label>Expected delivery date</label><input id="ed_${id}" type="date" value="${esc(o.expectedDelivery||'')}">
 <div id="r_${id}" style="display:${o.status=='Cancelled'?'block':'none'}"><label>Cancel remarks <span class="mut">(optional, customer will see this)</span></label><textarea id="rm_${id}" rows="2" maxlength="300">${esc(o.remarks||'')}</textarea></div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">${ok?`<button class="btn s" onclick="saveSt('${id}')">Save status</button>`:''}<button class="btn s r" onclick="delO('${id}')">Delete order</button></div>${o.status==='Cancelled'&&['Cashfree','Online QR'].includes(o.payment)&&o.paymentStatus==='Verified'?`<hr><h4>Online payment refund</h4><label>Expected refund date &amp; time</label><input type="datetime-local" id="refundDate_${id}" value="${esc(o.refundExpectedAt||'')}"><label>Refund status</label><select id="refundStatus_${id}"><option value="Pending" ${(o.refundStatus||'Pending')==='Pending'?'selected':''}>Pending</option><option value="Refunded" ${o.refundStatus==='Refunded'?'selected':''}>Refunded</option></select><button class="btn s" style="margin-top:8px" onclick="saveRefund('${id}')">Save refund update</button>`:''}</div></div>`}
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">${ok?`<button class="btn s" onclick="saveSt('${id}')">Save status</button>`:''}<button class="btn s" onclick="downloadShippingLabel('${id}')">Download Shipping Label (4×6)</button><button class="btn s r" onclick="delO('${id}')">Delete order</button></div>${o.status==='Cancelled'&&['Cashfree','Online QR'].includes(o.payment)&&o.paymentStatus==='Verified'?`<hr><h4>Online payment refund</h4><label>Expected refund date &amp; time</label><input type="datetime-local" id="refundDate_${id}" value="${esc(o.refundExpectedAt||'')}"><label>Refund status</label><select id="refundStatus_${id}"><option value="Pending" ${(o.refundStatus||'Pending')==='Pending'?'selected':''}>Pending</option><option value="Refunded" ${o.refundStatus==='Refunded'?'selected':''}>Refunded</option></select><button class="btn s" style="margin-top:8px" onclick="saveRefund('${id}')">Save refund update</button>`:''}</div></div>`}
 function stUI(id){const v=$('#s_'+id).value;$('#r_'+id).style.display=v=='Cancelled'?'block':'none';$('#c_'+id).style.display=['Shipped','In Transit','Out for Delivery','Delivered'].includes(v)?'block':'none'}
 async function verifyPay(id){const o=orders.find(x=>x.id==id);if(!o||!chk(o)||o.payment!=='Online QR')return;if(!confirm('Confirm that you checked your bank account and received '+inr(o.total)+' for UTR '+o.utr+'?'))return;try{await db.doc('orders/'+id).update({paymentStatus:'Verified'});toast('Payment marked Verified')}catch(e){toast('Failed')}}
 async function saveSt(id){const o=orders.find(x=>x.id==id);if(!o||!chk(o))return;const st=$('#s_'+id).value;if(payBlock(o)&&GATED.includes(st)){toast('Verify the payment first');route(true);return}
@@ -334,7 +333,41 @@ async function saveSt(id){const o=orders.find(x=>x.id==id);if(!o||!chk(o))return
  try{if(GATED.includes(st)&&!o.stockAdjusted){for(const i of o.items){const p=P(i.id);if(p&&!p.sample)await db.doc('products/'+i.id).update({stock:Math.max(0,p.stock-i.qty)})}u.stockAdjusted=true}
   else if(st=='Cancelled'&&o.stockAdjusted){for(const i of o.items){const p=P(i.id);if(p&&!p.sample)await db.doc('products/'+i.id).update({stock:p.stock+i.qty})}u.stockAdjusted=false}
   await db.doc('orders/'+id).update(u);toast('Updated')}catch(e){toast('Failed')}}
-async function saveRefund(id){if(!isAdmin)return;const o=orders.find(x=>x.id===id);if(!o||o.status!=='Cancelled'||!['Cashfree','Online QR'].includes(o.payment)||o.paymentStatus!=='Verified')return toast('Refund update is only for cancelled, paid online orders');const expected=$('#refundDate_'+id).value,status=$('#refundStatus_'+id).value;if(!['Pending','Refunded'].includes(status))return toast('Invalid refund status');if(expected&&!/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$/.test(expected))return toast('Enter a valid expected date and time');if(status==='Refunded'&&!confirm('Have you actually sent the refund to the customer?'))return;try{await db.doc('orders/'+id).update({refundStatus:status,refundExpectedAt:expected,refundUpdatedAt:new Date().toISOString()});toast('Refund information updated');route(true)}catch(e){toast('Refund update failed: '+e.message)}}
+async function saveRefund(id){if(!isAdmin)return;const o=orders.find(x=>x.id===id);if(!o||o.status!=='Cancelled'||!['Cashfree','Online QR'].includes(o.payment)||o.paymentStatus!=='Verified')return toast('Refund update is only for cancelled, paid online orders');const expected=$('#refundDate_'+id).value,status=$('#refundStatus_'+id).value;if(!['Pending','Refunded'].includes(status))return toast('Invalid refund status');if(expected&&!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(expected))return toast('Enter a valid expected date and time');if(status==='Refunded'&&!confirm('Have you actually sent the refund to the customer?'))return;try{await db.doc('orders/'+id).update({refundStatus:status,refundExpectedAt:expected,refundUpdatedAt:new Date().toISOString()});toast('Refund information updated');route(true)}catch(e){toast('Refund update failed: '+e.message)}}
+async function downloadShippingLabel(id){
+ if(!isAdmin)return toast('Admin access required');
+ const o=orders.find(x=>x.id===id);if(!o||!chk(o))return toast('Order data could not be verified');
+ try{
+  if(!window.jspdf?.jsPDF){await new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js';sc.onload=resolve;sc.onerror=()=>reject(new Error('PDF library could not load'));document.head.appendChild(sc)})}
+  const {jsPDF}=window.jspdf,doc=new jsPDF({orientation:'portrait',unit:'pt',format:[288,432]});
+  const W=288,margin=18;let y=24;
+  doc.setFillColor(11,15,25);doc.rect(0,0,W,66,'F');
+  doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(17);doc.text('SUDIP INDUSTRY',margin,27);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('BRANDED SHIPPING LABEL',margin,42);doc.setFontSize(8);doc.text('ORDER DISPATCH',W-margin,55,{align:'right'});
+  y=83;doc.setTextColor(15,23,42);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('SHIP TO',margin,y);y+=15;
+  doc.setFontSize(13);const nameLines=doc.splitTextToSize(String(o.name||'Customer'),W-2*margin);doc.text(nameLines,margin,y);y+=nameLines.length*15;
+  doc.setFont('helvetica','normal');doc.setFontSize(9);
+  const address=[o.address,o.pin?'PIN: '+o.pin:'',o.phone?'Mobile: '+o.phone:''].filter(Boolean).join(', ');
+  const addrLines=doc.splitTextToSize(address,W-2*margin);doc.text(addrLines,margin,y);y+=addrLines.length*12+10;
+  doc.setDrawColor(160,170,185);doc.line(margin,y,W-margin,y);y+=16;
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('ORDER DETAILS',margin,y);y+=14;
+  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('Order ID: '+String(o.id),margin,y);y+=12;
+  const created=o.createdAt?.toDate?o.createdAt.toDate():new Date(o.createdAt||Date.now());doc.text('Order Date: '+(isNaN(created.getTime())?'':created.toLocaleDateString('en-IN')),margin,y);y+=16;
+  doc.setFont('helvetica','bold');doc.text('PRODUCT',margin,y);doc.text('QTY',W-margin,y,{align:'right'});y+=5;doc.line(margin,y,W-margin,y);y+=12;
+  doc.setFont('helvetica','normal');
+  for(const item of (o.items||[])){
+   const title=String(item.name||item.title||P(item.id)?.name||'Product');const lines=doc.splitTextToSize(title,W-2*margin-42);
+   if(y+lines.length*10>335){doc.addPage([288,432]);y=25;}
+   doc.text(lines,margin,y);doc.text(String(item.qty||1),W-margin,y,{align:'right'});y+=lines.length*10+7;
+  }
+  y+=5;doc.line(margin,y,W-margin,y);y+=16;
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('PAYMENT: '+String(o.payment||'').toUpperCase(),margin,y);y+=16;
+  if(o.payment==='Cash on Delivery'||o.payment==='Cash on Delivery'.replace('Cash on Delivery','Cash on Delivery')){doc.setFontSize(12);doc.text('COLLECT: '+inr(o.total),margin,y);y+=17}
+  else{doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('Payment status: '+String(o.paymentStatus||'Pending'),margin,y);y+=14}
+  doc.setDrawColor(160,170,185);doc.line(margin,390,W-margin,390);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('Thank you for choosing SUDIP INDUSTRY',W/2,407,{align:'center'});doc.setFont('helvetica','normal');doc.text('Order ID: '+String(o.id),W/2,420,{align:'center'});
+  doc.save('SUDIP-INDUSTRY-Shipping-Label-'+String(o.id)+'.pdf');
+ }catch(e){toast('Label download failed: '+e.message)}
+}
 async function delO(id){if(!confirm('Delete this order permanently? This cannot be undone.'))return;try{await db.doc('orders/'+id).delete();toast('Order deleted')}catch(e){toast('Delete failed')}}
 const aMsg=()=>msgs.length?msgs.map(m=>`<div class="box" style="margin-bottom:10px"><b>${esc(m.name)}</b> · ${esc(m.contact)}<br>${esc(m.msg)}<div class="mut">${esc(dtKey(m)?new Date(dtKey(m)).toLocaleString('en-IN'):'')}</div></div>`).join(''):'<p>No messages yet.</p>';
 const aSet=()=>`<div class="box"><label>WhatsApp number (with country code, e.g. 91XXXXXXXXXX)</label><input id="wa" value="${esc(settings.whatsapp)}"><label style="margin-top:16px"><input type="checkbox" id="separatePricing" style="width:auto" ${settings.separatePricing===true?'checked':''}> Enable Separate COD & Online Pricing</label><p class="mut">OFF: existing product price is used for both methods. ON: enter Online Price and COD Price in each product. Existing prices remain unchanged.</p><br><button class="btn" onclick="saveSet()">Save</button></div>
@@ -435,7 +468,6 @@ function profileInit(){if(!curUser)return;const f=$('#pf');if(f)f.onsubmit=async
 async function claimManagerByEmail(u){if(!u||!u.email||isAdmin)return;const email=String(u.email).trim().toLowerCase();try{const ref=db.doc('managers/'+email),sn=await ref.get();if(!sn.exists||sn.data().active!==true)return;const x=sn.data();if(x.linkedUid&&x.linkedUid!==u.uid){console.warn('Manager invite is already linked to another UID');return}if(x.linkedUid!==u.uid)await ref.update({linkedUid:u.uid,linkedAt:new Date().toISOString()})}catch(e){console.warn('Manager UID linking failed',e)}}
 async function claimEmployeeByEmail(u){if(!u||!u.email||isAdmin)return;const email=String(u.email).trim().toLowerCase();try{const invite=await db.doc('employeesByEmail/'+email).get();if(!invite.exists||invite.data().status!=='Active')return;const x=invite.data(),profile=await db.doc('employees/'+u.uid).get();if(!profile.exists)await db.doc('employees/'+u.uid).set({uid:u.uid,email,name:x.name||u.displayName||'Employee',phone:x.phone||'',department:x.department||'',designation:x.designation||'',status:x.status||'Active',updatedAt:new Date().toISOString()});if(x.linkedUid!==u.uid)await db.doc('employeesByEmail/'+email).update({linkedUid:u.uid,linkedAt:new Date().toISOString()})}catch(e){console.warn('Employee email linking failed',e)}}
 function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=false;isManager=false;isEmployee=false;if(u&&String(u.email||'').toLowerCase()===ADMIN_EMAIL){try{const ad=await db.doc('admins/'+u.uid).get();isAdmin=!!(ad.exists&&ad.data()?.active===true)}catch(e){}}if(u&&!isAdmin&&u.email){
-  // Link an Admin-approved Manager invitation to this Firebase Auth UID on first sign-in.
   await claimManagerByEmail(u);
   try{const md=await db.doc('managers/'+String(u.email).trim().toLowerCase()).get();const mx=md.exists?md.data():{};isManager=!!(mx.active===true&&(!mx.linkedUid||mx.linkedUid===u.uid))}catch(e){console.warn('Manager account check failed',e)}
   await claimEmployeeByEmail(u);
