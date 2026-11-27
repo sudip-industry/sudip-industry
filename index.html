@@ -55,6 +55,77 @@ table{width:100%;border-collapse:collapse}
 .gal{display:grid;gap:8px}.gal .mainimg{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}.thumbs{display:flex;gap:8px;overflow-x:auto}.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;flex:none}.thumbs img.on{border-color:var(--bl)}
 .pv{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pv div{position:relative}.pv img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--bd)}.pv button{position:absolute;top:-6px;right:-6px;border:0;border-radius:50%;width:24px;height:24px;background:var(--er);color:#fff;font-size:12px;cursor:pointer}.rth{width:44px;height:44px;object-fit:cover;border-radius:8px}
 .ob{margin-top:10px;padding-top:10px;border-top:1px dashed var(--bd)}.ob>div{margin:2px 0}.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--bl);color:#fff}.pill.c{background:var(--er)}
+</style><style id="si-new-design">
+:root{--r:12px}
+body{background:var(--bg2)}
+.w{padding:0 12px}
+.sec{padding-top:14px;padding-bottom:14px}.sec h1{font-size:21px}.sec h2{font-size:18px}
+.btn{border-radius:var(--r);min-height:42px}.btn.s{min-height:34px}
+.sq{display:none;padding:0 12px 10px;max-width:1140px;margin:0 auto}.sq input{border:0;border-radius:99px;padding:11px 18px;background:#fff;color:#0f172a}
+body[data-page="home"] .sq,body[data-page="product"] .sq{display:block}
+@media(max-width:480px){.hd{gap:6px}.logo{gap:7px;white-space:nowrap;font-size:13px;letter-spacing:.02em}.logo small{font-size:7px;letter-spacing:.08em}nav{gap:0}nav a{padding:8px 7px}#lg{white-space:nowrap;padding:6px 9px;font-size:12px}#mb{padding:4px}}
+/* home */
+.hero{margin:12px;border-radius:18px;padding:24px 4px;background:linear-gradient(120deg,#1d4ed8,#0b0f19)}
+.hero h1{font-size:clamp(22px,5vw,40px)}.hero p{font-size:15px}.hero .btn{background:#fbbf24;color:#111827}
+body[data-page="home"] #app>.sec{background:var(--card);margin-bottom:8px}
+body[data-page="home"] #app>.sec:nth-of-type(1) .grid{display:flex;overflow-x:auto;gap:12px;padding-bottom:6px}
+.cat{flex:0 0 82px;background:none;border:0;padding:0;font-size:12px;line-height:1.3}
+.cat span,.cat .ci{width:68px;height:68px;margin:0 auto 6px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-size:30px;border:2px solid var(--bd)}
+/* product list */
+.grid{gap:12px}
+@media(max-width:480px){.grid{gap:8px}}
+.pc{border-radius:var(--r)}.pb{padding:9px;gap:3px}.pb>a{font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em}
+.pb .mut{font-size:12px}.pb .btn{margin-top:auto;background:transparent;color:var(--bl);border:1px solid var(--bl)}
+.off{background:#fbbf24;color:#111827}
+body[data-page="shop"] .bar{position:sticky;top:calc(60px + env(safe-area-inset-top,0px));z-index:10;background:var(--bg2);padding:8px 0;gap:8px;margin-bottom:8px}
+body[data-page="shop"] .bar select{flex:1 1 90px;min-width:0;font-size:13px;padding:8px}
+/* product page, cart, checkout, orders */
+body[data-page="product"] .two>div:last-child,body[data-page="cart"] .row,body[data-page="cart"] .tot,#cf,.two>.box,#mo>div,#dn{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px}
+body[data-page="cart"] .row{margin-bottom:8px;display:grid;grid-template-columns:auto 1fr auto;gap:10px}
+body[data-page="cart"] .row>b{grid-column:1/3;text-align:left}body[data-page="cart"] .row>.btn{grid-column:3;justify-self:end}
+body[data-page="cart"] .sec>a.btn,body[data-page="product"] .bar .btn{width:100%;text-align:center}
+body[data-page="product"] .bar .btn{flex:1;width:auto}
+.si-steps{display:flex;gap:6px;margin:0 0 12px;padding:0;list-style:none;counter-reset:s}
+.si-steps li{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--mut);border-top:4px solid var(--bd);padding-top:6px}
+.si-steps li.on{color:var(--bl);border-color:var(--bl)}
+#cf .box{background:none;border:0;padding:0}
+#cf .box>label{border:2px solid var(--bd);border-radius:var(--r);padding:13px;margin:8px 0 4px!important;cursor:pointer}
+#cf .box>label:has(input:checked){border-color:var(--bl);background:var(--bg2)}
+#cf .box>p{margin:0 0 10px 4px!important}
+#cf .box>label{display:flex;align-items:center;gap:10px}#cf .box>label>span{flex:1}
+.si-save{display:block;color:var(--ok);font-size:13px;font-weight:700}
+.si-det{margin:12px 0;border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px}.si-det summary{font-weight:700;cursor:pointer}.si-det div{display:flex;justify-content:space-between;margin-top:6px;font-size:14px}
+.si-pay{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;gap:12px;background:var(--card);border-top:1px solid var(--bd);margin:12px -14px -14px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));border-radius:0 0 var(--r) var(--r)}
+.si-pay>div{min-width:105px}.si-pay b{display:block;font-size:20px}.si-pay small{font-size:11px;color:var(--mut);display:block;line-height:1.3}.si-pay .btn{flex:1;width:auto!important;padding-left:8px;padding-right:8px}
+@media(max-width:760px){body[data-page="checkout"] .two>.box{order:-1}.two{gap:12px}}
+#deliveryQuoteMsg{background:var(--bg2);border-radius:8px;padding:8px 10px}
+/* simpler for customers */
+#cf .box>p,#deliveryChargeLine,body[data-page="cart"] .sec>p.mut{display:none}
+@media(max-width:480px){.hero p{display:none}.hero h1{margin:8px 0 14px}}
+/* my orders */
+#mo>div>ul{height:0;overflow:hidden;margin:2px 0;padding:0}#mo{overflow-wrap:anywhere}
+.si-top{display:block;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.si-st{font-size:18px;font-weight:800}.si-st.c{color:var(--er)}.si-st.d{color:var(--ok)}
+.si-eta{background:var(--bg2);border-radius:8px;padding:8px 10px;margin:6px 0;font-weight:600;font-size:14px}
+.si-it{display:flex;gap:12px;align-items:center;margin-top:8px;color:var(--tx);text-decoration:none}
+.si-ph{flex:none;width:76px;height:76px;border-radius:10px;background:var(--bg2);display:grid;place-items:center;font-size:36px;object-fit:cover}
+.si-it small{display:block;color:var(--mut)}
+#mo ol{list-style:none;padding-left:0!important}
+#mo ol li{position:relative;padding:0 0 12px 24px;margin:0!important}
+#mo ol li::before{content:"";position:absolute;left:3px;top:6px;width:11px;height:11px;border-radius:50%;background:currentColor}
+#mo ol li:not(:last-child)::after{content:"";position:absolute;left:8px;top:19px;bottom:-4px;width:2px;background:var(--bd)}
+#mo ol small{display:block;color:var(--mut)}
+#mo input{margin-bottom:6px}#mo .btn.s{width:100%}
+/* bottom bar */
+.bn{display:none}
+@media(max-width:760px){
+.bn{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bn a{display:flex;flex-direction:column;align-items:center;padding:7px 0;font-size:11px;font-weight:600;text-decoration:none;color:var(--mut)}.bn a span{font-size:20px;line-height:1.2}.bn a.on{color:var(--bl)}
+body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px))}
+body>div[style*="position:fixed"]{bottom:calc(76px + env(safe-area-inset-bottom,0px))!important}
+body[data-page="checkout"] .bn,body[data-page="admin"] .bn{display:none}
+body[data-page="checkout"],body[data-page="admin"]{padding-bottom:0}
+}
 </style><script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script></head><body>
 <header><div class="w hd"><a class="logo" href="#home"><i>S</i><span>SUDIP INDUSTRY<small>DREAM • WORK • SUCCESS</small></span></a>
 <nav><div class="nl" id="nl"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a><a id="profilelink" href="#profile" style="display:none">My Profile</a><a id="managerlink" href="#manager" style="display:none">Manager</a><a id="employeelink" href="#employee" style="display:none">Employee</a><a id="sisreglink" href="#sis-register" style="display:none">SIS Registration</a><a class="admlink" style="display:none" href="#admin">Admin</a></div><button class="btn s" id="lg">Sign in</button><a class="cartb" href="#wishlist" aria-label="Wishlist">♡<b id="wc">0</b></a><a class="cartb" href="#cart" aria-label="Cart">🛒<b id="cc">0</b></a><button id="mb" aria-label="Menu">☰</button></nav></div></header>
@@ -496,6 +567,45 @@ function boot(){db=FB.db;FB.onAuth(async u=>{curUser=u;uid=u?u.uid:null;isAdmin=
   try{const ep=await db.doc('employees/'+u.uid).get();isEmployee=!!(ep.exists&&ep.data()?.status==='Active')}catch(e){console.warn('Employee account check failed',e)}
  }authUI();subscribe();syncWL();const returnParams=new URLSearchParams(location.search),returnOrder=returnParams.get('order_id'),chargeOrder=returnParams.get('charge_order_id');if(returnParams.get('charge_return')==='1'&&/^SI[0-9A-F]{32}$/.test(chargeOrder||'')){history.replaceState(null,'',location.pathname+location.hash);try{const vr=await workerRequest('/verify-charge-payment',{chargeOrderId:chargeOrder});toast(vr.paymentStatus==='Verified'?'Payment verified. Request sent to Admin.':'Payment is not verified yet.');location.hash='#orders'}catch(e){toast('Charge verification failed: '+e.message);location.hash='#orders'}}else if(returnParams.get('cashfree_return')==='1'&&/^SI[0-9A-F]{32}$/.test(returnOrder||'')){history.replaceState(null,'',location.pathname+location.hash);location.hash='done-'+returnOrder}else if(u&&location.hash==='#login')location.hash='#'+backTo;else softRoute()})}
 window.FB?boot():addEventListener('fbready',boot);
+</script>
+<script id="si-new-design-js">
+(()=>{
+const q=document.createElement('form');q.className='sq';q.innerHTML='<input type="search" placeholder="Search products…" aria-label="Search products">';
+q.onsubmit=e=>{e.preventDefault();F={...F,q:q.firstChild.value.trim(),c:''};if(location.hash==='#shop')route();else location.hash='#shop'};
+document.querySelector('header').appendChild(q);
+const n=document.createElement('nav');n.className='bn';
+n.innerHTML=[['home','🏠','Home'],['shop','▦','Categories'],['orders','📦','Orders'],['profile','👤','Account']].map(x=>`<a href="#${x[0]}" data-k="${x[0]}"><span>${x[1]}</span>${x[2]}</a>`).join('');
+document.body.appendChild(n);
+n.querySelector('[data-k=profile]').onclick=e=>{if(!curUser){e.preventDefault();location.hash='#login'}};
+const steps=(el,i)=>{const u=document.createElement('ol');u.className='si-steps';u.innerHTML=['Cart','Address & Payment','Order'].map((t,k)=>`<li class="${k<=i?'on':''}">${t}</li>`).join('');el.prepend(u)};
+const mark=()=>{const k=(location.hash.slice(1)||'home').split('-')[0];if(document.body.dataset.page!==k)document.body.dataset.page=k;
+n.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.k===(k==='login'?'profile':k)));
+const s=app.querySelector('.sec'),i={cart:0,checkout:1,done:2}[k];if(s&&i!==undefined&&!s.querySelector('.si-steps')&&(k!=='cart'&&k!=='checkout'||items().length))steps(s,i)};
+const pay=()=>{const f=app.querySelector('#cf');if(!f||f.querySelector('.si-pay'))return;const b=f.querySelector('#pb');
+const d=document.createElement('details');d.className='si-det';d.innerHTML='<summary>Price details</summary><div><span>Products</span><span></span></div><div><span>Delivery charge</span><span></span></div><div><b>Total</b><b></b></div>';
+const bar=document.createElement('div');bar.className='si-pay';bar.innerHTML='<div><b></b><small></small></div>';
+b.before(d,bar);bar.appendChild(b);
+const save=document.createElement('span');save.className='si-save';f.querySelector('#onlinePriceLabel').appendChild(save);
+const draw=()=>{const online=f.pay.value==='cashfree',m=online?'cashfree':'cod',q=currentDeliveryQuote,fee=q?Number(online?q.paidDeliveryCharge:q.codDeliveryCharge):null,base=total(m),sum=base+(fee||0),v=d.querySelectorAll('div>:last-child');
+v[0].textContent=inr(base);v[1].textContent=q?inr(fee):'Enter PIN code';v[2].textContent=inr(sum);
+bar.querySelector('b').textContent=inr(sum);bar.querySelector('small').textContent=q?'Delivery included':'Delivery not added yet';
+const diff=q?Math.round((total('cod')+Number(q.codDeliveryCharge)-total('cashfree')-Number(q.paidDeliveryCharge))*100)/100:0;
+const label=f.querySelector('#onlinePriceLabel');if(!save.isConnected)label.appendChild(save);const t=diff>0?'You save '+inr(diff)+' by paying online':'';if(save.textContent!==t)save.textContent=t};
+let wait;const later=()=>{clearTimeout(wait);wait=setTimeout(draw,0)};
+f.addEventListener('change',later);f.addEventListener('input',later);
+const o=new MutationObserver(later);['#deliveryQuoteMsg','#deliveryChargeLine','#checkoutTotal','#onlinePriceLabel'].forEach(i=>{const e=app.querySelector(i);if(e)o.observe(e,{childList:true,characterData:true,subtree:true})});draw()};
+const day=v=>{const d=new Date(v&&v.toDate?v.toDate():/^\d{4}-\d\d-\d\d$/.test(v)?v+'T00:00:00':v);return !v||isNaN(d)?'':d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'})};
+const oldTrack=trackTxt;
+trackTxt=o=>{const done=o.status==='Delivered',off=o.status==='Cancelled';
+const eta=off?'':done?(day(o.deliveredAt)?'Delivered on '+day(o.deliveredAt):''):(day(o.expectedDelivery)?'Expected delivery: '+day(o.expectedDelivery):'Expected delivery date will be updated soon');
+const top=`<div class="si-top"><div class="si-st ${off?'c':done?'d':''}">${off?'Order Cancelled':done?'Delivered':'Order status: '+esc(o.status)}</div>${eta?`<div class="si-eta">${esc(eta)}</div>`:''}${o.items.map(i=>{const p=P(i.id),img=p&&safeImg(p.thumb);return `<a class="si-it" href="#product-${esc(i.id)}">${img?`<img class="si-ph" src="${img}" alt="">`:`<span class="si-ph">${esc(p&&p.icon||'📦')}</span>`}<span><b>${esc(i.name)}</b><small>${i.size?'Size: '+esc(i.size)+' · ':''}Qty: ${esc(i.qty)}</small><b>${inr(i.price)}</b></span></a>`}).join('')}</div>`;
+let t=oldTrack(o).replace(/<div><b>Estimated delivery:<\/b>[^<]*<\/div>/,'');for(const h of Array.isArray(o.statusHistory)?o.statusHistory:[]){const k=`<b>${esc(h.status)}</b>`;if(TRACK_STEPS.includes(h.status)&&day(h.at))t=t.replace(new RegExp(k+'( · Current)?(<small>[^<]*</small>)?(?=</li>)'),(m,c)=>k+(c||'')+`<small>${esc(day(h.at))}</small>`)}
+const sum=o.items.reduce((a,i)=>a+i.price*i.qty,0);
+return top+t+`<details class="si-det"><summary>Price details</summary><div><span>Products</span><span>${inr(sum)}</span></div><div><span>Delivery charge</span><span>${inr(o.deliveryCharge||0)}</span></div><div><b>Total</b><b>${inr(o.total)}</b></div></details><details class="si-det"><summary>Delivery address</summary><p>${esc(o.name)}<br>${esc(o.address)}<br>PIN ${esc(o.pin)}<br>Phone ${esc(o.phone)}</p></details>`};
+new MutationObserver(()=>app.querySelectorAll('#mo>div>.si-top').forEach(e=>{if(e.parentNode.firstChild!==e)e.parentNode.prepend(e)})).observe(app,{childList:true,subtree:true});
+new MutationObserver(pay).observe(app,{childList:true});pay();
+new MutationObserver(mark).observe(app,{childList:true});addEventListener('hashchange',mark);mark();
+})();
 </script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
