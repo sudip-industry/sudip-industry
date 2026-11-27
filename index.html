@@ -306,8 +306,15 @@ async function seedCats(){try{for(let i=0;i<CAT_DEFAULT.length;i++){const c=CAT_
 async function delP(id){if(confirm('Delete this product?'))try{await db.doc('products/'+id).delete();try{await db.doc('productImages/'+id).delete()}catch(x){}}catch(e){toast('Failed')}}
 async function seed(){try{for(const p of SEED){const{id,sample,...d}=p;await db.doc('products/'+id).set(d)}toast('Saved')}catch(e){toast('Failed')}}
 /* ---- admin orders ---- */
-const itemOK=i=>{const p=P(i.id);return !!p&&!p.sample&&Number.isInteger(i.qty)&&i.qty>0&&i.qty<=100&&typeof i.price=='number'&&p.price===i.price};
-const chk=o=>vOrder(o,o.ownerId)&&o.items.every(itemOK);
+const itemOK=(i,o)=>{
+ const p=P(i.id);
+ if(!p||p.sample||!Number.isInteger(i.qty)||i.qty<1||i.qty>100||typeof i.price!=='number'||!Number.isFinite(i.price))return false;
+ const allowedPrices=[p.price];
+ if(o.payment==='Cashfree'&&p.onlinePrice!==undefined&&p.onlinePrice!==null&&p.onlinePrice!=='')allowedPrices.push(p.onlinePrice);
+ if(o.payment==='Cash on Delivery'&&p.codPrice!==undefined&&p.codPrice!==null&&p.codPrice!=='')allowedPrices.push(p.codPrice);
+ return allowedPrices.some(v=>Number.isFinite(Number(v))&&Math.abs(Number(v)-i.price)<0.005);
+};
+const chk=o=>vOrder(o,o.ownerId)&&o.items.every(i=>itemOK(i,o));
 const GATED=['Confirmed','Processing','Packed','Shipped','In Transit','Out for Delivery','Delivered'],payBlock=o=>(o.payment==='Online QR'||o.payment==='Cashfree')&&o.paymentStatus!=='Verified';
 const cntSt=s=>s=='All'?orders.length:orders.filter(o=>o.status==s).length;
 function aOrd(){return `<div class="bar"><input id="oq" placeholder="Search order ID, name, phone…" value="${esc(aOQ)}"></div><div class="tabs">${['All',...ST].map(s=>`<button class="btn s ${aOF==s?'on':''}" onclick="aOF='${s}';route(true)">${s} (${cntSt(s)})</button>`).join('')}</div><div id="ol">${ordList()}</div>`}
