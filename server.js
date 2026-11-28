@@ -177,14 +177,14 @@ app.post("/api/members", requireUser, requireAdmin, async (req, res) => {
     const address = cleanText(b.address, 500);
     const photo = b.photo || "";
     if (fullName.length < 2 || !["Manager", "Employee"].includes(role) || !/^\d{4}-\d{2}-\d{2}$/.test(dob) ||
-        !/^\d{12}$/.test(aadhaar) || !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(pan) ||
+        !/^\d{12}$/.test(aadhaar) || (pan && !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(pan)) ||
         !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !validPhone(mobile) || address.length < 5 || address.length > 500 || !validMemberPhoto(photo)) {
-      return res.status(400).json({ error: "Check all fields. Aadhaar must be 12 digits, PAN must be valid, mobile must be a 10-digit Indian number and photo must be a compressed JPEG." });
+      return res.status(400).json({ error: "Check all fields. Aadhaar must be 12 digits, PAN (if entered) must be valid, mobile must be a 10-digit Indian number and photo must be a compressed JPEG." });
     }
     const existing = await db.collection("members").where("email", "==", email).limit(1).get();
     if (!existing.empty) return res.status(409).json({ error: "A member record already exists for this email." });
     // Validate encryption configuration before writing any member data.
-    const privateData = { aadhaar: encryptMemberValue(aadhaar), pan: encryptMemberValue(pan), createdAt: admin.firestore.FieldValue.serverTimestamp() };
+    const privateData = { aadhaar: encryptMemberValue(aadhaar), pan: pan ? encryptMemberValue(pan) : null, createdAt: admin.firestore.FieldValue.serverTimestamp() };
     const id = crypto.randomUUID();
     const publicData = { fullName, role, dob, email, mobile, address, photo, status: "Pending", siin: "", rejectionReason: "", createdBy: req.user.uid, createdAt: admin.firestore.FieldValue.serverTimestamp() };
     const batch = db.batch();
@@ -210,7 +210,7 @@ app.get("/api/members", requireUser, requireAdmin, async (_req, res) => {
       let aadhaarMasked = "Not available", panMasked = "Not available";
       try {
         const p = await db.collection("memberPrivate").doc(d.id).get();
-        if (p.exists) { const v = p.data(); aadhaarMasked = maskAadhaar(decryptMemberValue(v.aadhaar)); panMasked = maskPan(decryptMemberValue(v.pan)); }
+        if (p.exists) { const v = p.data(); aadhaarMasked = maskAadhaar(decryptMemberValue(v.aadhaar)); panMasked = v.pan ? maskPan(decryptMemberValue(v.pan)) : "Not provided"; }
       } catch (e) { console.error("Private member data mask failed:", e.message); }
       const publicRow = memberPublicData(x);
       delete publicRow.photo; // photos are fetched only when an approved card is requested
