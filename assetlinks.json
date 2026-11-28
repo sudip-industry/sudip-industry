@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.sudipindustry.app",
+        "sha256_cert_fingerprints": ["21:79:A0:00:66:ED:FA:B5:D6:F7:43:70:7F:EF:84:4E:6D:C6:2A:10:94:A7:FA:BC:5E:AB:74:2D:C6:D3:ED:DD"]
+      }
+    }]
