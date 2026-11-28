@@ -281,6 +281,7 @@ app.post("/api/members/:id/reject", requireUser, requireAdmin, async (req, res) 
 // Approved staff can fetch only their own public ID-card fields.
 app.get("/api/members/me/card", requireUser, async (req, res) => {
   try {
+    if (!req.user.email_verified) return res.status(403).json({ error: "Please verify your email first. Sign in with Google using the same email." });
     const email = String(req.user.email || "").toLowerCase();
     if (!email) return res.status(404).json({ error: "No approved member ID card was found." });
     const snap = await db.collection("members").where("email", "==", email).where("status", "==", "Approved").limit(1).get();
