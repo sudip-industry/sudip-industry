@@ -278,6 +278,36 @@ app.post("/api/members/:id/reject", requireUser, requireAdmin, async (req, res) 
   }
 });
 
+// Admin deactivates or reactivates an approved member. SIIN and records are kept.
+for (const [action, from, to] of [["deactivate", "Approved", "Deactivated"], ["reactivate", "Deactivated", "Approved"]]) {
+  app.post("/api/members/:id/" + action, requireUser, requireAdmin, async (req, res) => {
+    try {
+      const memberRef = db.collection("members").doc(cleanText(req.params.id, 80));
+      const active = to === "Approved";
+      await db.runTransaction(async tx => {
+        const memberSnap = await tx.get(memberRef);
+        if (!memberSnap.exists) throw new Error("MEMBER_NOT_FOUND");
+        const m = memberSnap.data();
+        if (m.status !== from) throw new Error("WRONG_STATUS");
+        const isManagerRole = m.role === "Manager";
+        const staffRef = db.collection(isManagerRole ? "managers" : "employeesByEmail").doc(m.email);
+        const profiles = isManagerRole ? null : await tx.get(db.collection("employees").where("email", "==", m.email));
+        const stamp = new Date().toISOString();
+        const change = isManagerRole ? { active } : { status: active ? "Active" : "Inactive" };
+        tx.update(memberRef, { status: to, [action + "dAt"]: admin.firestore.FieldValue.serverTimestamp(), [action + "dBy"]: req.user.uid });
+        tx.set(staffRef, { ...change, email: m.email, updatedAt: stamp }, { merge: true });
+        if (profiles) profiles.docs.forEach(d => tx.update(d.ref, { ...change, updatedAt: stamp }));
+      });
+      return res.json({ ok: true, status: to });
+    } catch (e) {
+      if (e.message === "MEMBER_NOT_FOUND") return res.status(404).json({ error: "Member not found." });
+      if (e.message === "WRONG_STATUS") return res.status(400).json({ error: "Only an " + from + " member can be " + action + "d. Reload the list." });
+      console.error("Member " + action + " error:", e.message);
+      return res.status(500).json({ error: "Could not " + action + " this member." });
+    }
+  });
+}
+
 // Approved staff can fetch only their own public ID-card fields.
 app.get("/api/members/me/card", requireUser, async (req, res) => {
   try {
@@ -342,6 +372,19 @@ app.get("/", (_req, res) => {
   res.sendFile(INDEX_FILE);
 });
 app.get("/index.html", (_req, res) => res.sendFile(INDEX_FILE));
+
+// Android app (PWA / Play Store) files. Only these exact files are public.
+for (const name of ["manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png"]) {
+  app.get("/" + name, (_req, res) => {
+    if (name.endsWith(".webmanifest")) res.type("application/manifest+json");
+    res.sendFile(path.join(__dirname, name));
+  });
+}
+app.get("/.well-known/assetlinks.json", (_req, res) => {
+  const file = path.join(__dirname, "assetlinks.json");
+  if (!fs.existsSync(file)) return res.status(404).json({ error: "assetlinks.json not added yet." });
+  res.sendFile(file);
+});
 
 // ===============================
 // CREATE CASHFREE ORDER
